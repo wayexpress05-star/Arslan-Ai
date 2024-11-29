@@ -40,7 +40,7 @@ let dec = `
 
  > © CREATED BY *ARSLANMD OFFICIAL*
 `
-await conn.sendMessage(from,{video:{url: `https://files.catbox.moe/szjn9h.mp4`},video/mp4},{quoted:mek});
+await conn.sendMessage(from,{image:{url: `https://files.catbox.moe/n5vvij.jpg`},caption:dec},{quoted:mek});
 
 }catch(e){
 console.log(e)
