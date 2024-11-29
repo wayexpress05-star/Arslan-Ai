@@ -16,7 +16,7 @@ const search = await yts(q)
 const data = search.videos[0]
 const url = data.url
 
-let desc = `╭━❮◆ MIKU MD SONG DOWNLOADER ◆❯━╮
+let desc = `╭━❮◆ ARSLAN MD SONG DOWNLOADER ◆❯━╮
 
 ┃➤✰ 𝚃𝙸𝚃𝙻𝙴 : ${data.title}
 
@@ -30,7 +30,7 @@ let desc = `╭━❮◆ MIKU MD SONG DOWNLOADER ◆❯━╮
 ╰━━━━━━━━━━━━━━━⪼
 
 
-> ©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴋɪɴɢ
+> ©CREATED BY *ARSLANMD OFFICIAL*
 `
 await conn.sendMessage(from,{image:{url: data.thumbnail},caption:desc},{quoted:mek});
 
@@ -63,7 +63,7 @@ const search = await yts(q)
 const data = search.videos[0]
 const url = data.url
 
-let des = `╭━❮◆ MIKU MD VIDEO DOWNLOADER ◆❯━╮
+let des = `╭━❮◆ ARSLAN MD VIDEO DOWNLOADER ◆❯━╮
 
 ┃➤✰ 𝚃𝙸𝚃𝙻𝙴 : ${data.title}
 
