@@ -23,11 +23,11 @@ let dec = `*👋 Hello ${pushname}*
 
 📍𝖯𝗅𝖾𝖺𝗌𝖾 𝖥𝗈𝗅𝗅𝗈𝗐 𝖬𝗒 𝖶𝗁𝖺𝗍𝗌𝖺𝗉𝗉 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 👇
 
-👨‍💻◦ https://whatsapp.com/channel/0029Vac8SosLY6d7CAFndv3Z
+👨‍💻◦ https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306
 
 > *©CREATED BY ARSLANMD OFFICIAL*
 `
-await conn.sendMessage(from,{image:{url: `https://files.catbox.moe/n5vvij.jpg`},caption:dec},{quoted:mek});
+await conn.sendMessage(from,{video:{url: `https://files.catbox.moe/szjn9h.mp4`},caption:dec},{quoted:mek});
 
 }catch(e){
 console.log(e)
