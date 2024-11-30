@@ -67,10 +67,32 @@ require("./plugins/" + plugin);
 }
 });
 console.log('Plugins installed successful ✅')
-console.log('Bot connected to whatsapp ✅')
+console.log('ArslanMD Bot connected to whatsapp ✅')
 
-let up = `Arslam-MD connected successful ✅\n\nPREFIX: ${prefix}`;
+let up = `🚀 *_Arslan-MD Connected Successfully!_* ✅ 
 
+--- *👨‍💻🎉 _Welcome to Arslan-MD!_* 🎉💗 
+
+*🔹 PREFIX:* .
+
+*🔹 OWNER:* 923237045919
+
+_Thank you for using_ *🙆Arslan-MD💗.*
+_We're here to make your experience enjoyable and seamless._
+_If you need any help or have questions, don't hesitate to ask._ 🌝💗
+
+*🖇️Join My WhatsApp Channel✓💗 - :* https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306
+
+*🖇️Subscribe My Youtube Channel✓💗 - :* https://youtube.com/@arslanmdofficial
+
+*🖇️Fork & Star My Repo✓💗 - :* https://github.com/Arslan-MD/Arslan-MD 
+
+*🖇️Follow My Github Account✓💗 - :* https://github.com/Arslan-MD 
+
+_*👨‍💻 Enjoy your time with us! 😊*_
+
+> *©POWERED BY ARSLANMD*`;
+        
 conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://files.catbox.moe/n5vvij.jpg` }, caption: up })
 
 }
