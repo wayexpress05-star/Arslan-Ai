@@ -93,7 +93,7 @@ _*👨‍💻 Enjoy your time with us! 😊*_
 
 > *©POWERED BY ARSLANMD*`;
         
-conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://files.catbox.moe/k64961.jpg` }, caption: up })
+conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://files.catbox.moe/fcjrrk.jpg` }, caption: up })
 
 }
 })
