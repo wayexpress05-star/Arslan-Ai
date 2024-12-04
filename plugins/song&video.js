@@ -27,8 +27,6 @@ let desc = `╭━❮◆ ARSLAN MD SONG DOWNLOADER ◆❯━╮
 ┃➤✰𝚃𝙸𝙼𝙴 : ${data.timestamp}
 
 ┃➤  𝙰𝙶𝙾 :  ${data.ago}
-
-┃➤ MY CHENNEL : https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306
 ╰━━━━━━━━━━━━━━━⪼
 
 
