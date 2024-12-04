@@ -43,7 +43,7 @@ src="https://cardivo.vercel.app/api?name=Arslan-MD%20MD&description=🥂THE%20WO
 ---
 **3. Deploy to HEROKU ↓**
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Arslan-MD/Arslan-MD)
+[![Deploy](https://heroku.com/deploy?template=https://github.com/Arslan-MD/Arslan-MD)
 
  **4.  Deploy to RENDER ↓**
 
