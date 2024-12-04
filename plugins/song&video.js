@@ -77,7 +77,7 @@ let des = `╭━❮◆ ARSLAN MD VIDEO DOWNLOADER ◆❯━╮
 ╰━━━━━━━━━━━━━━━⪼
 
 
-> ©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴋɪɴɢ
+> ©CREATED BY *ARSLANMD OFFICIAL*
 `
 await conn.sendMessage(from,{image:{url: data.thumbnail},caption:des},{quoted:mek});
 
