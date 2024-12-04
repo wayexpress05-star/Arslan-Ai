@@ -62,6 +62,8 @@
   WORKFLOW CODE
  ```name: Node.js CI
 
+name: Node.js CI
+
 on:
   push:
     branches:
