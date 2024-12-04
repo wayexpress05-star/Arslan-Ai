@@ -8,13 +8,13 @@
 <a><img src='https://i.imgur.com/LyHic3i.gif'/>
 
 <img align="center" height="auto"
-src="https://cardivo.vercel.app/api?name=Arslan-MD%20MD&description=🥂THE%20WORLD%20BEST%20WHATSAPP%20BOT%★%20CREATED%20BY%ARSLANMF%20OFFICIAL♥️&image=https://files.catbox.moe/zw6rsz.jpg?v=4&backgroundColor=%23ecf0f1&github=Arslan-MD&pattern=leaf&colorPattern=%23eaeaea"/>
+src="https://cardivo.vercel.app/api?name=Arslan-MD%20MD&description=🥂THE%20WORLD%20BEST%20WHATSAPP%20BOT%★%20CREATED%20BY%ARSLANMD%20OFFICIAL♥️&image=https://files.catbox.moe/zw6rsz.jpg?v=4&backgroundColor=%23ecf0f1&github=Arslan-MD&pattern=leaf&colorPattern=%23eaeaea"/>
 
 <br>
 
    </p>
 <p align="center">
-<a href="https://github.com/Arslan-MD"><img title="Author" src="https://img.shields.io/badge/ArslanMD-black?style=for-the-badge&logo=Github"></a> <a href="https://youtube.com/@arslanmdofficil"><img title="Author" src="https://img.shields.io/badge/YOUTUBE SUBSCRIBE-red?style=for-the-badge&logo=youtube"></a> <a href="https://wa.me/923237045919"><img title="Author" src="https://img.shields.io/badge/Contact Me-black?style=for-the-badge&logo=whatsapp"></a>
+<a href="https://github.com/Arslan-MD"><img title="Author" src="https://img.shields.io/badge/ArslanMD-black?style=for-the-badge&logo=Github"></a> <a href="https://youtube.com/@arslanmdofficial"><img title="Author" src="https://img.shields.io/badge/YOUTUBE SUBSCRIBE-red?style=for-the-badge&logo=youtube"></a> <a href="https://wa.me/923237045919"><img title="Author" src="https://img.shields.io/badge/Contact Me-black?style=for-the-badge&logo=whatsapp"></a>
 <p/> 
     
 1. Fork The Repo
@@ -109,7 +109,7 @@ jobs:
 
 ## MY YT CHANNEL
 
-[![Youtube](https://telegra.ph/file/eebe86c26e98ffeae39ea.jpg)](https://youtube.com/@malvintech2) 
+[![Youtube](https://telegra.ph/file/eebe86c26e98ffeae39ea.jpg)](https://youtube.com/@arslanmdofficial) 
  
  ### WHATSAPP CHANNLE 👇
  <p align="left">
