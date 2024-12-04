@@ -1,4 +1,4 @@
-const config = require('../config')
+broconst config = require('../config')
 const {cmd , commands} = require('../command')
 const os = require("os")
 const {runtime} = require('../lib/functions')
@@ -17,17 +17,17 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
      *${pushname}*
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
- *ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴍᴀʟᴠɪɴ ᴍᴅ v2 ғᴜʟʟ ᴄᴏᴍᴍᴀɴᴅ ʟɪsᴛ*
+ *ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ Arslan-MD ғᴜʟʟ ᴄᴏᴍᴍᴀɴᴅ ʟɪsᴛ*
 
-*ᴄʀᴇᴀᴛᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴋɪɴɢ👨🏻‍💻*
+*ᴄʀᴇᴀᴛᴇᴅ ʙʏ ArslanMD👨🏻‍💻*
 
 ╭─────────────···▸*
 *❖│▸* *ʀᴜɴᴛɪᴍᴇ* : ${runtime(process.uptime())}
 *❖│▸* *ᴍᴏᴅᴇ* : *[${config.MODE}]*
 *❖│▸* *ᴘʀᴇғɪx* : *[${config.PREFIX}]*
 *❖│▸* *ʀᴀᴍ ᴜsᴇ* : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB
-*❖│▸* *ɴᴀᴍᴇ ʙᴏᴛ* : *❖ᴍᴀʟᴠɪɴ-ᴍᴅ v2❖*
-*❖│▸* *ᴄʀᴇᴀᴛᴏʀ* : *➺ᴍᴀʟᴠɪɴ ᴋɪɴɢ࿐*
+*❖│▸* *ɴᴀᴍᴇ ʙᴏᴛ* : *Arslan-MD❖*
+*❖│▸* *ᴄʀᴇᴀᴛᴏʀ* : *ArslanMD࿐*
 *❖│▸* *ᴠᴇʀsɪᴏɴs* : *ᴠ.2.0.0*
 *❖│▸* *ᴍᴇɴᴜ ᴄᴍᴅ* : *ᴍᴇɴᴜ ʟɪsᴛ*
 *╰────────────···▸▸*
@@ -48,13 +48,13 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 *ׂ╰┈➤Reply with the Number you want to select*
 
-*⭕MALVIN MD NEW UPDATE*
+*⭕Arslan MD NEW UPDATE*
 
-*🖇️https://whatsapp.com/channel/0029Vac8SosLY6d7CAFndv3Z*
+*🖇️https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306*
 
-> *©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜッ*`;
+> *©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ArslanMDッ*`;
 
-        const vv = await conn.sendMessage(from, { image: { url: "https://files.catbox.moe/gdvaaw.jpg"}, caption: desc }, { quoted: mek });
+        const vv = await conn.sendMessage(from, { image: { url: "https://files.catbox.moe/zw6rsz.jpg"}, caption: desc }, { quoted: mek });
 
         conn.ev.on('messages.upsert', async (msgUpdate) => {
             const msg = msgUpdate.messages[0];
@@ -77,7 +77,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List OWNER: 1*
 
-> *©ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッ*`);
+> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
                         break;
                     case '2':               
                         repl (`꧁*◈╾───CONVERT COMMAND LIST───╼◈꧂*
@@ -89,7 +89,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List CONVERT: 1*
 
-> *©ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッ*`);
+> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
                         break;
                     case '3':               
                         reply(`꧁*◈╾───AI COMMAND LIST───╼◈꧂*
@@ -114,7 +114,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List SEARCH: 2*
 
-> *ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッ*`);
+> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
                         break;
                     case '5':               
                         reply(`*꧁◈╾─DOWNLOAD COMMAND LIST──╼◈꧂*
@@ -137,7 +137,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List DOWNLOAD: 14*
 
-> *©ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッッ*`);
+> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
                         break;
                     case '6':               
                         reply(`*꧁◈╾───MAIN COMMAND LIST───╼◈꧂*
@@ -155,7 +155,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List MAIN: 8*
 
-> *©ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッッ*`);
+> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
                         break;
                     case '7':               
                         reply(`*꧁◈╾───GROUP COMMAND LIST───╼◈꧂*
@@ -180,7 +180,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 ⭓ *Total Commands List GROUP: 11*
 
-> *ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッ*`);
+> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
                        break;
                     case '8':               
                         reply(`*꧁◈╾───FUN COMMAND LIST───╼◈꧂*
@@ -195,7 +195,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List FUN: 4*
 
-> *ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッッ*`);
+> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
 
                         break;
                     case '10':               
@@ -208,7 +208,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 
 ⭓ *Total Commands List OTHER: 3*
 
-> *ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッッ*`);
+> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
 
 
                         break;
