@@ -1,9 +1,22 @@
  **🧚‍♀️ PRINCE ARSLAN MD**
 
+<a><img src='https://i.imgur.com/LyHic3i.gif'/>
 
 </p> <p align="center">
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Rubik+Dirt&size=65&pause=1000&color=F20C39F&background=FF20A500&center=true&vCenter=true&width=1000&height=150&lines=PRINCE+ARSLAN+MD;MADE+BY+ArslanMD+Official" alt="Typing SVG" 
----
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Rubik+Dirt&size=65&pause=1000&color=F720C3F&background=FF20A500&center=true&vCenter=true&width=1000&height=150&lines=ARSLAN+MD+POWERBOT ;MADE+BY+ARSLANMD+OFFICIAL" alt="Typing SVG" /></a>
+
+<a><img src='https://i.imgur.com/LyHic3i.gif'/>
+
+<img align="center" height="auto"
+src="https://cardivo.vercel.app/api?name=Arslan-MD%20MD&description=🥂THE%20WORLD%20BEST%20WHATSAPP%20BOT%★%20CREATED%20BY%ARSLANMF%20OFFICIAL♥️&image=https://files.catbox.moe/zw6rsz.jpg?v=4&backgroundColor=%23ecf0f1&github=Arslan-MD&pattern=leaf&colorPattern=%23eaeaea"/>
+
+<br>
+
+   </p>
+<p align="center">
+<a href="https://github.com/Arslan-MD"><img title="Author" src="https://img.shields.io/badge/ArslanMD-black?style=for-the-badge&logo=Github"></a> <a href="https://youtube.com/@arslanmdofficil"><img title="Author" src="https://img.shields.io/badge/YOUTUBE SUBSCRIBE-red?style=for-the-badge&logo=youtube"></a> <a href="https://wa.me/923237045919"><img title="Author" src="https://img.shields.io/badge/Contact Me-black?style=for-the-badge&logo=whatsapp"></a>
+<p/> 
+    
 1. Fork The Repo
     <br>
 <a href="https://github.com/Arslan-MD/Arslan-MD/fork"><img title="PRINCE-ARSLAN-MD" src="https://img.shields.io/badge/FORK PRINCE-ARSLAN-h?color=black&style=for-the-badge&logo=stackshare"></a>
@@ -11,20 +24,6 @@
 ![forks](https://img.shields.io/github/forks/Arslan-MD/Arslan-MD?label=Forks&style=social)
 
 ![stars](https://img.shields.io/github/stars/Arslan-MD/Arslan-MD?style=social)
-
-
-
-
-<br>
-• Best and fast whatsapp bot
-<br>
-
-  <p align="center">  
-  <a href="https://files.catbox.moe/zw6rsz.jpg">
-    <img alt="prince-arslan" height="200" src="https://files.catbox.moe/zw6rsz.jpg">
-    
-   Loading...
-  <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
 
 
 
