@@ -1,17 +1,17 @@
-broconst config = require('../config')
 const {cmd , commands} = require('../command')
-const os = require("os")
-const {runtime} = require('../lib/functions')
+
 cmd({
     pattern: "menu",
-    alias: ["list"],
     desc: "menu the bot",
-    react: "📜",
-    category: "main"
+    category: "menu",
+    react: "💋",
+    filename: __filename
 },
-async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
-    try {
-        let desc = `*╭━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷*
+
+async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+
+let dec = `*╭━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷*
 *⇆ ʜɪɪ ᴍʏ ᴅᴇᴀʀ ғʀɪᴇɴᴅ ⇆*
 
      *${pushname}*
@@ -44,29 +44,8 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 *├➤ 9 • TOOLS*
 *├➤ 10 • OTHER*
 *╰╼╼╼╼╼╼╼╼╼╼*
-* ▣▣▣▣▣▣▣▣▣▣▣▣*⁠⁠⁠⁠
 
-*ׂ╰┈➤Reply with the Number you want to select*
-
-*⭕Arslan MD NEW UPDATE*
-
-*🖇️https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306*
-
-> *©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ArslanMDッ*`;
-
-        const vv = await conn.sendMessage(from, { image: { url: "https://files.catbox.moe/zw6rsz.jpg"}, caption: desc }, { quoted: mek });
-
-        conn.ev.on('messages.upsert', async (msgUpdate) => {
-            const msg = msgUpdate.messages[0];
-            if (!msg.message || !msg.message.extendedTextMessage) return;
-
-            const selectedOption = msg.message.extendedTextMessage.text.trim();
-
-            if (msg.message.extendedTextMessage.contextInfo && msg.message.extendedTextMessage.contextInfo.stanzaId === vv.key.id) {
-                switch (selectedOption) {
-                    case '1':
-                        reply(`*꧁◈╾───OWNER COMMAND LIST───╼◈꧂*
-
+*꧁◈╾───OWNER COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *restart* 
 ┋ ➽ *block*
@@ -75,36 +54,18 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┋ ➽ *jid*
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List OWNER: 1*
-
-> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-                        break;
-                    case '2':               
-                        repl (`꧁*◈╾───CONVERT COMMAND LIST───╼◈꧂*
-
+*꧁*◈╾───CONVERT COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *convert* 
 ┋ ➽ *ss* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List CONVERT: 1*
-
-> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-                        break;
-                    case '3':               
-                        reply(`꧁*◈╾───AI COMMAND LIST───╼◈꧂*
-
+*꧁*◈╾───AI COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *ai* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List AI: 1*
-
-> *©ᴍᴀʟᴠɪɴ ᴍᴅ ᴠ2 ᴄʀᴇᴀᴛᴇ ʙʏ ᴋɪɴɢ ᴍᴀʟᴠɪɴッ*`);
-                        break;
-                    case '4':               
-                        reply(`*꧁◈╾───SEARCH COMMAND LIST───╼◈꧂*
-
+*꧁◈╾───SEARCH COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *yt* 
 ┋ ➽ *song* 
@@ -112,13 +73,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┋ ➽ *movie* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List SEARCH: 2*
-
-> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-                        break;
-                    case '5':               
-                        reply(`*꧁◈╾─DOWNLOAD COMMAND LIST──╼◈꧂*
-
+*꧁◈╾─DOWNLOAD COMMAND LIST──╼◈꧂*
 ╭────────●●►
 ┋ ➽ *apk* 
 ┋ ➽ *twitter* 
@@ -135,13 +90,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┋ ➽ *img* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List DOWNLOAD: 14*
-
-> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-                        break;
-                    case '6':               
-                        reply(`*꧁◈╾───MAIN COMMAND LIST───╼◈꧂*
-
+*꧁◈╾───MAIN COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *alive* 
 ┋ ➽ *about* 
@@ -153,13 +102,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┋ ➽ *runtime* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List MAIN: 8*
-
-> *©Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-                        break;
-                    case '7':               
-                        reply(`*꧁◈╾───GROUP COMMAND LIST───╼◈꧂*
-
+*꧁◈╾───GROUP COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *promote* 
 ┋ ➽ *demote* 
@@ -178,13 +121,8 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┋ ➽ *groupinfo* 
 ┋ ➽ *grouplink* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
-⭓ *Total Commands List GROUP: 11*
 
-> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-                       break;
-                    case '8':               
-                        reply(`*꧁◈╾───FUN COMMAND LIST───╼◈꧂*
-
+*꧁◈╾───FUN COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *dog* 
 ┋ ➽ *fact* 
@@ -193,35 +131,26 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┋ ➽ *loli* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List FUN: 4*
-
-> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
-
-                        break;
-                    case '10':               
-                        reply(`*꧁◈╾───OTHER COMMAND LIST───╼◈꧂*
-
+*꧁◈╾───OTHER COMMAND LIST───╼◈꧂*
 ╭────────●●►
 ┋ ➽ *trt* 
 ┋ ➽ *weather* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-⭓ *Total Commands List OTHER: 3*
+* ▣▣▣▣▣▣▣▣▣▣▣▣*⁠⁠⁠⁠
 
-> *Arslan-MD CREATED BY ARSLANMD OFFICIALッ*`);
+*ׂ╰┈➤Reply with the Number you want to select*
 
+*⭕Arslan MD NEW UPDATE*
 
-                        break;
-                    default:
-                        reply("Invalid option. Please select a valid option🔴");
-                }
+*🖇️https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306*
 
-            }
-        });
+> *©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ArslanMDッ*
+`
+await conn.sendMessage(from,{image:{url: `https://files.catbox.moe/zw6rsz.jpg`},caption:dec},{quoted:mek});
 
-    } catch (e) {
-        console.error(e);
-        await conn.sendMessage(from, { react: { text: '❌', key: mek.key } })
-        reply('An error occurred while processing your request.');
-    }
-});
+}catch(e){
+console.log(e)
+reply(`${e}`)
+}
+})
