@@ -20,8 +20,8 @@
 <br>
 
   <p align="center">  
-  <a href="https://files.catbox.moe/k64961.jpg">
-    <img alt="prince-arslan" height="200" src="https://files.catbox.moe/k64961.jpg">
+  <a href="https://files.catbox.moe/zw6rsz.jpg">
+    <img alt="prince-arslan" height="200" src="https://files.catbox.moe/zw6rsz.jpg">
     
    Loading...
   <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
