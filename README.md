@@ -43,8 +43,9 @@ src="https://cardivo.vercel.app/api?name=Arslan-MD%20MD&description=🥂THE%20WO
 ---
 **3. Deploy to HEROKU ↓**
 
-[![Deploy](https://heroku.com/deploy?template=https://github.com/Arslan-MD/Arslan-MD)
-
+<p align="left">
+<a href='https://signup.heroku.com/' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-heroku ‎ deploy-blue?style=for-the-badge&logo=heroku&logoColor=white'/< width=150 height=28/p></a>
+   
  **4.  Deploy to RENDER ↓**
 
 <a href="https://dashboard.render.com/" target="blank"><img align="center" src="https://telegra.ph/file/c15e952f017c10e12f431.jpg" width="100" height="20" alt="Deploy bot"/></a>
