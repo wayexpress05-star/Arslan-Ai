@@ -21,20 +21,7 @@ let dec = `
 │*💻 HOST* :  arslanmd.com
 │*💫 ᴘʀᴇғɪx:* .
 ╰─────────────━┈⊷ 
-*╭╼╼╼╼╼╼╼╼╼╼*
-*├➤ 1 • OWNER*
-*├➤ 2 • CONVERT*
-*├➤ 3 • AI*
-*├➤ 4 • SEARCH*
-*├➤ 5 • DOWNLOAD*
-*├➤ 6 • MAIN*
-*├➤ 7 • GROUP*
-*├➤ 8 • FUN*
-*├➤ 9 • TOOLS*
-*├➤ 10 • OTHER*
-*╰╼╼╼╼╼╼╼╼╼╼*
-
-*꧁◈╾───OWNER COMMAND LIST───╼◈꧂*
+*꧁*◈╾───OWNER COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *restart* 
 ┋ ➽ *block*
@@ -43,18 +30,18 @@ let dec = `
 ┋ ➽ *jid*
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁*◈╾───CONVERT COMMAND LIST───╼◈꧂*
+*꧁*◈╾───CONVERT COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *convert* 
 ┋ ➽ *ss* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁*◈╾───AI COMMAND LIST───╼◈꧂*
+*꧁*◈╾───AI COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *ai* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁◈╾───SEARCH COMMAND LIST───╼◈꧂*
+*꧁*◈╾───SEARCH COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *yt* 
 ┋ ➽ *song* 
@@ -62,7 +49,7 @@ let dec = `
 ┋ ➽ *movie* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁◈╾─DOWNLOAD COMMAND LIST──╼◈꧂*
+*꧁*◈╾─DOWNLOAD COMMAND ──╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *apk* 
 ┋ ➽ *twitter* 
@@ -79,7 +66,7 @@ let dec = `
 ┋ ➽ *img* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁◈╾───MAIN COMMAND LIST───╼◈꧂*
+*꧁*◈╾───MAIN COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *alive* 
 ┋ ➽ *about* 
@@ -91,7 +78,7 @@ let dec = `
 ┋ ➽ *runtime* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁◈╾───GROUP COMMAND LIST───╼◈꧂*
+*꧁*◈╾───GROUP COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *promote* 
 ┋ ➽ *demote* 
@@ -111,7 +98,7 @@ let dec = `
 ┋ ➽ *grouplink* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁◈╾───FUN COMMAND LIST───╼◈꧂*
+*꧁*◈╾───FUN COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *dog* 
 ┋ ➽ *fact* 
@@ -120,7 +107,7 @@ let dec = `
 ┋ ➽ *loli* 
 ╰━━━━∙⋆⋅⋆∙━ ─┉─ • ─┉─⊷
 
-*꧁◈╾───OTHER COMMAND LIST───╼◈꧂*
+*꧁*◈╾───OTHER COMMAND ───╼◈*꧂*
 ╭────────●●►
 ┋ ➽ *trt* 
 ┋ ➽ *weather* 
