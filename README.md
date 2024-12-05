@@ -38,7 +38,7 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 <br>
 
 <p align="left">
-<a href='https://arslan-md-beta-pair.onrender.com' target="_blank"><img alt='Server2' src='https://img.shields.io/badge/-Server 2-darkred?style=for-the-badge&logo=Whatsapp&logoColor=white'/< width=120 height=39/p></a>
+<a href='https://registered-bunni-arslanmd12-faa34dac.koyeb.app' target="_blank"><img alt='Server2' src='https://img.shields.io/badge/-Server 2-darkred?style=for-the-badge&logo=Whatsapp&logoColor=white'/< width=120 height=39/p></a>
 
     
 ---
