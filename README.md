@@ -1,4 +1,4 @@
- **🧚‍♀️ PRINCE ARSLAN MD**
+ **☠️ PRINCE ARSLAN MD**
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/>
 
@@ -60,7 +60,7 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 ---
 **4. <br> ❖ DEPLOY_KOYEB ❖**
 
-`✠ IF YOU HAVE YOUR KOYEB ACCOUNT SO YOU CAN DEPLOY SANA_MD ON KOYEB WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
+`✠ IF YOU HAVE YOUR KOYEB ACCOUNT SO YOU CAN DEPLOY Arslan-MD ON KOYEB WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
 
 ---------
 
