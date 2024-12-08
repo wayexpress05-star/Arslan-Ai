@@ -1,6 +1,6 @@
 {
   "name": "Arslan-MD",
-  "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ꜱᴀɴᴀ",
+  "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ArslanMD",
   "logo": "https://files.catbox.moe/n5vvij.jpg",
   "keywords": ["bot"],
   "success_url": "/",
@@ -95,7 +95,7 @@
     "BOT_NAME": {
       "description": "write hear your name.",
       "required": true,
-      "value": "✦ꜱᴀɴᴀ_ᴍᴅ✦"
+      "value": "Arslan-MD"
     }, 
 
     "HEART_REACT": {
