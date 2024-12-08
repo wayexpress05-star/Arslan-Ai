@@ -58,6 +58,15 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 <a href="https://dashboard.render.com/" target="blank"><img align="center" src="https://telegra.ph/file/c15e952f017c10e12f431.jpg" width="100" height="20" alt="Deploy bot"/></a>
 
 ---
+**4. <br> ❖ DEPLOY_KOYEB ❖**
+
+`✠ IF YOU HAVE YOUR KOYEB ACCOUNT SO YOU CAN DEPLOY SANA_MD ON KOYEB WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
+
+---------
+
+<a href='https://app.koyeb.com/auth/signin' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-KOYEB-blue?style=for-the-badge&logo=koyeb&logoColor=white'/></a>
+
+------------
 
 
 
