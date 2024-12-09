@@ -16,15 +16,17 @@ let dec = `*👋 Hello ${pushname}*
 
 *☠️Arslan-MD Support Channels💗*
 
-*Youtube Channel Link:* https://www.youtube.com/@malvintech2 
+👨‍💻◦ https://github.com/Arslan-MD/Arslan-MD
 
-*Github Profile Link:* https://github.com/kingmalvn 
+📍𝖯𝗅𝖾𝖺𝗌𝖾 𝖲𝗎𝖻𝗌𝖼𝗋𝗂𝖻𝖾 𝖬𝗒 𝖸𝗈𝗎𝗍𝗎𝖻𝖾 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 👇
 
-*Whatsapp Channel Link:* https://whatsapp.com/channel/0029Vac8SosLY6d7CAFndv3Z
+👨‍💻◦ https://www.youtube.com/@arslanmdofficial
 
-👨‍💻◦ https://whatsapp.com/channel/0029VayTeumIN9io4KVkqx28
+📍𝖯𝗅𝖾𝖺𝗌𝖾 𝖥𝗈𝗅𝗅𝗈𝗐 𝖬𝗒 𝖶𝗁𝖺𝗍𝗌𝖺𝗉𝗉 𝖢𝗁𝖺𝗇𝗇𝖾𝗅 👇
 
-> *©ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ*
+👨‍💻◦ https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306
+
+> *©CREATED BY ARSLANMD OFFICIAL*
 `
 await conn.sendMessage(from,{image:{url: `https://files.catbox.moe/gdvaaw.jpg`},caption:dec},{quoted:mek});
 
