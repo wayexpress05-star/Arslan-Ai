@@ -59,13 +59,12 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 
 ---
 **4. <br> ❖ DEPLOY_KOYEB ❖**
-
-`✠ IF YOU HAVE YOUR KOYEB ACCOUNT SO YOU CAN DEPLOY Arslan-MD ON KOYEB WITH EASY SETUP NOTE:-MAYBE SOME PROBLEM TO DEPLOY ON KOYEB I ILL FIX SOON ✠`
-
----------
-
-<a href='https://app.koyeb.com/auth/signin' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-KOYEB-blue?style=for-the-badge&logo=koyeb&logoColor=white'/></a>
-
+1. [Sign Up on Koyeb](https://app.koyeb.com/auth/signup).
+3. Deploy your app using the button below:
+   <br>
+   <a href='https://Github.com/Arslan-MD/Arslan-MD' target="_blank">
+      <img alt='Deploy on Koyeb' src='https://img.shields.io/badge/-DEPLOY-red?style=for-the-badge&logo=koyeb&logoColor=white'/>
+   </a>
 ------------
 
 
