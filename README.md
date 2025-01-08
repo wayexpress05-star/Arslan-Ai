@@ -51,7 +51,7 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 **3. Deploy to HEROKU ↓**
 
 <p align="left">
-<a href='https://signup.heroku.com/' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-heroku ‎ deploy-blue?style=for-the-badge&logo=heroku&logoColor=white'/< width=150 height=28/p></a>
+<a href='https://www.heroku.com/deploy?template=https://github.com/Arslan-MD/Arslan-MD' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-heroku ‎ deploy-blue?style=for-the-badge&logo=heroku&logoColor=white'/< width=150 height=28/p></a>
    
  **4.  Deploy to RENDER ↓**
 
