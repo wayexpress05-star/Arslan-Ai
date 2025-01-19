@@ -35,12 +35,12 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 ***CLICK ON SERVER 1 - BEFORE WAIT A FEW SECONDS THEN PAIR YOUR WHATSAPP NUMBER***
 
 <p align="left">
-<a href='https://arslan-md-beta-pair.onrender.com' target="_blank"><img alt='Server1' src='https://img.shields.io/badge/-Server 1-darkgreen?style=for-the-badge&logo=Whatsapp&logoColor=white'/< width=120 height=39/p></a>
+<a href='https://arslanmdtesting-c5d3756a46cd.herokuapp.com/' target="_blank"><img alt='Server1' src='https://img.shields.io/badge/-Server 1-darkgreen?style=for-the-badge&logo=Whatsapp&logoColor=white'/< width=120 height=39/p></a>
 
 <br>
 
 <p align="left">
-<a href='https://registered-bunni-arslanmd12-faa34dac.koyeb.app' target="_blank"><img alt='Server2' src='https://img.shields.io/badge/-Server 2-darkred?style=for-the-badge&logo=Whatsapp&logoColor=white'/< width=120 height=39/p></a>
+<a href='https://arslan-md-beta-pair.onrender.com' target="_blank"><img alt='Server2' src='https://img.shields.io/badge/-Server 2-darkred?style=for-the-badge&logo=Whatsapp&logoColor=white'/< width=120 height=39/p></a>
 
     
 ---
