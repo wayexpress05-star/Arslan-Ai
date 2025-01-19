@@ -60,21 +60,19 @@ src="https://cardivo.vercel.app/api?name=Arslan%20MD&description=🥂THE%20WORLD
 <a href="https://dashboard.render.com/" target="blank"><img align="center" src="https://telegra.ph/file/c15e952f017c10e12f431.jpg" width="100" height="20" alt="Deploy bot"/></a>
 
 ---
-**4. <br> ❖ DEPLOY_KOYEB ❖**
-1. [Sign Up on Koyeb](https://app.koyeb.com/auth/signup).
-3. Deploy your app using the button below:
-   <br>
-   <a href='https://Github.com/Arslan-MD/Arslan-MD' target="_blank">
-      <img alt='Deploy on Koyeb' src='https://img.shields.io/badge/-DEPLOY-red?style=for-the-badge&logo=koyeb&logoColor=white'/>
-   </a>
-------------
+
+
+**5. <br> ❖ DEPLOY_KOYEB ❖**
+<p align="left">
+<a href='https://app.koyeb.com/services/deploy?type=git&repository=Arslan-MD/Arslan-MD&ports=3000&env[PREFIX]=.&env[SESSION_ID]=&env[ALWAYS_ONLINE]=false&env[MODE]=public&env[AUTO_STATUS_MSG]=Seen%20status%20by%20Arslan-MD&env[AUTO_STATUS_REPLY]=false&env[AUTO_STATUS_SEEN]=true&env[AUTO_TYPING]=false&env[ANTI_LINK]=true&env[AUTO_REACT]=false&env[READ_MESSAGE]=false' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-koyeb ‎ deploy-FF009D?style=for-the-badge&logo=koyeb&logoColor=white'/< width=150 height=28/p></a>
+
 
 
 
 
 
 ---
-**5. Deploy to GITHUB**
+**6. Deploy to GITHUB**
 
   WORKFLOW CODE
  ```name: Node.js CI
