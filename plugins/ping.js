@@ -1,16 +1,11 @@
-const { performance } = require('perf_hooks');
+module.exports = (sock) => {
+    sock.ev.on('messages.upsert', async ({ messages }) => {
+        const msg = messages[0];
+        if (!msg.message || msg.key.fromMe) return;
 
-module.exports = {
-  name: 'ping',
-  alias: ['speed'],
-  description: 'Check bot response speed',
-  category: 'general',
-  usage: '.ping',
-  async execute(client, m, args) {
-    const start = performance.now();
-    await m.reply('Pinging...');
-    const end = performance.now();
-    const speed = (end - start).toFixed(2);
-    m.reply(`🏓 Pong! Response in ${speed} ms`);
-  }
+        const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
+        if (text === '.ping') {
+            await sock.sendMessage(msg.key.remoteJid, { text: '```Pong!```' }, { quoted: msg });
+        }
+    });
 };
