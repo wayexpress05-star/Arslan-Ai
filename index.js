@@ -1,16 +1,23 @@
-const {
-  default: makeWASocket,
-  useMultiFileAuthState,
-  DisconnectReason,
-  fetchLatestBaileysVersion
-} = require("@whiskeysockets/baileys");
-
-const Pino = require("pino");
-const config = require("./config");
-const { Boom } = require("@hapi/boom");
+const { default: makeWASocket, DisconnectReason, fetchLatestBaileysVersion, useSingleFileAuthState } = require('@whiskeysockets/baileys');
+const Pino = require('pino');
+const { Boom } = require('@hapi/boom');
+const config = require('./config');
+const fs = require('fs');
 
 async function startBot() {
-  const { state, saveCreds } = await useMultiFileAuthState("session");
+  const { state, saveState } = useSingleFileAuthState('./session.json');
+
+  // ✅ Check and inject session from ENV
+  if (config.SESSION_ID) {
+    try {
+      const decoded = Buffer.from(config.SESSION_ID.replace("Sarkarmd$", ""), 'base64').toString();
+      fs.writeFileSync('./session.json', decoded);
+      console.log("✅ Session restored from environment!");
+    } catch (e) {
+      console.log("❌ Failed to restore session:", e.message);
+    }
+  }
+
   const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
@@ -20,67 +27,31 @@ async function startBot() {
     browser: ["Arslan-MD", "Chrome", "110.0.0.0"]
   });
 
-  sock.ev.on("creds.update", saveCreds);
+  sock.ev.on("creds.update", saveState);
 
-  // ✅ QR Show in Terminal
-  sock.ev.on("connection.update", ({ connection, qr, lastDisconnect }) => {
-    if (qr) {
-      console.log("🔐 Scan this QR to connect:\n", qr);
-    }
-
-    if (connection === "close") {
+  sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
+    if (connection === "open") {
+      console.log("✅ Bot Connected Successfully!");
+    } else if (connection === "close") {
       const shouldReconnect =
         new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
       if (shouldReconnect) {
-        console.log("🔄 Reconnecting...");
         startBot();
       } else {
-        console.log("❌ Logged out. Please restart and scan QR again.");
+        console.log("❌ Session expired. QR scan required.");
       }
-    } else if (connection === "open") {
-      console.log("✅ Bot Connected Successfully!");
     }
   });
 
-  // ✅ Command Handler
   sock.ev.on("messages.upsert", async ({ messages }) => {
     const m = messages[0];
     if (!m.message || m.key.fromMe) return;
 
     const from = m.key.remoteJid;
-    const text =
-      m.message.conversation || m.message.extendedTextMessage?.text || "";
-    const prefix = config.PREFIX;
+    const text = m.message.conversation || m.message.extendedTextMessage?.text || "";
 
-    if (!text.startsWith(prefix)) return;
-
-    const cmd = text.slice(prefix.length).trim().split(" ")[0].toLowerCase();
-
-    if (cmd === "ping") {
+    if (text.toLowerCase() === '.ping') {
       await sock.sendMessage(from, { text: "🏓 Pong!" }, { quoted: m });
-    }
-
-    if (cmd === "owner") {
-      await sock.sendMessage(from, {
-        text: `👑 Owner: wa.me/${config.OWNER_NUMBER}`
-      }, { quoted: m });
-    }
-
-    if (cmd === "menu") {
-      await sock.sendMessage(from, {
-        text: `
-╭───❍ *Arslan-MD Menu* ❍───
-│ • .ping
-│ • .owner
-│ • .repo
-╰────────────────────────`
-      }, { quoted: m });
-    }
-
-    if (cmd === "repo") {
-      await sock.sendMessage(from, {
-        text: `📦 GitHub: ${config.REPO}`
-      }, { quoted: m });
     }
   });
 }
