@@ -15,7 +15,6 @@ async function startBot() {
 
   const sock = makeWASocket({
     version,
-    printQRInTerminal: true,
     auth: state,
     logger: Pino({ level: "silent" }),
     browser: ["Arslan-MD", "Chrome", "110.0.0.0"]
@@ -23,20 +22,27 @@ async function startBot() {
 
   sock.ev.on("creds.update", saveCreds);
 
-  sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
+  // ✅ QR Show in Terminal
+  sock.ev.on("connection.update", ({ connection, qr, lastDisconnect }) => {
+    if (qr) {
+      console.log("🔐 Scan this QR to connect:\n", qr);
+    }
+
     if (connection === "close") {
       const shouldReconnect =
         new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
       if (shouldReconnect) {
+        console.log("🔄 Reconnecting...");
         startBot();
       } else {
-        console.log("❌ Connection closed. QR required again.");
+        console.log("❌ Logged out. Please restart and scan QR again.");
       }
     } else if (connection === "open") {
       console.log("✅ Bot Connected Successfully!");
     }
   });
 
+  // ✅ Command Handler
   sock.ev.on("messages.upsert", async ({ messages }) => {
     const m = messages[0];
     if (!m.message || m.key.fromMe) return;
@@ -55,7 +61,9 @@ async function startBot() {
     }
 
     if (cmd === "owner") {
-      await sock.sendMessage(from, { text: `👑 Owner: wa.me/${config.OWNER_NUMBER}` }, { quoted: m });
+      await sock.sendMessage(from, {
+        text: `👑 Owner: wa.me/${config.OWNER_NUMBER}`
+      }, { quoted: m });
     }
 
     if (cmd === "menu") {
