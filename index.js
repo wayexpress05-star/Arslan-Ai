@@ -1,24 +1,31 @@
-const { default: makeWASocket, DisconnectReason, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
-const { useSingleFileAuthState } = require('@whiskeysockets/baileys/lib/auth-utils');
+const {
+  default: makeWASocket,
+  DisconnectReason,
+  fetchLatestBaileysVersion,
+  useMultiFileAuthState
+} = require('@whiskeysockets/baileys');
+
 const { Boom } = require('@hapi/boom');
 const Pino = require('pino');
 const fs = require('fs');
 const config = require('./config');
 
 async function startBot() {
-  const sessionFile = './session.json';
+  const authFolder = './session';
 
-  if (config.SESSION_ID && !fs.existsSync(sessionFile)) {
+  // ✅ Session from ENV
+  if (config.SESSION_ID && !fs.existsSync(`${authFolder}/creds.json`)) {
     try {
+      fs.mkdirSync(authFolder, { recursive: true });
       const decoded = Buffer.from(config.SESSION_ID.replace('Sarkarmd$', ''), 'base64').toString();
-      fs.writeFileSync(sessionFile, decoded);
+      fs.writeFileSync(`${authFolder}/creds.json`, decoded);
       console.log("✅ Session restored from environment!");
     } catch (e) {
-      console.error("❌ Failed to write session.json:", e.message);
+      console.log("❌ Session restore failed:", e.message);
     }
   }
 
-  const { state, saveCreds } = useSingleFileAuthState(sessionFile);
+  const { state, saveCreds } = await useMultiFileAuthState(authFolder);
   const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
@@ -34,13 +41,12 @@ async function startBot() {
     if (connection === "open") {
       console.log("✅ Bot Connected Successfully!");
     } else if (connection === "close") {
-      const shouldReconnect =
-        new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+      const shouldReconnect = new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
       if (shouldReconnect) {
         console.log("🔄 Reconnecting...");
         startBot();
       } else {
-        console.log("❌ Session expired. Please re-pair.");
+        console.log("❌ Session expired or logged out.");
       }
     }
   });
@@ -53,7 +59,7 @@ async function startBot() {
     const text = m.message.conversation || m.message.extendedTextMessage?.text || "";
 
     if (text.toLowerCase() === '.ping') {
-      await sock.sendMessage(from, { text: "🏓 Pong! Bot is active." }, { quoted: m });
+      await sock.sendMessage(from, { text: "🏓 Pong! Bot is alive." }, { quoted: m });
     }
   });
 }
