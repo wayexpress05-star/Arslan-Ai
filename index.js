@@ -5,17 +5,9 @@ const {
   fetchLatestBaileysVersion
 } = require("@whiskeysockets/baileys");
 
-const { makeInMemoryStore } = require("@whiskeysockets/baileys/lib/Store");
 const Pino = require("pino");
 const config = require("./config");
 const { Boom } = require("@hapi/boom");
-
-// Logging
-const store = makeInMemoryStore({ logger: Pino({ level: "silent" }) });
-store.readFromFile("./session/baileys_store.json");
-setInterval(() => {
-  store.writeToFile("./session/baileys_store.json");
-}, 10000);
 
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState("session");
@@ -29,7 +21,6 @@ async function startBot() {
     browser: ["Arslan-MD", "Chrome", "110.0.0.0"]
   });
 
-  store.bind(sock.ev);
   sock.ev.on("creds.update", saveCreds);
 
   sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
@@ -39,7 +30,7 @@ async function startBot() {
       if (shouldReconnect) {
         startBot();
       } else {
-        console.log("❌ Connection closed. QR scan required again.");
+        console.log("❌ Connection closed. QR required again.");
       }
     } else if (connection === "open") {
       console.log("✅ Bot Connected Successfully!");
@@ -60,13 +51,11 @@ async function startBot() {
     const cmd = text.slice(prefix.length).trim().split(" ")[0].toLowerCase();
 
     if (cmd === "ping") {
-      await sock.sendMessage(from, { text: "🏓 Pong! Bot is online." }, { quoted: m });
+      await sock.sendMessage(from, { text: "🏓 Pong!" }, { quoted: m });
     }
 
     if (cmd === "owner") {
-      await sock.sendMessage(from, {
-        text: `👑 Owner: wa.me/${config.OWNER_NUMBER}`
-      }, { quoted: m });
+      await sock.sendMessage(from, { text: `👑 Owner: wa.me/${config.OWNER_NUMBER}` }, { quoted: m });
     }
 
     if (cmd === "menu") {
