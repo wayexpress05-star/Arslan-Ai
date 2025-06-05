@@ -2,18 +2,18 @@ const {
   default: makeWASocket,
   DisconnectReason,
   fetchLatestBaileysVersion,
-  useMultiFileAuthState
+  useMultiFileAuthState,
 } = require('@whiskeysockets/baileys');
-
 const { Boom } = require('@hapi/boom');
-const Pino = require('pino');
 const fs = require('fs');
+const Pino = require('pino');
+const express = require('express');
 const config = require('./config');
 
 async function startBot() {
   const authFolder = './session';
 
-  // ✅ Session from ENV
+  // ✅ Restore session from ENV
   if (config.SESSION_ID && !fs.existsSync(`${authFolder}/creds.json`)) {
     try {
       fs.mkdirSync(authFolder, { recursive: true });
@@ -46,11 +46,12 @@ async function startBot() {
         console.log("🔄 Reconnecting...");
         startBot();
       } else {
-        console.log("❌ Session expired or logged out.");
+        console.log("❌ Session expired. Please re-pair.");
       }
     }
   });
 
+  // ✅ Message Handler
   sock.ev.on("messages.upsert", async ({ messages }) => {
     const m = messages[0];
     if (!m.message || m.key.fromMe) return;
@@ -58,23 +59,40 @@ async function startBot() {
     const from = m.key.remoteJid;
     const text = m.message.conversation || m.message.extendedTextMessage?.text || "";
 
-    if (text.toLowerCase() === '.ping') {
-      await sock.sendMessage(from, { text: "🏓 Pong! Bot is alive." }, { quoted: m });
+    const prefix = config.PREFIX || '.';
+    if (!text.startsWith(prefix)) return;
+
+    const cmd = text.slice(prefix.length).trim().toLowerCase();
+
+    if (cmd === 'ping') {
+      await sock.sendMessage(from, { text: '🏓 Pong! Bot is active.' }, { quoted: m });
+    }
+
+    if (cmd === 'owner') {
+      await sock.sendMessage(from, { text: `👑 Owner: wa.me/${config.OWNER_NUMBER}` }, { quoted: m });
+    }
+
+    if (cmd === 'menu') {
+      await sock.sendMessage(from, {
+        text: `📜 *Arslan-MD Command List:*
+• .ping – Check bot status
+• .owner – Get owner contact
+• .repo – GitHub repo link`,
+      }, { quoted: m });
+    }
+
+    if (cmd === 'repo') {
+      await sock.sendMessage(from, {
+        text: `🔗 GitHub Repo: ${config.REPO}`
+      }, { quoted: m });
     }
   });
 }
 
 startBot();
 
-// ✅ Dummy server to satisfy Render port requirement
-const express = require('express');
+// ✅ Express server to satisfy Render port
 const app = express();
 const PORT = process.env.PORT || 8000;
-
-app.get('/', (req, res) => {
-  res.send('🟢 Arslan-MD WhatsApp Bot is running...');
-});
-
-app.listen(PORT, () => {
-  console.log(`🌐 Web server running on port ${PORT}`);
-});
+app.get('/', (req, res) => res.send('🟢 Arslan-MD Bot is Running...'));
+app.listen(PORT, () => console.log(`🌐 Web server on port ${PORT}`));
