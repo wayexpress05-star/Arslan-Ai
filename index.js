@@ -1,101 +1,91 @@
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, makeInMemoryStore } = require("@whiskeysockets/baileys");
-const pino = require("pino");
-const fs = require("fs");
-const { Boom } = require("@hapi/boom");
-const { execSync } = require("child_process");
-const config = require("./config");
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  DisconnectReason,
+  fetchLatestBaileysVersion
+} = require("@whiskeysockets/baileys");
 
-// Logger & Auth
-const logger = pino({ level: "silent" });
-const store = makeInMemoryStore({ logger });
+const { makeInMemoryStore } = require("@whiskeysockets/baileys/lib/Store");
+const Pino = require("pino");
+const config = require("./config");
+const { Boom } = require("@hapi/boom");
+
+// Logging
+const store = makeInMemoryStore({ logger: Pino({ level: "silent" }) });
 store.readFromFile("./session/baileys_store.json");
 setInterval(() => {
   store.writeToFile("./session/baileys_store.json");
 }, 10000);
 
-async function startArslanMD() {
+async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState("session");
-
-  const { version, isLatest } = await fetchLatestBaileysVersion();
+  const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
     version,
-    logger,
     printQRInTerminal: true,
     auth: state,
-    browser: ["Arslan-MD", "Chrome", "110.0.0.0"],
-    defaultQueryTimeoutMs: undefined,
+    logger: Pino({ level: "silent" }),
+    browser: ["Arslan-MD", "Chrome", "110.0.0.0"]
   });
 
   store.bind(sock.ev);
-
   sock.ev.on("creds.update", saveCreds);
 
-  sock.ev.on("connection.update", async (update) => {
-    const { connection, lastDisconnect } = update;
-
+  sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
     if (connection === "close") {
       const shouldReconnect =
-        lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
+        new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
       if (shouldReconnect) {
-        startArslanMD();
+        startBot();
+      } else {
+        console.log("❌ Connection closed. QR scan required again.");
       }
     } else if (connection === "open") {
-      console.log("✅ Bot Connected As", sock.user.name || sock.user.id);
+      console.log("✅ Bot Connected Successfully!");
     }
   });
 
-  // Commands Handler
   sock.ev.on("messages.upsert", async ({ messages }) => {
-    try {
-      const m = messages[0];
-      if (!m.message || m.key.fromMe) return;
+    const m = messages[0];
+    if (!m.message || m.key.fromMe) return;
 
-      const from = m.key.remoteJid;
-      const isGroup = from.endsWith("@g.us");
-      const sender = m.key.participant || m.key.remoteJid;
-      const body = m.message.conversation || m.message.extendedTextMessage?.text || "";
-      const prefix = config.PREFIX;
-      const isCmd = body.startsWith(prefix);
-      const command = isCmd ? body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-      const args = isCmd ? body.slice(prefix.length).trim().split(" ").slice(1) : [];
+    const from = m.key.remoteJid;
+    const text =
+      m.message.conversation || m.message.extendedTextMessage?.text || "";
+    const prefix = config.PREFIX;
 
-      switch (command) {
-        case "ping":
-          await sock.sendMessage(from, { text: "🏓 Pong! Bot is active." }, { quoted: m });
-          break;
+    if (!text.startsWith(prefix)) return;
 
-        case "owner":
-          await sock.sendMessage(from, { text: `👑 My Owner: wa.me/${config.OWNER_NUMBER}` }, { quoted: m });
-          break;
+    const cmd = text.slice(prefix.length).trim().split(" ")[0].toLowerCase();
 
-        case "menu":
-          await sock.sendMessage(from, {
-            text: `
-╭━━⊰ *Arslan-MD Menu* ⊱━━⬣
-┃⚙️ .ping
-┃👑 .owner
-┃📦 .repo
-┃✏️ More coming soon...
-╰━━━━━━━━━━━━━━⬣`
-          }, { quoted: m });
-          break;
+    if (cmd === "ping") {
+      await sock.sendMessage(from, { text: "🏓 Pong! Bot is online." }, { quoted: m });
+    }
 
-        case "repo":
-          await sock.sendMessage(from, {
-            text: `📦 My GitHub Repository:\n${config.REPO}`
-          }, { quoted: m });
-          break;
+    if (cmd === "owner") {
+      await sock.sendMessage(from, {
+        text: `👑 Owner: wa.me/${config.OWNER_NUMBER}`
+      }, { quoted: m });
+    }
 
-        default:
-          if (isCmd) {
-            await sock.sendMessage(from, { text: "❌ Unknown command. Type .menu for help." }, { quoted: m });
-          }
-      }
-    } catch (err) {
-      console.error("❌ Command Handler Error:", err);
+    if (cmd === "menu") {
+      await sock.sendMessage(from, {
+        text: `
+╭───❍ *Arslan-MD Menu* ❍───
+│ • .ping
+│ • .owner
+│ • .repo
+╰────────────────────────`
+      }, { quoted: m });
+    }
+
+    if (cmd === "repo") {
+      await sock.sendMessage(from, {
+        text: `📦 GitHub: ${config.REPO}`
+      }, { quoted: m });
     }
   });
 }
 
-startArslanMD();
+startBot();
