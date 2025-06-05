@@ -1,0 +1,16 @@
+{
+  "name": "arslan-md",
+  "version": "1.0.0",
+  "description": "Professional WhatsApp Bot Based on Baileys",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "ArslanMDofficial",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.0",
+    "@hapi/boom": "^11.1.4",
+    "pino": "^8.17.0"
+  }
+}

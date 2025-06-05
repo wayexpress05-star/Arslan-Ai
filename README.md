@@ -1,2 +1,2 @@
-# Arslan-MD WhatsApp Bot
-Custom powerful WhatsApp bot based on Baileys.
+# Arslan-MD
+This is the final upgraded version of the Arslan-MD WhatsApp bot with manual QR pairing, English language, prefix `.`, and full Koyeb support.
