@@ -1,23 +1,24 @@
-const { default: makeWASocket, DisconnectReason, fetchLatestBaileysVersion, useSingleFileAuthState } = require('@whiskeysockets/baileys');
-const Pino = require('pino');
+const { default: makeWASocket, useSingleFileAuthState, fetchLatestBaileysVersion, DisconnectReason } = require('@whiskeysockets/baileys');
 const { Boom } = require('@hapi/boom');
-const config = require('./config');
 const fs = require('fs');
+const Pino = require('pino');
+const config = require('./config');
 
 async function startBot() {
-  const { state, saveState } = useSingleFileAuthState('./session.json');
+  const sessionFile = './session.json';
 
-  // ✅ Check and inject session from ENV
-  if (config.SESSION_ID) {
+  // ✅ Restore session from ENV if not already saved
+  if (config.SESSION_ID && !fs.existsSync(sessionFile)) {
     try {
-      const decoded = Buffer.from(config.SESSION_ID.replace("Sarkarmd$", ""), 'base64').toString();
-      fs.writeFileSync('./session.json', decoded);
+      const decoded = Buffer.from(config.SESSION_ID.replace('Sarkarmd$', ''), 'base64').toString();
+      fs.writeFileSync(sessionFile, decoded);
       console.log("✅ Session restored from environment!");
     } catch (e) {
-      console.log("❌ Failed to restore session:", e.message);
+      console.error("❌ Failed to write session.json:", e.message);
     }
   }
 
+  const { state, saveState } = useSingleFileAuthState(sessionFile);
   const { version } = await fetchLatestBaileysVersion();
 
   const sock = makeWASocket({
@@ -33,12 +34,11 @@ async function startBot() {
     if (connection === "open") {
       console.log("✅ Bot Connected Successfully!");
     } else if (connection === "close") {
-      const shouldReconnect =
-        new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+      const shouldReconnect = new Boom(lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
       if (shouldReconnect) {
         startBot();
       } else {
-        console.log("❌ Session expired. QR scan required.");
+        console.log("❌ Session expired. Re-scan or check session.");
       }
     }
   });
@@ -51,7 +51,7 @@ async function startBot() {
     const text = m.message.conversation || m.message.extendedTextMessage?.text || "";
 
     if (text.toLowerCase() === '.ping') {
-      await sock.sendMessage(from, { text: "🏓 Pong!" }, { quoted: m });
+      await sock.sendMessage(from, { text: "🏓 Pong! Bot is alive." }, { quoted: m });
     }
   });
 }
