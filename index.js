@@ -170,7 +170,7 @@
                 
                 var dev = [dj, dj2,dj3,dj4,luffy].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
                 function repondre(mes) { zk.sendMessage(origineMessage, { text: mes }, { quoted: ms }); }
-                console.log("\t [][]...{Zokou-Md}...[][]");
+                console.log("\t [][]...{Arslan-Md}...[][]");
                 console.log("=========== Nouveau message ===========");
                 if (verifGroupe) {
                     console.log("message provenant du groupe : " + nomGroupe);
@@ -452,7 +452,7 @@
                                        // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
                                         const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
                                         var sticker = new Sticker(gifLink, {
-                                            pack: 'Zoou-Md',
+                                            pack: 'Arslan-Md',
                                             author: conf.NOM_OWNER,
                                             type: StickerTypes.FULL,
                                             categories: ['🤩', '🎉'],
@@ -553,7 +553,7 @@
                // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
                 const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
                 var sticker = new Sticker(gifLink, {
-                    pack: 'Zoou-Md',
+                    pack: 'Arslan-Md',
                     author: conf.NOM_OWNER,
                     type: StickerTypes.FULL,
                     categories: ['🤩', '🎉'],
@@ -810,7 +810,7 @@
                   zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Coucou c'est l'heure de fermer le groupe ; sayonnara " });
 
                 }, {
-                    timezone: "Africa/Abidjan"
+                    timezone: "Karachi/Asia"
                   });
               }
         
@@ -827,7 +827,7 @@
 
                  
                 },{
-                    timezone: "Africa/Abidjan"
+                    timezone: "Karachi/Asia"
                   });
               }
         
@@ -908,14 +908,14 @@
                    
                  if((conf.DP).toLowerCase() === 'oui') {
                     let cmsg = `╔════◇
-    ║ 『𝐙𝐨𝐤𝐨𝐮-𝐌𝐃』
+    ║ 『Arslan-𝐌𝐃』
     ║    Prefix : [ ${prefixe} ]
     ║    Mode :${md}
     ║    Nombre total de Commandes : ${evt.cm.length}︎
     ╚══════════════════╝
     
     ╔═════◇
-    ║『𝗯𝘆 Djalega++』
+    ║『𝗯𝘆 ArslanMD Official』
     ║ 
     ╚══════════════════╝`;
                    
