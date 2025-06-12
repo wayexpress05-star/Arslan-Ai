@@ -291,12 +291,13 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 await unbanCommand(sock, chatId, message);
                 break;
             switch(true) {
-  case userMessage === '.help':
-  case userMessage === '.menu':
-  case userMessage === '.bot':
-  case userMessage === '.list':
-    await helpCommand(sock, chatId, message);  // global.channelLink hata do agar function use nahi karta
+            case userMessage === '.help':
+            case userMessage === '.menu':
+            case userMessage === '.bot':
+            case userMessage === '.list':
+            await helpCommand(sock, chatId, message);  // global.channelLink hata do agar function use nahi karta
                  break;
+       }
             case userMessage === '.sticker' || userMessage === '.s':
                 await stickerCommand(sock, chatId, message);
                 break;
