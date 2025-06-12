@@ -3,7 +3,7 @@ const settings = require('../settings');
 const fs = require('fs');
 const path = require('path');
 
-async function helpCommand(sock, chatId, message) {
+async function helpCommand(sock, chatId, message, prefix = '.') {
     const helpMessage = `
 ╔═══════════════════╗
 🤖 *${settings.botName || 'Arslan-MD'}*
@@ -15,72 +15,72 @@ async function helpCommand(sock, chatId, message) {
 📜 *Available Commands*
 
 ╔════ 🌐 General ════╗
-• .help / .menu
-• .ping / .alive
-• .tts <text>
-• .owner / .jid
-• .joke / .quote
-• .weather <city>
-• .lyrics <title>
-• .8ball <question>
-• .groupinfo / .admins
-• .ss <link>
-• .trt <text> <lang>
+• ${prefix}help / ${prefix}menu
+• ${prefix}ping / ${prefix}alive
+• ${prefix}tts <text>
+• ${prefix}owner / ${prefix}jid
+• ${prefix}joke / ${prefix}quote
+• ${prefix}weather <city>
+• ${prefix}lyrics <title>
+• ${prefix}8ball <question>
+• ${prefix}groupinfo / ${prefix}admins
+• ${prefix}ss <link>
+• ${prefix}trt <text> <lang>
 ╚════════════════════╝
 
 ╔════ 👮 Admin ════╗
-• .ban / .kick @user
-• .promote / .demote
-• .mute / .unmute
-• .clear / .delete
-• .warn / .warnings
-• .tag / .tagall
-• .chatbot / .antilink
-• .welcome / .goodbye
+• ${prefix}ban / ${prefix}kick @user
+• ${prefix}promote / ${prefix}demote
+• ${prefix}mute / ${prefix}unmute
+• ${prefix}clear / ${prefix}delete
+• ${prefix}warn / ${prefix}warnings
+• ${prefix}tag / ${prefix}tagall
+• ${prefix}chatbot / ${prefix}antilink
+• ${prefix}welcome / ${prefix}goodbye
 ╚════════════════════╝
 
 ╔════ 🔒 Owner ════╗
-• .mode / .autoreact
-• .clearsession / .cleartmp
-• .setpp <img>
+• ${prefix}mode / ${prefix}autoreact
+• ${prefix}clearsession / ${prefix}cleartmp
+• ${prefix}setpp <img>
 ╚════════════════════╝
 
 ╔══ 🎨 Stickers ══╗
-• .sticker / .simage
-• .blur / .emojimix
-• .meme / .take
+• ${prefix}sticker / ${prefix}simage
+• ${prefix}blur / ${prefix}emojimix
+• ${prefix}meme / ${prefix}take
 ╚══════════════════╝
 
 ╔════ 🎮 Games ════╗
-• .tictactoe / .hangman
-• .guess / .trivia
-• .truth / .dare
+• ${prefix}tictactoe / ${prefix}hangman
+• ${prefix}guess / ${prefix}trivia
+• ${prefix}truth / ${prefix}dare
 ╚════════════════════╝
 
 ╔════ 🤖 AI Tools ══╗
-• .gpt / .gemini
-• .imagine / .flux
+• ${prefix}gpt / ${prefix}gemini
+• ${prefix}imagine / ${prefix}flux
 ╚════════════════════╝
 
 ╔════ 🎯 Fun ═════╗
-• .flirt / .shayari
-• .goodnight / .roseday
-• .insult / .compliment
-• .ship / .wasted / .simp
+• ${prefix}flirt / ${prefix}shayari
+• ${prefix}goodnight / ${prefix}roseday
+• ${prefix}insult / ${prefix}compliment
+• ${prefix}ship / ${prefix}wasted / ${prefix}simp
 ╚═══════════════════╝
 
 ╔══ 🔤 Text Maker ═╗
-• .neon / .devil / .ice / .fire
-• .matrix / .glitch / .sand etc.
+• ${prefix}neon / ${prefix}devil / ${prefix}ice / ${prefix}fire
+• ${prefix}matrix / ${prefix}glitch / ${prefix}sand etc.
 ╚═══════════════════╝
 
 ╔══ 📥 Downloader ═╗
-• .play / .song <name>
-• .tiktok / .instagram / .fb
+• ${prefix}play / ${prefix}song <name>
+• ${prefix}tiktok / ${prefix}instagram / ${prefix}fb
 ╚═══════════════════╝
 
 ╔══ 💻 GitHub ═════╗
-• .repo / .sc / .github
+• ${prefix}repo / ${prefix}sc / ${prefix}github
 ╚═══════════════════╝
 `.trim();
 
@@ -99,10 +99,10 @@ async function helpCommand(sock, chatId, message) {
             }, { quoted: message });
         }
     } catch (error) {
-        console.error('Error in help command:', error);
+        console.error('❌ Error in help command:', error);
         await sock.sendMessage(chatId, {
-            text: helpMessage
-        });
+            text: `❌ Help failed: ${error.message}`
+        }, { quoted: message });
     }
 }
 
