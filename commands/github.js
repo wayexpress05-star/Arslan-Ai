@@ -1,4 +1,7 @@
-async function githubCommand(sock, chatId) {
+const fs = require('fs');
+const path = require('path');
+
+async function githubCommand(sock, chatId, message) {
     const repoInfo = `*🤖 Arslan-MD*
 
 *📂 GitHub Repository:*
@@ -16,19 +19,19 @@ _Star ⭐ the repository if you like the bot!_`;
             const imageBuffer = fs.readFileSync(imagePath);
             await sock.sendMessage(chatId, {
                 image: imageBuffer,
-                caption: helpMessage
+                caption: repoInfo
             }, { quoted: message });
         } else {
             await sock.sendMessage(chatId, {
-                text: helpMessage
+                text: repoInfo
             }, { quoted: message });
         }
     } catch (error) {
-        console.error('Error in help command:', error);
+        console.error('Error in github command:', error);
         await sock.sendMessage(chatId, {
-            text: helpMessage
+            text: repoInfo
         });
     }
 }
 
-module.exports = githubCommand; 
+module.exports = githubCommand;
