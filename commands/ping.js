@@ -3,9 +3,9 @@ const settings = require('../settings.js');
 
 function formatTime(seconds) {
     const days = Math.floor(seconds / (24 * 60 * 60));
-    seconds = seconds % (24 * 60 * 60);
+    seconds %= (24 * 60 * 60);
     const hours = Math.floor(seconds / (60 * 60));
-    seconds = seconds % (60 * 60);
+    seconds %= (60 * 60);
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
 
@@ -21,26 +21,29 @@ function formatTime(seconds) {
 async function pingCommand(sock, chatId, message) {
     try {
         const start = Date.now();
-        await sock.sendMessage(chatId, { text: 'Pong!' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '🛰️ *Pinging...*' }, { quoted: message });
         const end = Date.now();
         const ping = Math.round((end - start) / 2);
-
-        const uptimeInSeconds = process.uptime();
-        const uptimeFormatted = formatTime(uptimeInSeconds);
+        const uptimeFormatted = formatTime(process.uptime());
 
         const botInfo = `
-┏━━〔 🤖 Arslan-MD 〕━━┓
-┃ 🚀 Ping     : ${ping} ms
-┃ ⏱️ Uptime   : ${uptimeFormatted}
-┃ 🔖 Version  : v${settings.version}
-┗━━━━━━━━━━━━━━━━━━━┛`.trim();
+╭━━━[ 🤖 *${settings.botName || 'Arslan-MD'}* ]━━━╮
+┃ 🛰️ *Ping:* ${ping} ms
+┃ ⏱️ *Uptime:* ${uptimeFormatted}
+┃ 🧠 *Platform:* ${os.platform().toUpperCase()}
+┃ 📦 *Version:* v${settings.version || '1.0.0'}
+╰━━━━━━━━━━━━━━━━━━━━━━╯
 
-        // Reply to the original message with the bot info
-        await sock.sendMessage(chatId, { text: botInfo},{ quoted: message });
+✨ _I’m always ready to serve, boss!_
+`.trim();
+
+        await sock.sendMessage(chatId, { text: botInfo }, { quoted: message });
 
     } catch (error) {
         console.error('Error in ping command:', error);
-        await sock.sendMessage(chatId, { text: '❌ Failed to get bot status.' });
+        await sock.sendMessage(chatId, {
+            text: '❌ *Ping failed.* Please try again later.'
+        }, { quoted: message });
     }
 }
 
