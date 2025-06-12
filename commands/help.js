@@ -1,3 +1,4 @@
+console.log('📥 .help command triggered');
 const settings = require('../settings');
 const fs = require('fs');
 const path = require('path');
