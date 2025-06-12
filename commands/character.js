@@ -85,4 +85,7 @@ module.exports = {
     category: 'fun',
     use: '[mention ya reply karo]',
     handler: characterCommand
-};
+     });
+  }
+}
+module.exports = characterCommand;
