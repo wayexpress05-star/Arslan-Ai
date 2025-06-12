@@ -1,105 +1,199 @@
-const moment = require('moment-timezone');
+const settings = require('../settings');
 const fs = require('fs');
 const path = require('path');
 
-async function menuCommand(sock, m, command, prefix, from, pushName) {
-    const time = moment().tz('Asia/Karachi').format('hh:mm A');
-    const date = moment().tz('Asia/Karachi').format('dddd, MMMM Do YYYY');
+async function helpCommand(sock, chatId, message) {
+    const helpMessage = `
+╔═══════════════════╗
+   *🤖 ${settings.botName || 'Arslan-MD'}*  
+   Version: *${settings.version || '2.0.2'}*
+   by ${settings.botOwner || 'ArslanMD official'}
+   YT : ${global.ytch}
+╚═══════════════════╝
 
-    const menuText = `
-╭━━━〔 🤖 *Arslan-MD Bot Menu* 〕━━━⬣
-┃ 👤 *User:* ${pushName}
-┃ 📆 *Date:* ${date}
-┃ ⏰ *Time:* ${time}
-┃ 🧩 *Prefix:* ${prefix}
-╰━━━━━━━━━━━━━━━━━━⬣
+*Available Commands:*
 
-╭─〔 🎉 𝗙𝘂𝗻 & 𝗚𝗮𝗺𝗲𝘀 〕─⬣
-┃ 🎭 ${prefix}joke
-┃ 🧠 ${prefix}riddle
-┃ 😂 ${prefix}meme
-┃ 🎲 ${prefix}truth
-┃ 🎯 ${prefix}dare
-┃ 🧙 ${prefix}character @user
-┃ 🎰 ${prefix}slot
-┃ 🧩 ${prefix}guess [emoji]
+╔═══════════════════╗
+🌐 *General Commands*:
+║ ➤ .help or .menu
+║ ➤ .ping
+║ ➤ .alive
+║ ➤ .tts <text>
+║ ➤ .owner
+║ ➤ .joke
+║ ➤ .quote
+║ ➤ .fact
+║ ➤ .weather <city>
+║ ➤ .news
+║ ➤ .attp <text>
+║ ➤ .lyrics <song_title>
+║ ➤ .8ball <question>
+║ ➤ .groupinfo
+║ ➤ .staff or .admins 
+║ ➤ .vv
+║ ➤ .trt <text> <lang>
+║ ➤ .ss <link>
+║ ➤ .jid
+╚═══════════════════╝ 
 
-╭─〔 📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗧𝗼𝗼𝗹𝘀 〕─⬣
-┃ 🎧 ${prefix}play [song]
-┃ 🎥 ${prefix}ytmp3 / ytmp4
-┃ 📸 ${prefix}ig [link]
-┃ 🐦 ${prefix}twitter [link]
-┃ 📘 ${prefix}fb [link]
-┃ 🎬 ${prefix}tiktok [link]
-┃ 🖼️ ${prefix}pinterest [search]
+╔═══════════════════╗
+👮‍♂️ *Admin Commands*:
+║ ➤ .ban @user
+║ ➤ .promote @user
+║ ➤ .demote @user
+║ ➤ .mute <minutes>
+║ ➤ .unmute
+║ ➤ .delete or .del
+║ ➤ .kick @user
+║ ➤ .warnings @user
+║ ➤ .warn @user
+║ ➤ .antilink
+║ ➤ .antibadword
+║ ➤ .clear
+║ ➤ .tag <message>
+║ ➤ .tagall
+║ ➤ .chatbot
+║ ➤ .resetlink
+║ ➤ .welcome <on/off>
+║ ➤ .goodbye <on/off>
+╚═══════════════════╝
 
-╭─〔 🖼️ 𝗦𝘁𝗶𝗰𝗸𝗲𝗿 & 𝗘𝗱𝗶𝘁 〕─⬣
-┃ 🖼️ ${prefix}sticker
-┃ 🌈 ${prefix}attp [text]
-┃ 🧢 ${prefix}emojimix 😅+❤️
-┃ 🪞 ${prefix}removebg
-┃ 🎨 ${prefix}styletext [text]
-┃ 🔁 ${prefix}toimg / tovideo
+╔═══════════════════╗
+🔒 *Owner Commands*:
+║ ➤ .mode
+║ ➤ .autostatus
+║ ➤ .clearsession
+║ ➤ .antidelete
+║ ➤ .cleartmp
+║ ➤ .setpp <reply to image>
+║ ➤ .autoreact
+╚═══════════════════╝
 
-╭─〔 🔎 𝗔𝗜 & 𝗜𝗻𝗳𝗼 〕─⬣
-┃ 🤖 ${prefix}gpt [prompt]
-┃ 🧠 ${prefix}ai-img [desc]
-┃ 📚 ${prefix}google [query]
-┃ 📖 ${prefix}wikipedia
-┃ 📊 ${prefix}ping
-┃ 🧾 ${prefix}shortlink
-┃ 🕋 ${prefix}quran [surah]
+╔═══════════════════╗
+🎨 *Image/Sticker Commands*:
+║ ➤ .blur <image>
+║ ➤ .simage <reply to sticker>
+║ ➤ .sticker <reply to image>
+║ ➤ .tgsticker <Link>
+║ ➤ .meme
+║ ➤ .take <packname> 
+║ ➤ .emojimix <emj1>+<emj2>
+╚═══════════════════╝  
 
-╭─〔 🔧 𝗨𝘁𝗶𝗹𝘀 & 𝗙𝗶𝗹𝗲𝘀 〕─⬣
-┃ 📤 ${prefix}upload
-┃ 📥 ${prefix}mediafire [url]
-┃ 🗂️ ${prefix}tourl
-┃ 📝 ${prefix}ocr (image text)
-┃ 🧾 ${prefix}readmore
+╔═══════════════════╗
+🎮 *Game Commands*:
+║ ➤ .tictactoe @user
+║ ➤ .hangman
+║ ➤ .guess <letter>
+║ ➤ .trivia
+║ ➤ .answer <answer>
+║ ➤ .truth
+║ ➤ .dare
+╚═══════════════════╝
 
-╭─〔 👑 𝗔𝗱𝗺𝗶𝗻 𝗖𝗺𝗱𝘀 〕─⬣
-┃ 👥 ${prefix}group open/close
-┃ 🧾 ${prefix}tagall
-┃ 🚫 ${prefix}kick @user
-┃ 👑 ${prefix}promote
-┃ 🔻 ${prefix}demote
-┃ 📝 ${prefix}setname/setdesc
+╔═══════════════════╗
+🤖 *AI Commands*:
+║ ➤ .gpt <question>
+║ ➤ .gemini <question>
+║ ➤ .imagine <prompt>
+║ ➤ .flux <prompt>
+╚═══════════════════╝
 
-╭─〔 💻 𝗢𝘄𝗻𝗲𝗿 𝗧𝗼𝗼𝗹𝘀 〕─⬣
-┃ 🧠 ${prefix}eval
-┃ ⚙️ ${prefix}setpp
-┃ ✏️ ${prefix}setbio
-┃ 📵 ${prefix}block/unblock
-┃ ♻️ ${prefix}restart
-┃ 🔒 ${prefix}ban/unban
+╔═══════════════════╗
+🎯 *Fun Commands*:
+║ ➤ .compliment @user
+║ ➤ .insult @user
+║ ➤ .flirt 
+║ ➤ .shayari
+║ ➤ .goodnight
+║ ➤ .roseday
+║ ➤ .character @user
+║ ➤ .wasted @user
+║ ➤ .ship @user
+║ ➤ .simp @user
+║ ➤ .stupid @user [text]
+╚═══════════════════╝
 
-╭─〔 📣 𝗕𝗼𝘁 𝗜𝗻𝗳𝗼 〕─⬣
-┃ 💌 ${prefix}donate
-┃ 🧾 ${prefix}script
-┃ 🧑‍💻 ${prefix}owner
-┃ 📺 ${prefix}channel
-┃ 🔗 ${prefix}invite
+╔═══════════════════╗
+🔤 *Textmaker*:
+║ ➤ .metallic <text>
+║ ➤ .ice <text>
+║ ➤ .snow <text>
+║ ➤ .impressive <text>
+║ ➤ .matrix <text>
+║ ➤ .light <text>
+║ ➤ .neon <text>
+║ ➤ .devil <text>
+║ ➤ .purple <text>
+║ ➤ .thunder <text>
+║ ➤ .leaves <text>
+║ ➤ .1917 <text>
+║ ➤ .arena <text>
+║ ➤ .hacker <text>
+║ ➤ .sand <text>
+║ ➤ .blackpink <text>
+║ ➤ .glitch <text>
+║ ➤ .fire <text>
+╚═══════════════════╝
 
-╰━━━━━━━〔 💎 *Arslan-MD v2.0* 〕━━━━━━⬣
-`;
+╔═══════════════════╗
+📥 *Downloader*:
+║ ➤ .play <song_name>
+║ ➤ .song <song_name>
+║ ➤ .instagram <link>
+║ ➤ .facebook <link>
+║ ➤ .tiktok <link>
+╚═══════════════════╝
 
-    // Paths to media files
-    const gifPath = path.join(__dirname, '../ArslanMedia/media/menu.gif');
-    const voicePath = path.join(__dirname, '../ArslanMedia/audio/welcome.mp3');
+╔═══════════════════╗
+💻 *Github Commands:*
+║ ➤ .git
+║ ➤ .github
+║ ➤ .sc
+║ ➤ .script
+║ ➤ .repo
+╚═══════════════════╝
 
-    // Send GIF with menu text
-    await sock.sendMessage(from, {
-        video: fs.readFileSync(gifPath),
-        gifPlayback: true,
-        caption: menuText
-    }, { quoted: m });
+Join our channel for updates:`;
 
-    // Send voice message
-    await sock.sendMessage(from, {
-        audio: fs.readFileSync(voicePath),
-        mimetype: 'audio/mp4',
-        ptt: true
-    }, { quoted: m });
+    try {
+        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
+        
+        if (fs.existsSync(imagePath)) {
+            const imageBuffer = fs.readFileSync(imagePath);
+            
+            await sock.sendMessage(chatId, {
+                image: imageBuffer,
+                caption: helpMessage,
+                contextInfo: {
+                    forwardingScore: 1,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: '120363161513685998@newsletter',
+                        newsletterName: 'KnightBot MD',
+                        serverMessageId: -1
+                    }
+                }
+            },{ quoted: message });
+        } else {
+            console.error('Bot image not found at:', imagePath);
+            await sock.sendMessage(chatId, { 
+                text: helpMessage,
+                contextInfo: {
+                    forwardingScore: 1,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: '120363161513685998@newsletter',
+                        newsletterName: 'KnightBot MD by Mr Unique Hacker',
+                        serverMessageId: -1
+                    } 
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error in help command:', error);
+        await sock.sendMessage(chatId, { text: helpMessage });
+    }
 }
 
-module.exports = menuCommand;
+module.exports = helpCommand;
