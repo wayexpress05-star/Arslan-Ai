@@ -1,3 +1,4 @@
+console.log('📥 .menu command triggered');
 const moment = require('moment-timezone');
 const fs = require('fs');
 const path = require('path');
