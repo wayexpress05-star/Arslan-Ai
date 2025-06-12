@@ -291,6 +291,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
             case userMessage.startsWith('.unban'):
                 await unbanCommand(sock, chatId, message);
                 break;
+       switch (true) {   
             case userMessage.startsWith('.menu'):
                 await menuCommand(sock, message, userMessage, '.', chatId, pushName);
                 break;
@@ -299,6 +300,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
             case userMessage.startsWith('.list'):
                 await helpCommand(sock, chatId, message);
                 break;
+       }
             case userMessage === '.sticker' || userMessage === '.s':
                 await stickerCommand(sock, chatId, message);
                 break;
