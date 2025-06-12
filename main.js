@@ -293,6 +293,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 break;
        switch (true) {   
             case userMessage.startsWith('.menu'):
+               console.log('MENU command triggered');
                 await menuCommand(sock, message, userMessage, '.', chatId, pushName);
                 break;
             case userMessage.startsWith('.help'):
