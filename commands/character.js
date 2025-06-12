@@ -67,3 +67,5 @@ async function characterCommand(sock, chatId, message) {
         await sock.sendMessage(chatId, { 
             text: '❌ Character analyze karne mein masla hua! Baad mein dobara try karo.'
         });
+    }
+}
