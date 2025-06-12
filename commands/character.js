@@ -3,7 +3,6 @@ const axios = require('axios');
 async function characterCommand(sock, chatId, message) {
     let userToAnalyze;
 
-    // Mention ya reply check karo
     if (message.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {
         userToAnalyze = message.message.extendedTextMessage.contextInfo.mentionedJid[0];
     } else if (message.message?.extendedTextMessage?.contextInfo?.participant) {
@@ -18,7 +17,6 @@ async function characterCommand(sock, chatId, message) {
     }
 
     try {
-        // Profile picture lo ya default do
         let profilePic;
         try {
             profilePic = await sock.profilePictureUrl(userToAnalyze, 'image');
@@ -32,7 +30,6 @@ async function characterCommand(sock, chatId, message) {
             "مزاحیہ 😂", "دلچسپ 😎", "سمجھدار 🧘", "وفادار 🐾", "عقلمند 🦉"
         ];
 
-        // 3-5 traits chunein
         const numTraits = Math.floor(Math.random() * 3) + 3;
         const selectedTraits = [];
         for (let i = 0; i < numTraits; i++) {
@@ -42,20 +39,17 @@ async function characterCommand(sock, chatId, message) {
             }
         }
 
-        // Har trait ka random % nikalain
         const traitPercentages = selectedTraits.map(trait => {
             const percentage = Math.floor(Math.random() * 41) + 60;
             return `${trait}: ${percentage}%`;
         });
 
-        // Final message
         const analysis = `🔮 *Character Analysis* 🔮\n\n` +
             `👤 *User:* ${userToAnalyze.split('@')[0]}\n\n` +
             `✨ *Khaas Khususiyaat:*\n${traitPercentages.join('\n')}\n\n` +
             `🎯 *Overall Rating:* ${Math.floor(Math.random() * 21) + 80}%\n\n` +
             `📌 Yeh aik fun analysis hai — maze ke liye hai, dil pe mat lena! 😄`;
 
-        // Send karo profile pic ke sath
         await sock.sendMessage(chatId, {
             image: { url: profilePic },
             caption: analysis,
@@ -66,7 +60,7 @@ async function characterCommand(sock, chatId, message) {
         console.error('Character command error:', error);
         await sock.sendMessage(chatId, { 
             text: '❌ Character analyze karne mein masla hua! Baad mein dobara try karo.'
-        });
+        }); // ✅ FIXED HERE
     }
 }
 
