@@ -1,108 +1,105 @@
-const settings = require('../settings');
+const moment = require('moment-timezone');
 const fs = require('fs');
 const path = require('path');
 
-async function helpCommand(sock, chatId, message) {
-    const helpMessage = `
-╔═══════════════════╗
-🤖 *${settings.botName || 'Arslan-MD'}*
-*Version:* ${settings.version || '2.0.2'}
-*By:* ${settings.botOwner || 'ArslanMD Official'}
-*YT:* ${global.ytch || 'youtube.com/@ArslanMD'}
-╚═══════════════════╝
+async function menuCommand(sock, m, command, prefix, from, pushName) {
+    const time = moment().tz('Asia/Karachi').format('hh:mm A');
+    const date = moment().tz('Asia/Karachi').format('dddd, MMMM Do YYYY');
 
-📜 *Available Commands*
+    const menuText = `
+╭━━━〔 🤖 *Arslan-MD Bot Menu* 〕━━━⬣
+┃ 👤 *User:* ${pushName}
+┃ 📆 *Date:* ${date}
+┃ ⏰ *Time:* ${time}
+┃ 🧩 *Prefix:* ${prefix}
+╰━━━━━━━━━━━━━━━━━━⬣
 
-╔════ 🌐 General ════╗
-• .help / .menu
-• .ping / .alive
-• .tts <text>
-• .owner / .jid
-• .joke / .quote
-• .weather <city>
-• .lyrics <title>
-• .8ball <question>
-• .groupinfo / .admins
-• .ss <link>
-• .trt <text> <lang>
-╚════════════════════╝
+╭─〔 🎉 𝗙𝘂𝗻 & 𝗚𝗮𝗺𝗲𝘀 〕─⬣
+┃ 🎭 ${prefix}joke
+┃ 🧠 ${prefix}riddle
+┃ 😂 ${prefix}meme
+┃ 🎲 ${prefix}truth
+┃ 🎯 ${prefix}dare
+┃ 🧙 ${prefix}character @user
+┃ 🎰 ${prefix}slot
+┃ 🧩 ${prefix}guess [emoji]
 
-╔════ 👮 Admin ════╗
-• .ban / .kick @user
-• .promote / .demote
-• .mute / .unmute
-• .clear / .delete
-• .warn / .warnings
-• .tag / .tagall
-• .chatbot / .antilink
-• .welcome / .goodbye
-╚════════════════════╝
+╭─〔 📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗧𝗼𝗼𝗹𝘀 〕─⬣
+┃ 🎧 ${prefix}play [song]
+┃ 🎥 ${prefix}ytmp3 / ytmp4
+┃ 📸 ${prefix}ig [link]
+┃ 🐦 ${prefix}twitter [link]
+┃ 📘 ${prefix}fb [link]
+┃ 🎬 ${prefix}tiktok [link]
+┃ 🖼️ ${prefix}pinterest [search]
 
-╔════ 🔒 Owner ════╗
-• .mode / .autoreact
-• .clearsession / .cleartmp
-• .setpp <img>
-╚════════════════════╝
+╭─〔 🖼️ 𝗦𝘁𝗶𝗰𝗸𝗲𝗿 & 𝗘𝗱𝗶𝘁 〕─⬣
+┃ 🖼️ ${prefix}sticker
+┃ 🌈 ${prefix}attp [text]
+┃ 🧢 ${prefix}emojimix 😅+❤️
+┃ 🪞 ${prefix}removebg
+┃ 🎨 ${prefix}styletext [text]
+┃ 🔁 ${prefix}toimg / tovideo
 
-╔══ 🎨 Stickers ══╗
-• .sticker / .simage
-• .blur / .emojimix
-• .meme / .take
-╚══════════════════╝
+╭─〔 🔎 𝗔𝗜 & 𝗜𝗻𝗳𝗼 〕─⬣
+┃ 🤖 ${prefix}gpt [prompt]
+┃ 🧠 ${prefix}ai-img [desc]
+┃ 📚 ${prefix}google [query]
+┃ 📖 ${prefix}wikipedia
+┃ 📊 ${prefix}ping
+┃ 🧾 ${prefix}shortlink
+┃ 🕋 ${prefix}quran [surah]
 
-╔════ 🎮 Games ════╗
-• .tictactoe / .hangman
-• .guess / .trivia
-• .truth / .dare
-╚════════════════════╝
+╭─〔 🔧 𝗨𝘁𝗶𝗹𝘀 & 𝗙𝗶𝗹𝗲𝘀 〕─⬣
+┃ 📤 ${prefix}upload
+┃ 📥 ${prefix}mediafire [url]
+┃ 🗂️ ${prefix}tourl
+┃ 📝 ${prefix}ocr (image text)
+┃ 🧾 ${prefix}readmore
 
-╔════ 🤖 AI Tools ══╗
-• .gpt / .gemini
-• .imagine / .flux
-╚════════════════════╝
+╭─〔 👑 𝗔𝗱𝗺𝗶𝗻 𝗖𝗺𝗱𝘀 〕─⬣
+┃ 👥 ${prefix}group open/close
+┃ 🧾 ${prefix}tagall
+┃ 🚫 ${prefix}kick @user
+┃ 👑 ${prefix}promote
+┃ 🔻 ${prefix}demote
+┃ 📝 ${prefix}setname/setdesc
 
-╔════ 🎯 Fun ═════╗
-• .flirt / .shayari
-• .goodnight / .roseday
-• .insult / .compliment
-• .ship / .wasted / .simp
-╚═══════════════════╝
+╭─〔 💻 𝗢𝘄𝗻𝗲𝗿 𝗧𝗼𝗼𝗹𝘀 〕─⬣
+┃ 🧠 ${prefix}eval
+┃ ⚙️ ${prefix}setpp
+┃ ✏️ ${prefix}setbio
+┃ 📵 ${prefix}block/unblock
+┃ ♻️ ${prefix}restart
+┃ 🔒 ${prefix}ban/unban
 
-╔══ 🔤 Text Maker ═╗
-• .neon / .devil / .ice / .fire
-• .matrix / .glitch / .sand etc.
-╚═══════════════════╝
+╭─〔 📣 𝗕𝗼𝘁 𝗜𝗻𝗳𝗼 〕─⬣
+┃ 💌 ${prefix}donate
+┃ 🧾 ${prefix}script
+┃ 🧑‍💻 ${prefix}owner
+┃ 📺 ${prefix}channel
+┃ 🔗 ${prefix}invite
 
-╔══ 📥 Downloader ═╗
-• .play / .song <name>
-• .tiktok / .instagram / .fb
-╚═══════════════════╝
+╰━━━━━━━〔 💎 *Arslan-MD v2.0* 〕━━━━━━⬣
+`;
 
-╔══ 💻 GitHub ═════╗
-• .repo / .sc / .github
-╚═══════════════════╝
-`.trim();
+    // Paths to media files
+    const gifPath = path.join(__dirname, '../ArslanMedia/media/menu.gif');
+    const voicePath = path.join(__dirname, '../ArslanMedia/audio/welcome.mp3');
 
-    try {
-        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
+    // Send GIF with menu text
+    await sock.sendMessage(from, {
+        video: fs.readFileSync(gifPath),
+        gifPlayback: true,
+        caption: menuText
+    }, { quoted: m });
 
-        if (fs.existsSync(imagePath)) {
-            const imageBuffer = fs.readFileSync(imagePath);
-            await sock.sendMessage(chatId, {
-                image: imageBuffer,
-                caption: helpMessage
-            }, { quoted: message });
-        } else {
-            await sock.sendMessage(chatId, {
-                text: helpMessage
-            }, { quoted: message });
-        }
-    } catch (error) {
-        console.error('Error in help command:', error);
-        await sock.sendMessage(chatId, {
-            text: helpMessage
-        });
-    }
+    // Send voice message
+    await sock.sendMessage(from, {
+        audio: fs.readFileSync(voicePath),
+        mimetype: 'audio/mp4',
+        ptt: true
+    }, { quoted: m });
 }
 
-module.exports = helpCommand;
+module.exports = menuCommand;
