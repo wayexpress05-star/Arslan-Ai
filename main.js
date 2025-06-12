@@ -291,22 +291,14 @@ async function handleMessages(sock, messageUpdate, printLog) {
             case userMessage.startsWith('.unban'):
                 await unbanCommand(sock, chatId, message);
                 break;
-      switch (userMessage) {
-
-                // ✅ .help, .bot, .list use helpCommand
-            case '.help':
-            case '.bot':
-            case '.list':
-                await helpCommand(sock, chatId, message);
-                break;
-
-                // ✅ .menu uses menuCommand (GIF + voice)
-            case '.menu':
+            case userMessage.startsWith('.menu'):
                 await menuCommand(sock, message, userMessage, '.', chatId, pushName);
                 break;
-
-                // ... other cases
-                }
+            case userMessage.startsWith('.help'):
+            case userMessage.startsWith('.bot'):
+            case userMessage.startsWith('.list'):
+                await helpCommand(sock, chatId, message);
+                break;
             case userMessage === '.sticker' || userMessage === '.s':
                 await stickerCommand(sock, chatId, message);
                 break;
