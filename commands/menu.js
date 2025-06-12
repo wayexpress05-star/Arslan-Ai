@@ -38,8 +38,12 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 `;
 
     try {
-        const gifPath = path.join(__dirname, '..', 'ArslanMedia', 'media', 'menu.gif');
-        const voicePath = path.join(__dirname, '..', 'ArslanMedia', 'audio', 'welcome.mp3');
+        const gifPath = path.resolve('ArslanMedia/media/menu.gif');
+        const voicePath = path.resolve('ArslanMedia/audio/welcome.mp3');
+
+        // Check file existence before reading
+        if (!fs.existsSync(gifPath)) throw new Error("menu.gif not found!");
+        if (!fs.existsSync(voicePath)) throw new Error("welcome.mp3 not found!");
 
         await sock.sendMessage(from, {
             video: fs.readFileSync(gifPath),
@@ -56,7 +60,7 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
     } catch (err) {
         console.error('❌ Error in menuCommand:', err);
         await sock.sendMessage(from, {
-            text: `❌ Menu failed: ${err.message}`
+            text: `❌ Menu error: ${err.message}`
         }, { quoted: m });
     }
 }
