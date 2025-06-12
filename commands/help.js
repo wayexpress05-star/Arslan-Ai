@@ -116,6 +116,3 @@ try {
 }
 
 module.exports = menuCommand;
-
-Esmay or bhi commands list daloo CHOTI CHOTI command bhi add karo or esay or bhi stylish bnao isi shap me
-
