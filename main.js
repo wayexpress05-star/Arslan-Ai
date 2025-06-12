@@ -291,7 +291,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
             case userMessage.startsWith('.unban'):
                 await unbanCommand(sock, chatId, message);
                 break;
-                switch (userMessage) {
+      switch (userMessage) {
 
                 // ✅ .help, .bot, .list use helpCommand
             case '.help':
