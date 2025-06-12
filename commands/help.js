@@ -2,107 +2,120 @@ const settings = require('../settings');
 const fs = require('fs');
 const path = require('path');
 
-async function helpCommand(sock, chatId, message) {
-    const helpMessage = `
-╔═══════════════════╗
-🤖 *${settings.botName || 'Arslan-MD'}*
-*Version:* ${settings.version || '2.0.2'}
-*By:* ${settings.botOwner || 'ArslanMD Official'}
-*YT:* ${global.ytch || 'youtube.com/@ArslanMD'}
-╚═══════════════════╝
+async function menuCommand(sock, chatId, message) {
+const botName = settings.botName || 'Arslan-MD';
+const version = settings.version || '2.0.2';
+const owner = settings.botOwner || 'ArslanMD Official';
+const ytch = global.ytch || 'youtube.com/@ArslanMD';
 
-📜 *Available Commands*
+const menuText = `
 
-╔════ 🌐 General ════╗
+╔══════════════════════════╗
+🔥🔥 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗧𝗢 ${botName} 🔥🔥
+╚══════════════════════════╝
+
+╔═══ 🚀 𝗕𝗢𝗧 𝗜𝗡𝗙𝗢 🚀 ═══╗
+• Version: ${version}
+• Owner: ${owner}
+• YouTube: ${ytch}
+╚══════════════════════════╝
+
+╔═══ ⚡ 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 𝗟𝗜𝗦𝗧 ⚡ ═══╗
+
+╔══ 🌐 𝗚𝗘𝗡𝗘𝗥𝗔𝗟 ══╗
 • .help / .menu
 • .ping / .alive
 • .tts <text>
-• .owner / .jid
-• .joke / .quote
+• .joke
+• .quote
 • .weather <city>
 • .lyrics <title>
 • .8ball <question>
-• .groupinfo / .admins
-• .ss <link>
-• .trt <text> <lang>
-╚════════════════════╝
+╚════════════════╝
 
-╔════ 👮 Admin ════╗
-• .ban / .kick @user
-• .promote / .demote
-• .mute / .unmute
+╔══ 👮‍♂️ 𝗔𝗗𝗠𝗜𝗡 ══╗
+• .ban @user
+• .kick @user
+• .promote @user
+• .demote @user
+• .mute @user
+• .unmute @user
 • .clear / .delete
-• .warn / .warnings
-• .tag / .tagall
-• .chatbot / .antilink
-• .welcome / .goodbye
-╚════════════════════╝
+• .warn @user
+• .tagall
+╚════════════════╝
 
-╔════ 🔒 Owner ════╗
-• .mode / .autoreact
-• .clearsession / .cleartmp
-• .setpp <img>
-╚════════════════════╝
+╔══ 🔒 𝗢𝗪𝗡𝗘𝗥 ══╗
+• .mode <on/off>
+• .autoreact <on/off>
+• .clearsession
+• .setpp <image>
+╚════════════════╝
 
-╔══ 🎨 Stickers ══╗
-• .sticker / .simage
-• .blur / .emojimix
-• .meme / .take
-╚══════════════════╝
+╔══ 🎨 𝗦𝗧𝗜𝗖𝗞𝗘𝗥𝗦 ══╗
+• .sticker
+• .simage
+• .blur
+• .emojimix
+╚════════════════╝
 
-╔════ 🎮 Games ════╗
-• .tictactoe / .hangman
-• .guess / .trivia
-• .truth / .dare
-╚════════════════════╝
+╔══ 🎮 𝗚𝗔𝗠𝗘𝗦 ══╗
+• .tictactoe
+• .hangman
+• .guess
+• .trivia
+╚════════════════╝
 
-╔════ 🤖 AI Tools ══╗
-• .gpt / .gemini
-• .imagine / .flux
-╚════════════════════╝
+╔══ 🤖 𝗔𝗜 𝗧𝗢𝗢𝗟𝗦 ══╗
+• .gpt <text>
+• .imagine <prompt>
+╚════════════════╝
 
-╔════ 🎯 Fun ═════╗
-• .flirt / .shayari
-• .goodnight / .roseday
-• .insult / .compliment
-• .ship / .wasted / .simp
-╚═══════════════════╝
+╔══ 🎯 𝗙𝗨𝗡 ══╗
+• .flirt
+• .shayari
+• .insult
+• .compliment
+• .ship
+╚════════════════╝
 
-╔══ 🔤 Text Maker ═╗
-• .neon / .devil / .ice / .fire
-• .matrix / .glitch / .sand etc.
-╚═══════════════════╝
+╔══ 📥 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥𝗦 ══╗
+• .play <song name>
+• .tiktok <link>
+• .instagram <link>
+╚════════════════╝
 
-╔══ 📥 Downloader ═╗
-• .play / .song <name>
-• .tiktok / .instagram / .fb
-╚═══════════════════╝
+╔══ 💻 𝗚𝗜𝗧𝗛𝗨𝗕 ═╗
+• .repo
+• .sc
+╚═════════════╝
 
-╔══ 💻 GitHub ═════╗
-• .repo / .sc / .github
-╚═══════════════════╝
+⚡ Use commands smartly! ⚡
 `.trim();
 
-    try {
-        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
-
-        if (fs.existsSync(imagePath)) {
-            const imageBuffer = fs.readFileSync(imagePath);
-            await sock.sendMessage(chatId, {
-                image: imageBuffer,
-                caption: helpMessage
-            }, { quoted: message });
-        } else {
-            await sock.sendMessage(chatId, {
-                text: helpMessage
-            }, { quoted: message });
-        }
-    } catch (error) {
-        console.error('Error in help command:', error);
-        await sock.sendMessage(chatId, {
-            text: helpMessage
-        });
-    }
+try {  
+    const imagePath = path.join(__dirname, '../assets/bot_banner.jpg');  
+    if (fs.existsSync(imagePath)) {  
+        const imageBuffer = fs.readFileSync(imagePath);  
+        await sock.sendMessage(chatId, {  
+            image: imageBuffer,  
+            caption: menuText  
+        }, { quoted: message });  
+    } else {  
+        await sock.sendMessage(chatId, {  
+            text: menuText  
+        }, { quoted: message });  
+    }  
+} catch (err) {  
+    console.error('Menu Command Error:', err);  
+    await sock.sendMessage(chatId, {  
+        text: menuText  
+    });  
 }
 
-module.exports = helpCommand;
+}
+
+module.exports = menuCommand;
+
+Esmay or bhi commands list daloo CHOTI CHOTI command bhi add karo or esay or bhi stylish bnao isi shap me
+
