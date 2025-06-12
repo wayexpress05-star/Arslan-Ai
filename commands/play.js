@@ -1,63 +1,74 @@
 const yts = require('yt-search');
+const ytdl = require('ytdl-core');
+const fs = require('fs-extra');
 const axios = require('axios');
+const path = require('path');
 
 async function playCommand(sock, chatId, message) {
     try {
-        const text = message.message?.conversation || message.message?.extendedTextMessage?.text;
-        const searchQuery = text.split(' ').slice(1).join(' ').trim();
-        
-        if (!searchQuery) {
-            return await sock.sendMessage(chatId, { 
-                text: "What song do you want to download?"
+        const text = message.message?.conversation || message.message?.extendedTextMessage?.text || '';
+        const query = text.split(' ').slice(1).join(' ');
+
+        if (!query) {
+            return await sock.sendMessage(chatId, {
+                text: '🎧 *Usage:* `.play song name`\n\n_Example:_ `.play shape of you`'
             });
         }
 
-        // Search for the song
-        const { videos } = await yts(searchQuery);
-        if (!videos || videos.length === 0) {
-            return await sock.sendMessage(chatId, { 
-                text: "No songs found!"
-            });
+        // Search YouTube
+        const search = await yts(query);
+        const video = search.videos[0];
+
+        if (!video) {
+            return await sock.sendMessage(chatId, { text: '❌ No results found!' });
         }
 
-        // Send loading message
+        const { title, url, thumbnail, duration, author } = video;
+        const audioPath = path.join(__dirname, `ArslanMD_${Date.now()}.mp3`);
+        const thumbPath = path.join(__dirname, `thumb_${Date.now()}.jpg`);
+
+        // Notify downloading
         await sock.sendMessage(chatId, {
-            text: "_Please wait your download is in progress_"
+            text: `🔎 *Title:* ${title}\n⏱️ *Duration:* ${duration.timestamp}\n📥 *Downloading...*`
         });
 
-        // Get the first video result
-        const video = videos[0];
-        const urlYt = video.url;
+        // Download thumbnail
+        const thumb = await axios.get(thumbnail, { responseType: 'arraybuffer' });
+        await fs.writeFile(thumbPath, thumb.data);
 
-        // Fetch audio data from API
-        const response = await axios.get(`https://apis-keith.vercel.app/download/dlmp3?url=${urlYt}`);
-        const data = response.data;
+        // Download audio
+        const stream = ytdl(url, { filter: 'audioonly' });
+        const writer = fs.createWriteStream(audioPath);
+        stream.pipe(writer);
 
-        if (!data || !data.status || !data.result || !data.result.downloadUrl) {
-            return await sock.sendMessage(chatId, { 
-                text: "Failed to fetch audio from the API. Please try again later."
-            });
-        }
+        writer.on('finish', async () => {
+            // Send audio with thumbnail preview
+            await sock.sendMessage(chatId, {
+                image: fs.readFileSync(thumbPath),
+                caption: `🎵 *${title}*\n🎤 *By:* ${author.name}\n⏱️ *Duration:* ${duration.timestamp}\n🔗 *Link:* ${url}\n\n🎧 _Powered by ArslanMD_`
+            }, { quoted: message });
 
-        const audioUrl = data.result.downloadUrl;
-        const title = data.result.title;
+            await sock.sendMessage(chatId, {
+                audio: fs.readFileSync(audioPath),
+                mimetype: 'audio/mp4',
+                fileName: `${title}.mp3`
+            }, { quoted: message });
 
-        // Send the audio
+            // Cleanup
+            fs.unlinkSync(audioPath);
+            fs.unlinkSync(thumbPath);
+        });
+
+    } catch (err) {
+        console.error('[.play] Error:', err);
         await sock.sendMessage(chatId, {
-            audio: { url: audioUrl },
-            mimetype: "audio/mpeg",
-            fileName: `${title}.mp3`
-        }, { quoted: message });
-
-    } catch (error) {
-        console.error('Error in song2 command:', error);
-        await sock.sendMessage(chatId, { 
-            text: "Download failed. Please try again later."
+            text: '❌ Failed to download the song. Please try again later.'
         });
     }
 }
 
-module.exports = playCommand; 
+module.exports = playCommand;
 
-/*Powered by KNIGHT-BOT*
-*Credits to Keith MD*`*/
+/*
+🔥 Enhanced by ArslanMD | Audio + Thumbnail + Info
+*/
