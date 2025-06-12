@@ -38,17 +38,15 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 `;
 
     try {
-        const gifPath = path.join(__dirname, '../ArslanMedia/media/menu.gif');
-        const voicePath = path.join(__dirname, '../ArslanMedia/audio/welcome.mp3');
+        const gifPath = path.join(__dirname, '..', 'ArslanMedia', 'media', 'menu.gif');
+        const voicePath = path.join(__dirname, '..', 'ArslanMedia', 'audio', 'welcome.mp3');
 
-        // Send animated GIF menu
         await sock.sendMessage(from, {
             video: fs.readFileSync(gifPath),
             gifPlayback: true,
             caption: menuText
         }, { quoted: m });
 
-        // Send welcome voice
         await sock.sendMessage(from, {
             audio: fs.readFileSync(voicePath),
             mimetype: 'audio/mp4',
@@ -58,7 +56,7 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
     } catch (err) {
         console.error('❌ Error in menuCommand:', err);
         await sock.sendMessage(from, {
-            text: '❌ Menu failed. Please contact the bot owner.'
+            text: `❌ Menu failed: ${err.message}`
         }, { quoted: m });
     }
 }
