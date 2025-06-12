@@ -2,14 +2,14 @@ const axios = require('axios');
 
 async function characterCommand(sock, chatId, message) {
     let userToAnalyze;
-    
+
     // Mention ya reply check karo
     if (message.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {
         userToAnalyze = message.message.extendedTextMessage.contextInfo.mentionedJid[0];
     } else if (message.message?.extendedTextMessage?.contextInfo?.participant) {
         userToAnalyze = message.message.extendedTextMessage.contextInfo.participant;
     }
-    
+
     if (!userToAnalyze) {
         await sock.sendMessage(chatId, { 
             text: '⚠️ Barah-e-karam kisi user ko mention ya un ke message ka reply dein taake unka character analyze kiya ja sake!' 
@@ -69,3 +69,5 @@ async function characterCommand(sock, chatId, message) {
         });
     }
 }
+
+module.exports = characterCommand;
