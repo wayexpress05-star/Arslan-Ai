@@ -14,6 +14,7 @@ const { addWelcome, delWelcome, isWelcomeOn, addGoodbye, delGoodBye, isGoodByeOn
 // Command imports
 const tagAllCommand = require('./commands/tagall');
 const helpCommand = require('./commands/help');
+const menuCommand = require('./commands/menu');
 const banCommand = require('./commands/ban');
 const { promoteCommand } = require('./commands/promote');
 const { demoteCommand } = require('./commands/demote');
@@ -290,20 +291,27 @@ async function handleMessages(sock, messageUpdate, printLog) {
             case userMessage.startsWith('.unban'):
                 await unbanCommand(sock, chatId, message);
                 break;
-            switch(true) {
-            case userMessage === '.help':
-            case userMessage === '.menu':
-            case userMessage === '.bot':
-            case userMessage === '.list':
-            await helpCommand(sock, chatId, message);  // global.channelLink hata do agar function use nahi karta
-                 break;
-       }
+                switch(userMessage) {
+               ...
+  
+            case '.help':
+            case '.menu':
+            case '.bot':
+            case '.list':
+                await helpCommand(sock, chatId, message);
+                break;
+
+                  ...
+            }
             case userMessage === '.sticker' || userMessage === '.s':
                 await stickerCommand(sock, chatId, message);
                 break;
             case userMessage.startsWith('.warnings'):
                 const mentionedJidListWarnings = message.message.extendedTextMessage?.contextInfo?.mentionedJid || [];
                 await warningsCommand(sock, chatId, mentionedJidListWarnings);
+                break;
+            case '.menu':
+                await menuCommand(sock, message, userMessage, '.', chatId, pushName);
                 break;
             case userMessage.startsWith('.warn'):
                 const mentionedJidListWarn = message.message.extendedTextMessage?.contextInfo?.mentionedJid || [];
