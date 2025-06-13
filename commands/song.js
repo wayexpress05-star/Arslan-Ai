@@ -1,6 +1,8 @@
-const axios = require("axios");
+const { default: axios } = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
+const DY_SCRAP = require("@dark-yasiya/scrap");
+const dy_scrap = new DY_SCRAP();
 
 async function songCommand(sock, chatId, message) {
     try {
@@ -16,7 +18,7 @@ async function songCommand(sock, chatId, message) {
             }, { quoted: message });
         }
 
-        // 🌀 React & Loading sticker
+        // 🎶 React & Sticker
         await sock.sendMessage(chatId, { react: { text: "🎶", key: message.key } });
         const stickerPath = path.resolve("ArslanMedia/stickers/loading.webp");
         if (fs.existsSync(stickerPath)) {
@@ -25,44 +27,60 @@ async function songCommand(sock, chatId, message) {
             }, { quoted: message });
         }
 
-        // 🎧 API Request
-        const api = `https://api.lolhuman.xyz/api/ytaudio?apikey=a1040ef9a277ebee15665227&url=${encodeURIComponent(query)}`;
-        const response = await axios.get(api);
-        const result = response.data.result;
+        // 🔎 Search YouTube via scrap API
+        const searchResult = await dy_scrap.ytsearch(query);
+        if (!searchResult?.results?.length) {
+            return await sock.sendMessage(chatId, {
+                text: "❌ No song found. Please try another name."
+            }, { quoted: message });
+        }
 
-        const { title, link, thumbnail, duration, views, audio } = result;
-        const filePath = path.resolve(`./temp/${Date.now()}_arslan_song.mp3`);
+        const video = searchResult.results[0];
+        const { title, url, image, timestamp, views, ago, author } = video;
+
+        // ⏬ Download MP3
+        const mp3data = await dy_scrap.ytmp3(url);
+        const audioURL = mp3data?.result?.download?.url;
+        if (!audioURL) {
+            return await sock.sendMessage(chatId, {
+                text: "❌ Unable to fetch audio. Try again later."
+            }, { quoted: message });
+        }
+
+        // 🖼 Download thumbnail
         const thumbPath = path.resolve(`./temp/thumb_${Date.now()}.jpg`);
-
-        // Download audio
-        const audioBuffer = await axios.get(audio, { responseType: 'arraybuffer' });
-        await fs.outputFile(filePath, audioBuffer.data);
-
-        // Thumbnail
-        const thumb = await axios.get(thumbnail, { responseType: 'arraybuffer' });
+        const thumb = await axios.get(image, { responseType: 'arraybuffer' });
         await fs.outputFile(thumbPath, thumb.data);
 
-        // 🖼️ Send info image
+        // 📄 Song info card
+        const caption = `🎶 *Now Playing:*\n\n` +
+            `📌 *Title:* ${title}\n` +
+            `🕒 *Duration:* ${timestamp || "N/A"}\n` +
+            `📈 *Views:* ${views || "N/A"}\n` +
+            `📅 *Published:* ${ago || "N/A"}\n` +
+            `👤 *Author:* ${author?.name || "N/A"}\n` +
+            `🔗 ${url}\n\n` +
+            `_🔊 Powered by ArslanMD Official_`;
+
+        // 🖼️ Send song info with image
         await sock.sendMessage(chatId, {
             image: fs.readFileSync(thumbPath),
-            caption: `🎶 *Now Playing:*\n\n📌 *${title}*\n🕒 ${duration}\n📈 ${views} views\n🔗 ${link}\n\n_🔊 Powered by ArslanMD Official_`,
+            caption
         }, { quoted: message });
 
-        // 🎧 Send audio
+        // 🎵 Send the MP3
         await sock.sendMessage(chatId, {
-            audio: fs.readFileSync(filePath),
-            mimetype: 'audio/mp4',
-            fileName: `${title}.mp3`,
-            ptt: false
+            audio: { url: audioURL },
+            mimetype: 'audio/mpeg',
+            fileName: `${title}.mp3`
         }, { quoted: message });
 
-        // ✅ Success react
+        // ✅ Success emoji
         await sock.sendMessage(chatId, {
             react: { text: "✅", key: message.key }
         });
 
         // 🧹 Cleanup
-        fs.unlinkSync(filePath);
         fs.unlinkSync(thumbPath);
 
     } catch (err) {
@@ -71,7 +89,7 @@ async function songCommand(sock, chatId, message) {
             react: { text: "⚠️", key: message.key }
         });
         await sock.sendMessage(chatId, {
-            text: "❌ *Failed to download the song.*\nPlease try again later."
+            text: "❌ *Failed to download the song.* Please try again later."
         }, { quoted: message });
     }
 }
