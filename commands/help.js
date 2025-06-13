@@ -1,7 +1,5 @@
 console.log('📥 .help command triggered');
 const settings = require('../settings');
-const fs = require('fs');
-const path = require('path');
 
 async function helpCommand(sock, chatId, message, prefix = '.') {
     const helpMessage = `
@@ -13,30 +11,40 @@ async function helpCommand(sock, chatId, message, prefix = '.') {
 ╚═══════════════════╝
 
 📜 *Available Commands*
-• ${prefix}help / ${prefix}menu / ${prefix}ping / ${prefix}alive
-• ${prefix}joke / ${prefix}gpt / ${prefix}play / ${prefix}ban / ...
-`.trim();
 
-    try {
-        const imagePath = path.resolve('assets/bot_image.jpg');
+╔════ 🌐 General ════╗
+• ${prefix}help / ${prefix}menu
+• ${prefix}ping / ${prefix}alive
+• ${prefix}tts <text>
+• ${prefix}owner / ${prefix}jid
+• ${prefix}joke / ${prefix}quote
+• ${prefix}weather <city>
+• ${prefix}lyrics <title>
+• ${prefix}8ball <question>
+• ${prefix}groupinfo / ${prefix}admins
+• ${prefix}ss <link>
+• ${prefix}trt <text> <lang>
 
-        if (fs.existsSync(imagePath)) {
-            const imageBuffer = fs.readFileSync(imagePath);
-            await sock.sendMessage(chatId, {
-                image: imageBuffer,
-                caption: helpMessage
-            }, { quoted: message });
-        } else {
-            await sock.sendMessage(chatId, {
-                text: helpMessage
-            }, { quoted: message });
-        }
-    } catch (error) {
-        console.error('❌ Error in helpCommand:', error);
-        await sock.sendMessage(chatId, {
-            text: `❌ Help error: ${error.message}`
-        }, { quoted: message });
-    }
-}
+╔════ 👮 Admin ════╗
+• ${prefix}ban / ${prefix}kick
+• ${prefix}promote / ${prefix}demote
+• ${prefix}mute / ${prefix}unmute
+• ${prefix}clear / ${prefix}delete
+• ${prefix}warn / ${prefix}warnings
+• ${prefix}tag / ${prefix}tagall
+• ${prefix}chatbot / ${prefix}antilink
+• ${prefix}welcome / ${prefix}goodbye
 
-module.exports = helpCommand;
+╔════ 🔒 Owner ════╗
+• ${prefix}mode / ${prefix}autoreact
+• ${prefix}clearsession / ${prefix}cleartmp
+• ${prefix}setpp <img>
+
+╔══ 🎮 Games ════╗
+• ${prefix}tictactoe / ${prefix}hangman
+• ${prefix}guess / ${prefix}trivia
+• ${prefix}truth / ${prefix}dare
+
+╔════ 🤖 AI Tools ══╗
+• ${prefix}gpt / ${prefix}gemini
+• ${prefix}imagine /
