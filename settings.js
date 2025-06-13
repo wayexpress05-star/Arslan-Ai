@@ -1,3 +1,25 @@
+// 💥 Anti-Clone Security Check
+const fs = require("fs");
+
+const botName = "Arslan-MD";
+const ownerNumber = "923237045919";
+
+// 🚫 Block if tampered
+if (__filename.includes('node_modules') === false) {
+    const currentFile = fs.readFileSync(__filename, "utf8");
+    if (!currentFile.includes(botName) || !currentFile.includes(ownerNumber)) {
+        console.log(`
+🚨 Unauthorized Clone Detected!
+
+Bot settings have been modified.
+Original Bot Name: ${botName}
+Original Owner: ${ownerNumber}
+
+❌ Shutting down...
+        `);
+        process.exit(1);
+    }
+}
 const settings = {
   // 🤖 Identity & Branding
   botName: "Arslan-MD",
