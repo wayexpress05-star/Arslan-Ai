@@ -26,7 +26,7 @@ async function songCommand(sock, chatId, message) {
         }
 
         // 🎧 API Request
-        const api = `https://api.lolhuman.xyz/api/ytplay2?apikey=ArslanKey&query=${encodeURIComponent(query)}`;
+        const api = `https://api.lolhuman.xyz/api/ytaudio?apikey=a1040ef9a277ebee15665227&url=${encodeURIComponent(query)}`;
         const response = await axios.get(api);
         const result = response.data.result;
 
