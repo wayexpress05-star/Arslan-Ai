@@ -9,13 +9,15 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
     const date = moment().tz('Asia/Karachi').format('dddd, MMMM Do YYYY');
 
     const menuText = `
-╭[*Arslan-MD Bot Menu*]━⬣
+╭[ *Arslan-MD Bot Menu* ]━⬣
 ┃ 👤 *User:* ${pushName}
 ┃ 📆 *Date:* ${date}
 ┃ ⏰ *Time:* ${time}
 ┃ 🧩 *Prefix:* ${prefix}
 ╰━━━━━━━━━━━━━━━━━━⬣
+
 > Arslan-MD MENU     
+
 ╭──·๏[📥 *ᴅᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ*📥]
 ┆ ◦ 
 ┆ ◦  🟦 facebook
@@ -315,7 +317,7 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 ┆ ◦  🔍 yts
 ┆ ◦  📹 ytv
 ┆ ◦ 
-╰━[*Arslan-MD v2.0*]━━⬣
+╰━[ *Arslan-MD v2.0* ]━━⬣
 `;
 
     try {
