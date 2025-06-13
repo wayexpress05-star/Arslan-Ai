@@ -11,21 +11,21 @@ function formatUptime(seconds) {
 
 async function aliveCommand(sock, chatId, message) {
     try {
-        // 🧠 Pull global info
+        // 🧠 Global values
         const botName = global.botname || 'Arslan-MD';
         const version = global.version || '2.0.2';
         const owner = global.botOwner || global.ownerNumber || 'ArslanMD';
         const mode = global.commandMode || 'public';
         const uptime = formatUptime(process.uptime());
 
-        // 📋 Main message text
+        // 📋 Main message
         const msg = `
 🤖 *${botName} is Alive!*
 
 📦 *Version:* ${version}
 👑 *Owner:* ${owner}
 🌐 *Mode:* ${mode}
-📶 *Platform:* ${os.platform().toUpperCase()}
+💻 *Platform:* ${os.platform().toUpperCase()}
 ⏱️ *Uptime:* ${uptime}
 
 _Select an option from below:_
@@ -38,17 +38,17 @@ _Select an option from below:_
             { buttonId: '.repo', buttonText: { displayText: '💻 Repo' }, type: 1 }
         ];
 
-        // ✅ Send with buttons
+        // ✅ Send button message
         await sock.sendMessage(chatId, {
             text: msg,
             buttons,
-            headerType: 1
+            headerType: 4 // ✅ Updated from 1 to 4
         }, { quoted: message });
 
     } catch (error) {
         console.error('❌ Error in alive command:', error);
         await sock.sendMessage(chatId, {
-            text: '⚠️ Arslan-MD is alive, but detailed info failed to load.'
+            text: '⚠️ Arslan-MD is alive, but button failed to load.'
         }, { quoted: message });
     }
 }
