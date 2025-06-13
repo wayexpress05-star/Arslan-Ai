@@ -39,7 +39,7 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 `;
 
     try {
-        const gifPath = path.resolve('ArslanMedia/media/menu.gif');
+        const gifPath = path.resolve('ArslanMedia/media/menu.video');
         const voicePath = path.resolve('ArslanMedia/audio/welcome.mp3');
 
         // 🎬 Send GIF
