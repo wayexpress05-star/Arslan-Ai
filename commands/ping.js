@@ -21,26 +21,44 @@ function formatTime(seconds) {
 async function pingCommand(sock, chatId, message) {
     try {
         const start = Date.now();
-        await sock.sendMessage(chatId, { text: '🛰️ *Pinging...*' }, { quoted: message });
+
+        const emojis = ['⚡', '🚀', '💨', '🎯', '🧠', '🎉', '💥'];
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+        await sock.sendMessage(chatId, {
+            react: { text: randomEmoji, key: message.key }
+        });
+
         const end = Date.now();
         const ping = Math.round((end - start) / 2);
         const uptimeFormatted = formatTime(process.uptime());
 
-        const botInfo = `
-╭━━━[ 🤖 *${settings.botName || 'Arslan-MD'}* ]━━━╮
-┃ 🛰️ *Ping:* ${ping} ms
-┃ ⏱️ *Uptime:* ${uptimeFormatted}
-┃ 🧠 *Platform:* ${os.platform().toUpperCase()}
-┃ 📦 *Version:* v${settings.version || '1.0.0'}
-╰━━━━━━━━━━━━━━━━━━━━━━╯
+        let badge = '🐢 Slow', color = '🔴';
+        if (ping <= 150) {
+            badge = '🚀 Super Fast'; color = '🟢';
+        } else if (ping <= 300) {
+            badge = '⚡ Fast'; color = '🟡';
+        } else if (ping <= 600) {
+            badge = '⚠️ Medium'; color = '🟠';
+        }
 
-✨ _I’m always ready to serve, boss!_
+        const botInfo = `
+╭━━━〔 🤖 *${settings.botName || 'Arslan-MD'} Status* 〕━━⬣
+┃ 🛰️ *Ping:* ${ping} ms
+┃ 📶 *Speed:* ${color} ${badge}
+┃ ⏱️ *Uptime:* ${uptimeFormatted}
+┃ 💻 *Platform:* ${os.platform().toUpperCase()}
+┃ 📦 *Version:* v${settings.version || '1.0.0'}
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━⬣
+✨ _I'm always ready to serve, boss!_
 `.trim();
 
-        await sock.sendMessage(chatId, { text: botInfo }, { quoted: message });
+        await sock.sendMessage(chatId, {
+            text: botInfo
+        }, { quoted: message });
 
     } catch (error) {
-        console.error('Error in ping command:', error);
+        console.error('❌ Error in ping command:', error);
         await sock.sendMessage(chatId, {
             text: '❌ *Ping failed.* Please try again later.'
         }, { quoted: message });
