@@ -1,3 +1,4 @@
+console.log('⚡ .help command activated!');
 console.log('📥 .help command triggered');
 const settings = require('../settings');
 
