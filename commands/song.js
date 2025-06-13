@@ -18,12 +18,10 @@ async function songCommand(sock, chatId, message) {
             });
         }
 
-        // React to command
         await sock.sendMessage(chatId, {
             react: { text: '🎶', key: message.key }
         });
 
-        // Search YouTube
         const search = await yts(query);
         const video = search.videos[0];
 
@@ -38,34 +36,34 @@ async function songCommand(sock, chatId, message) {
         const audioPath = path.join(__dirname, `ArslanMD_${Date.now()}.mp3`);
         const thumbPath = path.join(__dirname, `thumb_${Date.now()}.jpg`);
 
-        // Notify user
         await sock.sendMessage(chatId, {
-            text: `🎧 *${title}*\n\n*Duration:* ${duration.timestamp}\n*Views:* ${views.toLocaleString()}\n\n🔁 *Downloading your song...*\n> Arslan-MD Bot`,
+            text: `🎧 *${title}*\n\n*Duration:* ${duration.timestamp}\n*Views:* ${views.toLocaleString()}\n\n⏳ Downloading...`
         });
 
-        // Download thumbnail
+        // Thumbnail
         const thumb = await axios.get(thumbnail, { responseType: 'arraybuffer' });
         await fs.writeFile(thumbPath, thumb.data);
 
-        // Download audio
-        const stream = ytdl(url, { filter: 'audioonly' });
+        // Audio stream download
+        const stream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
         const writer = fs.createWriteStream(audioPath);
+
         await new Promise((resolve, reject) => {
             stream.pipe(writer);
             writer.on('finish', resolve);
             writer.on('error', reject);
         });
 
-        // Send image with caption
+        // Send thumbnail preview
         await sock.sendMessage(chatId, {
             image: fs.readFileSync(thumbPath),
             caption: `🎵 *${title}*\n🎬 *Duration:* ${duration.timestamp}\n📈 *Views:* ${views.toLocaleString()}\n🔗 ${url}\n\n🎧 _Powered by Arslan-MD_`
         }, { quoted: message });
 
-        // Send audio
+        // ✅ Fix: send with correct mimetype
         await sock.sendMessage(chatId, {
             audio: fs.readFileSync(audioPath),
-            mimetype: 'audio/mp4',
+            mimetype: 'audio/mpeg',
             fileName: `${title}.mp3`
         }, { quoted: message });
 
@@ -74,7 +72,6 @@ async function songCommand(sock, chatId, message) {
             react: { text: '✅', key: message.key }
         });
 
-        // Cleanup
         fs.unlinkSync(audioPath);
         fs.unlinkSync(thumbPath);
 
