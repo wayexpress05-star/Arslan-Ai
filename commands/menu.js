@@ -1,7 +1,5 @@
 console.log('📥 .menu command triggered');
 const moment = require('moment-timezone');
-const fs = require('fs');
-const path = require('path');
 
 async function menuCommand(sock, m, command, prefix, from, pushName) {
     const time = moment().tz('Asia/Karachi').format('hh:mm A');
@@ -38,25 +36,9 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 `;
 
     try {
-        const gifPath = path.resolve('ArslanMedia/media/menu.gif');
-        const voicePath = path.resolve('ArslanMedia/audio/welcome.mp3');
-
-        // Check file existence before reading
-        if (!fs.existsSync(gifPath)) throw new Error("menu.gif not found!");
-        if (!fs.existsSync(voicePath)) throw new Error("welcome.mp3 not found!");
-
         await sock.sendMessage(from, {
-            video: fs.readFileSync(gifPath),
-            gifPlayback: true,
-            caption: menuText
+            text: menuText
         }, { quoted: m });
-
-        await sock.sendMessage(from, {
-            audio: fs.readFileSync(voicePath),
-            mimetype: 'audio/mp4',
-            ptt: true
-        }, { quoted: m });
-
     } catch (err) {
         console.error('❌ Error in menuCommand:', err);
         await sock.sendMessage(from, {
