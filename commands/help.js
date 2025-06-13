@@ -47,4 +47,37 @@ async function helpCommand(sock, chatId, message, prefix = '.') {
 
 ╔════ 🤖 AI Tools ══╗
 • ${prefix}gpt / ${prefix}gemini
-• ${prefix}imagine /
+• ${prefix}imagine / ${prefix}flux
+
+╔════ 🎯 Fun ═════╗
+• ${prefix}flirt / ${prefix}shayari
+• ${prefix}goodnight / ${prefix}roseday
+• ${prefix}insult / ${prefix}compliment
+• ${prefix}ship / ${prefix}wasted / ${prefix}simp
+
+╔══ 🔤 Text Maker ═╗
+• ${prefix}neon / ${prefix}devil / ${prefix}ice / ${prefix}fire
+• ${prefix}matrix / ${prefix}glitch / ${prefix}sand etc.
+
+╔══ 📥 Downloader ═╗
+• ${prefix}play / ${prefix}song <name>
+• ${prefix}tiktok / ${prefix}instagram / ${prefix}fb
+
+╔══ 💻 GitHub ═════╗
+• ${prefix}repo / ${prefix}sc / ${prefix}github
+`.trim();
+
+    try {
+        await sock.sendMessage(chatId, {
+            text: helpMessage
+        }, { quoted: message });
+        console.log("📤 .help message sent successfully");
+    } catch (error) {
+        console.error('❌ Error in helpCommand:', error);
+        await sock.sendMessage(chatId, {
+            text: `❌ Help error: ${error.message}`
+        }, { quoted: message });
+    }
+}
+
+module.exports = helpCommand;
