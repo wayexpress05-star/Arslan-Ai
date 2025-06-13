@@ -2,62 +2,60 @@ const settings = require("../settings");
 const os = require("os");
 const moment = require("moment");
 
-const ALIVE_IMG = "https://i.imgur.com/kFZ5EwF.jpeg"; // ✅ Change to your custom image
+const ALIVE_IMG = "https://i.imgur.com/kFZ5EwF.jpeg"; // ✅ HD image
 
 function formatTime(seconds) {
-    const days = Math.floor(seconds / (24 * 3600));
+    const d = Math.floor(seconds / (24 * 3600));
     seconds %= (24 * 3600);
-    const hours = Math.floor(seconds / 3600);
+    const h = Math.floor(seconds / 3600);
     seconds %= 3600;
-    const minutes = Math.floor(seconds / 60);
-    seconds = Math.floor(seconds % 60);
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${d}d ${h}h ${m}m ${s}s`;
 }
 
 async function aliveCommand(sock, chatId, message) {
     try {
-        const pushName = message.pushName || "User";
+        const pushName = message?.pushName || message?.key?.fromMe ? "You" : "User";
         const time = moment().format("hh:mm A");
         const date = moment().format("dddd, MMMM Do YYYY");
         const uptime = formatTime(process.uptime());
-        const mode = settings.MODE?.toUpperCase() || 'PUBLIC';
-        const version = settings.version || '3.0';
+        const mode = settings.MODE || settings.commandMode || "PUBLIC";
+        const version = settings.version || "3.0";
         const platform = os.platform().toUpperCase();
 
         const caption = `
-╭━━━〔 🤖 *Arslan-MD System Status* 〕━━━⬣
-┃ 🧑‍💻 *Hello:* ${pushName}
+╭━━━〔 🤖 *Arslan-MD Status* 〕━━━⬣
+┃ 👤 *User:* ${pushName}
 ┃ 🕒 *Time:* ${time}
 ┃ 📅 *Date:* ${date}
 ┃ ⏱️ *Uptime:* ${uptime}
-┃ ⚙️ *Mode:* ${mode}
+┃ ⚙️ *Mode:* ${mode.toUpperCase()}
 ┃ 💻 *Platform:* ${platform}
-┃ 🧩 *Bot Version:* v${version}
+┃ 🧩 *Version:* v${version}
 ┃ 👑 *Developer:* ${settings.botOwner || 'ArslanMD Official'}
-┃
-┃ 🌟 *Main Features:*
-┃ ┣ 📂 Group Tools + Moderation
-┃ ┣ 🤖 AI Chat + GPT & Gemini
-┃ ┣ 🎮 Games, Fun, Convertors
-┃ ┣ 📥 Instagram/YouTube Downloader
-┃ ┗ 🧠 Utilities, Quran, Info Tools
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⬣
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━⬣
 
-🔰 *Arslan-MD is Active, Responsive, and Royal as Always!*
-💡 _Type *.menu* to explore full power_
-        `.trim();
+✅ *Bot is alive and running like a pro!*
+`.trim();
 
-        await sock.sendMessage(chatId, {
-            image: { url: ALIVE_IMG },
-            caption,
-            contextInfo: {
-                forwardingScore: 999,
-                isForwarded: true
-            }
-        }, { quoted: message });
+        // Try to send image with caption
+        try {
+            await sock.sendMessage(chatId, {
+                image: { url: ALIVE_IMG },
+                caption,
+                contextInfo: {
+                    forwardingScore: 999,
+                    isForwarded: true
+                }
+            }, { quoted: message });
+        } catch (imgErr) {
+            // fallback if image fails
+            await sock.sendMessage(chatId, { text: caption }, { quoted: message });
+        }
 
     } catch (err) {
-        console.error('❌ Alive Command Error:', err);
+        console.error("❌ Alive Command Error:", err);
         await sock.sendMessage(chatId, {
             text: '✅ Arslan-MD is alive, but detailed info failed to load.'
         }, { quoted: message });
