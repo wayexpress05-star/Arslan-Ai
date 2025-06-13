@@ -1,139 +1,108 @@
 const fs = require('fs');
 const path = require('path');
 
-// Path to store auto status configuration
+// 📁 Auto Status Configuration File
 const configPath = path.join(__dirname, '../data/autoStatus.json');
 
-// Initialize config file if it doesn't exist
+// ⚙️ Initialize file if missing
 if (!fs.existsSync(configPath)) {
-    fs.writeFileSync(configPath, JSON.stringify({ enabled: false }));
+    fs.writeFileSync(configPath, JSON.stringify({ enabled: false }, null, 2));
 }
 
+// 📍 Toggle Command Handler
 async function autoStatusCommand(sock, chatId, msg, args) {
     try {
-        // Check if sender is owner
+        const sender = msg.key.participant || msg.key.remoteJid;
+
         if (!msg.key.fromMe) {
-            await sock.sendMessage(chatId, { 
-                text: '❌ This command can only be used by the owner!'
+            return await sock.sendMessage(chatId, {
+                text: '🚫 *Owner Only!*\nThis command is only for the bot owner.',
+                quoted: msg
             });
-            return;
         }
 
-        // Read current config
-        let config = JSON.parse(fs.readFileSync(configPath));
+        const config = JSON.parse(fs.readFileSync(configPath));
 
-        // If no arguments, show current status
         if (!args || args.length === 0) {
-            const status = config.enabled ? 'enabled' : 'disabled';
-            await sock.sendMessage(chatId, { 
-                text: `🔄 *Auto Status View*\n\nCurrent status: ${status}\n\nUse:\n.autostatus on - Enable auto status view\n.autostatus off - Disable auto status view`
+            const status = config.enabled ? '🟢 *Enabled*' : '🔴 *Disabled*';
+            return await sock.sendMessage(chatId, {
+                text: `🛰️ *Auto Status Viewer*\n\nCurrent Status: ${status}\n\n✅ Use:\n*.autostatus on* – Enable auto-view\n*.autostatus off* – Disable auto-view`,
+                quoted: msg
             });
-            return;
         }
 
-        // Handle on/off commands
         const command = args[0].toLowerCase();
+
         if (command === 'on') {
             config.enabled = true;
-            fs.writeFileSync(configPath, JSON.stringify(config));
-            await sock.sendMessage(chatId, { 
-                text: '✅ Auto status view has been enabled!\nBot will now automatically view all contact statuses.'
+            fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+            await sock.sendMessage(chatId, {
+                text: `✅ *Auto Status Enabled!*\nBot will now automatically view all contact status updates.`,
+                quoted: msg
             });
         } else if (command === 'off') {
             config.enabled = false;
-            fs.writeFileSync(configPath, JSON.stringify(config));
-            await sock.sendMessage(chatId, { 
-                text: '❌ Auto status view has been disabled!\nBot will no longer automatically view statuses.'
+            fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+            await sock.sendMessage(chatId, {
+                text: `🚫 *Auto Status Disabled!*\nBot will no longer auto-view statuses.`,
+                quoted: msg
             });
         } else {
-            await sock.sendMessage(chatId, { 
-                text: '❌ Invalid command! Use:\n.autostatus on - Enable auto status view\n.autostatus off - Disable auto status view'
+            await sock.sendMessage(chatId, {
+                text: `❌ *Invalid Option!*\n\nUse:\n.autostatus on\n.autostatus off`,
+                quoted: msg
             });
         }
 
     } catch (error) {
-        console.error('Error in autostatus command:', error);
-        await sock.sendMessage(chatId, { 
-            text: '❌ Error occurred while managing auto status!\n' + error.message
+        console.error('❌ autostatus error:', error.message);
+        await sock.sendMessage(chatId, {
+            text: `⚠️ *Unexpected Error:*\n${error.message}`,
+            quoted: msg
         });
     }
 }
 
-// Function to check if auto status is enabled
+// 🔁 Status Handler Function
 function isAutoStatusEnabled() {
     try {
         const config = JSON.parse(fs.readFileSync(configPath));
         return config.enabled;
     } catch (error) {
-        console.error('Error checking auto status config:', error);
+        console.error('❌ Status Config Read Error:', error.message);
         return false;
     }
 }
 
-// Function to handle status updates
+// 📡 Auto View Status Updates
 async function handleStatusUpdate(sock, status) {
+    if (!isAutoStatusEnabled()) return;
+
     try {
-        if (!isAutoStatusEnabled()) {
-            return;
-        }
+        await new Promise(r => setTimeout(r, 1000)); // Small delay
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        const key = status?.key || status?.messages?.[0]?.key || status?.reaction?.key;
+        if (key?.remoteJid !== 'status@broadcast') return;
 
-        if (status.messages && status.messages.length > 0) {
-            const msg = status.messages[0];
-            if (msg.key && msg.key.remoteJid === 'status@broadcast') {
-                try {
-                    await sock.readMessages([msg.key]);
-                    const sender = msg.key.participant || msg.key.remoteJid;
-                } catch (err) {
-                    if (err.message?.includes('rate-overlimit')) {
-                        console.log('⚠️ Rate limit hit, waiting before retrying...');
-                        await new Promise(resolve => setTimeout(resolve, 2000));
-                        await sock.readMessages([msg.key]);
-                    } else {
-                        throw err;
-                    }
-                }
-                return;
-            }
-        }
+        await sock.readMessages([key]);
 
-        if (status.key && status.key.remoteJid === 'status@broadcast') {
+        const sender = key.participant || key.remoteJid;
+        const jid = sender?.split('@')[0] || 'unknown';
+        console.log(`👀 Auto-viewed status from: ${jid}`);
+
+    } catch (err) {
+        if (err.message?.includes('rate-overlimit')) {
+            console.warn('⚠️ Rate limit hit! Retrying...');
+            await new Promise(r => setTimeout(r, 2000));
             try {
-                await sock.readMessages([status.key]);
-                const sender = status.key.participant || status.key.remoteJid;
-                console.log(`✅ Viewed status from: ${sender.split('@')[0]}`);
-            } catch (err) {
-                if (err.message?.includes('rate-overlimit')) {
-                    console.log('⚠️ Rate limit hit, waiting before retrying...');
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    await sock.readMessages([status.key]);
-                } else {
-                    throw err;
-                }
+                const key = status?.key || status?.messages?.[0]?.key || status?.reaction?.key;
+                await sock.readMessages([key]);
+            } catch (e) {
+                console.error('❌ Retry failed:', e.message);
             }
-            return;
+        } else {
+            console.error('❌ Error viewing status:', err.message);
         }
-
-        if (status.reaction && status.reaction.key.remoteJid === 'status@broadcast') {
-            try {
-                await sock.readMessages([status.reaction.key]);
-                const sender = status.reaction.key.participant || status.reaction.key.remoteJid;
-                console.log(`✅ Viewed status from: ${sender.split('@')[0]}`);
-            } catch (err) {
-                if (err.message?.includes('rate-overlimit')) {
-                    console.log('⚠️ Rate limit hit, waiting before retrying...');
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    await sock.readMessages([status.reaction.key]);
-                } else {
-                    throw err;
-                }
-            }
-            return;
-        }
-
-    } catch (error) {
-        console.error('❌ Error in auto status view:', error.message);
     }
 }
 
