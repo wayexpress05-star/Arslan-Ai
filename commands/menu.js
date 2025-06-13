@@ -39,42 +39,41 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 `;
 
     try {
-        const gifPath = path.resolve('ArslanMedia/media/menu.mp4');
-        const voicePath = path.resolve('ArslanMedia/audio/welcome.mp3');
+    const videoPath = path.resolve('ArslanMedia/media/menu.mp4');
+    const voicePath = path.resolve('ArslanMedia/audio/welcome.mp3');
 
-        // 🎬 Send GIF
-        if (fs.existsSync(gifPath)) {
-            await sock.sendMessage(from, {
-                video: fs.readFileSync(gifPath),
-                gifPlayback: true,
-                caption: menuText
-            }, { quoted: m });
-            console.log("✅ menu.gif sent");
-        } else {
-            console.warn("⚠️ menu.gif not found");
-            await sock.sendMessage(from, {
-                text: menuText
-            }, { quoted: m });
-        }
-
-        // 🔊 Send Voice
-        if (fs.existsSync(voicePath)) {
-            await sock.sendMessage(from, {
-                audio: fs.readFileSync(voicePath),
-                mimetype: 'audio/mp4',
-                ptt: true
-            }, { quoted: m });
-            console.log("✅ welcome.mp3 sent");
-        } else {
-            console.warn("⚠️ welcome.mp3 not found");
-        }
-
-    } catch (err) {
-        console.error('❌ Error in menuCommand:', err);
+    // 🎬 Send Video
+    if (fs.existsSync(videoPath)) {
         await sock.sendMessage(from, {
-            text: `❌ Menu error: ${err.message}`
+            video: fs.readFileSync(videoPath),
+            mimetype: 'video/mp4',
+            caption: menuText
+        }, { quoted: m });
+        console.log("✅ menu.mp4 sent");
+    } else {
+        console.warn("⚠️ menu.mp4 not found");
+        await sock.sendMessage(from, {
+            text: menuText
         }, { quoted: m });
     }
+
+    // 🔊 Send Voice
+    if (fs.existsSync(voicePath)) {
+        await sock.sendMessage(from, {
+            audio: fs.readFileSync(voicePath),
+            mimetype: 'audio/mp4',
+            ptt: true
+        }, { quoted: m });
+        console.log("✅ welcome.mp3 sent");
+    } else {
+        console.warn("⚠️ welcome.mp3 not found");
+    }
+
+} catch (err) {
+    console.error('❌ Error in menuCommand:', err);
+    await sock.sendMessage(from, {
+        text: `❌ Menu error: ${err.message}`
+    }, { quoted: m });
 }
 
 module.exports = menuCommand;
