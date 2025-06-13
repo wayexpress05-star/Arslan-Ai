@@ -1,3 +1,4 @@
+console.log('⚡ .menu command activated!');
 console.log('📥 .menu command triggered');
 const moment = require('moment-timezone');
 
