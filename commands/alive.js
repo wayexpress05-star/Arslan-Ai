@@ -1,63 +1,38 @@
 const settings = require("../settings");
 const os = require("os");
 const moment = require("moment");
-
-const ALIVE_IMG = "https://i.imgur.com/kFZ5EwF.jpeg"; // ✅ HD image
-
-function formatTime(seconds) {
-    const d = Math.floor(seconds / (24 * 3600));
-    seconds %= (24 * 3600);
-    const h = Math.floor(seconds / 3600);
-    seconds %= 3600;
-    const m = Math.floor(seconds / 60);
-    const s = Math.floor(seconds % 60);
-    return `${d}d ${h}h ${m}m ${s}s`;
-}
+const settings = require("../settings");
 
 async function aliveCommand(sock, chatId, message) {
     try {
-        const pushName = message?.pushName || message?.key?.fromMe ? "You" : "User";
-        const time = moment().format("hh:mm A");
-        const date = moment().format("dddd, MMMM Do YYYY");
-        const uptime = formatTime(process.uptime());
-        const mode = settings.MODE || settings.commandMode || "PUBLIC";
-        const version = settings.version || "3.0";
-        const platform = os.platform().toUpperCase();
+        const statusMessage = `
+🤖 *${settings.botName || 'Arslan-MD'} is Alive!*
 
-        const caption = `
-╭━━━〔 🤖 *Arslan-MD Status* 〕━━━⬣
-┃ 👤 *User:* ${pushName}
-┃ 🕒 *Time:* ${time}
-┃ 📅 *Date:* ${date}
-┃ ⏱️ *Uptime:* ${uptime}
-┃ ⚙️ *Mode:* ${mode.toUpperCase()}
-┃ 💻 *Platform:* ${platform}
-┃ 🧩 *Version:* v${version}
-┃ 👑 *Developer:* ${settings.botOwner || 'ArslanMD Official'}
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━⬣
+📦 Version: ${settings.version}
+🧑‍💻 Owner: ${settings.botOwner}
+🌐 Mode: ${settings.commandMode || 'public'}
+💚 Status: Online & Operational
+📅 Uptime: Always Active 🚀
 
-✅ *Bot is alive and running like a pro!*
-`.trim();
+_Select an option below to continue:_
+        `.trim();
 
-        // Try to send image with caption
-        try {
-            await sock.sendMessage(chatId, {
-                image: { url: ALIVE_IMG },
-                caption,
-                contextInfo: {
-                    forwardingScore: 999,
-                    isForwarded: true
-                }
-            }, { quoted: message });
-        } catch (imgErr) {
-            // fallback if image fails
-            await sock.sendMessage(chatId, { text: caption }, { quoted: message });
-        }
+        const buttons = [
+            { buttonId: '.menu', buttonText: { displayText: '📜 Menu' }, type: 1 },
+            { buttonId: '.ping', buttonText: { displayText: '🏓 Ping' }, type: 1 },
+            { buttonId: '.repo', buttonText: { displayText: '💻 Repo' }, type: 1 }
+        ];
 
-    } catch (err) {
-        console.error("❌ Alive Command Error:", err);
         await sock.sendMessage(chatId, {
-            text: '✅ Arslan-MD is alive, but detailed info failed to load.'
+            text: statusMessage,
+            buttons: buttons,
+            headerType: 1
+        }, { quoted: message });
+
+    } catch (error) {
+        console.error('❌ Error in alive command:', error);
+        await sock.sendMessage(chatId, {
+            text: '⚠️ Bot is alive but buttons failed to load.'
         }, { quoted: message });
     }
 }
