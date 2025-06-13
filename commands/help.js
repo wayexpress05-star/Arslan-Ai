@@ -1,6 +1,8 @@
 console.log('⚡ .help command activated!');
 console.log('📥 .help command triggered');
 const settings = require('../settings');
+const fs = require('fs');
+const path = require('path');
 
 async function helpCommand(sock, chatId, message, prefix = '.') {
     const helpMessage = `
@@ -69,14 +71,25 @@ async function helpCommand(sock, chatId, message, prefix = '.') {
 `.trim();
 
     try {
-        await sock.sendMessage(chatId, {
-            text: helpMessage
-        }, { quoted: message });
-        console.log("📤 .help message sent successfully");
+        const imagePath = path.resolve('assets/bot_banner.jpg');
+
+        if (fs.existsSync(imagePath)) {
+            const imageBuffer = fs.readFileSync(imagePath);
+            await sock.sendMessage(chatId, {
+                image: imageBuffer,
+                caption: helpMessage
+            }, { quoted: message });
+            console.log("✅ .help image sent with text");
+        } else {
+            console.warn("⚠️ bot_image.jpg not found, sending text only");
+            await sock.sendMessage(chatId, {
+                text: helpMessage
+            }, { quoted: message });
+        }
     } catch (error) {
         console.error('❌ Error in helpCommand:', error);
         await sock.sendMessage(chatId, {
-            text: `❌ Help error: ${error.message}`
+            text: `❌ Error: ${error.message}`
         }, { quoted: message });
     }
 }
