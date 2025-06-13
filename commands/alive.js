@@ -1,38 +1,54 @@
-const settings = require("../settings");
-const os = require("os");
-const moment = require("moment");
-const settings = require("../settings");
+const os = require('os');
+const process = require('process');
+
+function formatUptime(seconds) {
+    const pad = (s) => (s < 10 ? '0' + s : s);
+    const hrs = pad(Math.floor(seconds / 3600));
+    const mins = pad(Math.floor((seconds % 3600) / 60));
+    const secs = pad(Math.floor(seconds % 60));
+    return `${hrs}:${mins}:${secs}`;
+}
 
 async function aliveCommand(sock, chatId, message) {
     try {
-        const statusMessage = `
-🤖 *${settings.botName || 'Arslan-MD'} is Alive!*
+        // 🧠 Pull global info
+        const botName = global.botname || 'Arslan-MD';
+        const version = global.version || '2.0.2';
+        const owner = global.botOwner || global.ownerNumber || 'ArslanMD';
+        const mode = global.commandMode || 'public';
+        const uptime = formatUptime(process.uptime());
 
-📦 Version: ${settings.version}
-🧑‍💻 Owner: ${settings.botOwner}
-🌐 Mode: ${settings.commandMode || 'public'}
-💚 Status: Online & Operational
-📅 Uptime: Always Active 🚀
+        // 📋 Main message text
+        const msg = `
+🤖 *${botName} is Alive!*
 
-_Select an option below to continue:_
+📦 *Version:* ${version}
+👑 *Owner:* ${owner}
+🌐 *Mode:* ${mode}
+📶 *Platform:* ${os.platform().toUpperCase()}
+⏱️ *Uptime:* ${uptime}
+
+_Select an option from below:_
         `.trim();
 
+        // 🔘 Buttons
         const buttons = [
             { buttonId: '.menu', buttonText: { displayText: '📜 Menu' }, type: 1 },
             { buttonId: '.ping', buttonText: { displayText: '🏓 Ping' }, type: 1 },
             { buttonId: '.repo', buttonText: { displayText: '💻 Repo' }, type: 1 }
         ];
 
+        // ✅ Send with buttons
         await sock.sendMessage(chatId, {
-            text: statusMessage,
-            buttons: buttons,
+            text: msg,
+            buttons,
             headerType: 1
         }, { quoted: message });
 
     } catch (error) {
         console.error('❌ Error in alive command:', error);
         await sock.sendMessage(chatId, {
-            text: '⚠️ Bot is alive but buttons failed to load.'
+            text: '⚠️ Arslan-MD is alive, but detailed info failed to load.'
         }, { quoted: message });
     }
 }
