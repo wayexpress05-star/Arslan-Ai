@@ -1,6 +1,6 @@
 🤖 Arslan-MD - MULTIPLE POWERFUL WHATSAPP BOT
 
-> ⚔️ Developed by ArslanMD Official | Ultra Pro Max Multi-Deployment Support | 100+ Features | Super Aggressive Bot Engine
+> ⚔️ Developed by ArslanMD Official | 100+ Features | Super Aggressive Bot Engine
 </div>
 
 <p align="center">
