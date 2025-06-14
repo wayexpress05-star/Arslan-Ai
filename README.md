@@ -110,6 +110,58 @@ Authenticate using **one** of the methods below to generate your `Session ID`.
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/>
 
+<h4 align="center">9. Workflow</h4>
+<p style="text-align: center; font-size: 1.2em;">
+
+
+<details>
+
+<b><strong><summary align="center" style="color: Yello;">Deploy Malvin On Workflow</summary></strong></b>
+<p style="text-align: center; font-size: 1.2em;">
+ 
+<h8>Copy the workflow codes and then fork the repo edit config add session id then save and now click on repo action tag then click on start new workflow then paste workflow codes rename main.yml to deploy.yml and save the file</h8>
+<h3 align-"center"> Important</h3>
+<h6 align-"center">Attention! We do not take responsibility if your github account is suspended through this Deploy method, I advise you not to use this workflow deploy method in the latest github accounts, github accounts created a year or more ago have not received the risk of suspension so far, this works It will only be done for 6 hours, you need to update the code to reactivate it.</h6>
+
+```
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start application
+      run: npm start
+```
+</details> 
+
+  <img src="https://i.imgur.com/LyHic3i.gif" width="100%" />
+</p>
 
 
 
