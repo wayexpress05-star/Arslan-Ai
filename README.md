@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://files.catbox.moe/627ndt.png" />
+  <img src="https://files.catbox.moe/bxqan2.png" />
 </p>
 
 <!-- 📊 STATS & HERO ANIMATION (Updated Colors) -->
