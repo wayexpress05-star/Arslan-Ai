@@ -52,6 +52,64 @@ Authenticate using **one** of the methods below to generate your `Session ID`.
 
 [![Scan QR Code](https://img.shields.io/badge/Scan%20QR%20Code-000000?style=for-the-badge&logo=react&logoColor=white)](https://arslanmd-bot-pairing.onrender.com/)
 
+<p align="center">
+  <img src="https://i.imgur.com/LyHic3i.gif" width="65%" />
+</p>
+
+<p align="center" style="color:#777;font-size:13px;">
+  <img src="https://github.com/Arslan-MD/Arslan-MD/blob/main/assets/warning.gif?raw=true" width="15" />
+  <em>Having connection issues? Try using a VPN.</em>
+</p>
+
+
+<div align="center">
+  <img src="https://github.com/Arslan-MD/Arslan-MD/blob/main/assets/techwave.gif?raw=true" width="80%"/>
+</div>
+
+<h2 align="center">🚀 Deployment Options</h2>
+
+<div align="center">
+  <table cellspacing="20">
+    <tr>
+      <td align="center">
+        <a href="https://dashboard.heroku.com/new?template=https://github.com/Arslan-MD/Arslan-MD" target="_blank">
+          <img src="https://img.shields.io/badge/Deploy%20to-Heroku-7A3E9D?style=for-the-badge&logo=heroku&logoColor=white" alt="Heroku"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://app.koyeb.com/services/deploy?type=git&repository=Arslan-MD/Arslan-MD" target="_blank">
+          <img src="https://img.shields.io/badge/Deploy%20to-Koyeb-FF2D95?style=for-the-badge&logo=koyeb&logoColor=white" alt="Koyeb"/>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a href="https://railway.app/new" target="_blank">
+          <img src="https://img.shields.io/badge/Deploy%20to-Railway-121212?style=for-the-badge&logo=railway&logoColor=white" alt="Railway"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://dashboard.render.com/web/new" target="_blank">
+          <img src="https://img.shields.io/badge/Deploy%20to-Render-00C7A9?style=for-the-badge&logo=render&logoColor=white" alt="Render"/>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a href="https://app.netlify.com/" target="_blank">
+          <img src="https://img.shields.io/badge/Deploy%20to-Netlify-00ADB5?style=for-the-badge&logo=netlify&logoColor=white" alt="Netlify"/>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://talkdrove.com" target="_blank">
+          <img src="https://img.shields.io/badge/Deploy%20via-TalkDrove-6B47FF?style=for-the-badge&logo=github&logoColor=white" alt="TalkDrove"/>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+<a><img src='https://i.imgur.com/LyHic3i.gif'/>
+
 
 
 
