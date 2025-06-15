@@ -901,6 +901,15 @@ async function handleGroupParticipantUpdate(sock, update) {
     }
 }
 
+// ✅ MESSAGE EVENT HANDLER (Essential for bot to respond to anything!)
+sock.ev.on('messages.upsert', async (chatUpdate) => {
+    try {
+        await handleMessages(sock, chatUpdate, true);
+    } catch (err) {
+        console.error('❌ Message Handler Error:', err);
+    }
+});
+
 // Instead, export the handlers along with handleMessages
 module.exports = {
     handleMessages,
