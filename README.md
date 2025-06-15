@@ -1,6 +1,6 @@
-🤖 Arslan-MD - MULTIPLE POWERFUL WHATSAPP BOT
+🤖 ***Arslan-MD*** - MULTIPLE POWERFUL WHATSAPP BOT
 
-> ⚔️ Developed by ArslanMD Official | 100+ Features | Super Aggressive Bot Engine
+> ⚔️ Developed by ArslanMD Official | 100+ Features | Super Aggressive Bot
 </div>
 
 <p align="center">
