@@ -141,6 +141,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
         let userMessage = message.message?.conversation?.trim().toLowerCase() ||
             message.message?.extendedTextMessage?.text?.trim().toLowerCase() || '';
         userMessage = userMessage.replace(/\.\s+/g, '.').trim();
+        await handleAutoReply(sock, chatId, message, userMessage);
 
         // Preserve raw message for commands like .tag that need original casing
         const rawText = message.message?.conversation?.trim() ||
