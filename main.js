@@ -93,7 +93,7 @@ const { goodnightCommand } = require('./commands/goodnight');
 const { shayariCommand } = require('./commands/shayari');
 const { rosedayCommand } = require('./commands/roseday');
 const imagineCommand = require('./commands/imagine');
-
+const { handleAutoReply } = require('./lib/autoreply'); // path adjust karna ho to karo
 
 // Global settings
 global.packname = settings.packname;
