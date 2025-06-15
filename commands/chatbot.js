@@ -4,7 +4,6 @@ const fetch = require('node-fetch');
 const config = require('../settings');
 
 const USER_GROUP_DATA = path.join(__dirname, '../data/userGroupData.json');
-const AUTOREPLY_PATH = path.join(__dirname, '../autos/autoreply.json');
 
 const chatMemory = {
     messages: new Map(),
@@ -38,18 +37,15 @@ async function showTyping(sock, chatId) {
 async function handleChatbotCommand(sock, chatId, message, match) {
     const data = loadUserGroupData();
     const isGroup = chatId.endsWith('@g.us');
-    const senderId = message.key.participant || message.key.remoteJid;
-    const botNumber = sock.user.id.split(':')[0] + '@s.whatsapp.net';
-    const isOwner = senderId === botNumber;
 
     if (!isGroup) {
-        return await sock.sendMessage(chatId, {
+        return sock.sendMessage(chatId, {
             text: '*🤖 Arslan-MD Chatbot is always active in private chat.* 💬'
         }, { quoted: message });
     }
 
     if (!match) {
-        return await sock.sendMessage(chatId, {
+        return sock.sendMessage(chatId, {
             text: `╭─「 *🤖 Chatbot Setup* 」\n│\n│ 💬 *.chatbot on* – Enable in group\n│ 🔇 *.chatbot off* – Disable in group\n╰───────────────⬣`
         });
     }
@@ -75,25 +71,6 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
 
     if (isGroup && !data.chatbot[chatId]) return;
 
-    // ✅ Check autoreply.json first
-    if (config.AUTO_REPLY === 'true') {
-        try {
-            const replyMap = JSON.parse(fs.readFileSync(AUTOREPLY_PATH, 'utf-8'));
-            const lowerMsg = userMessage.trim().toLowerCase();
-
-            if (replyMap[lowerMsg]) {
-                await showTyping(sock, chatId);
-                return await sock.sendMessage(chatId, {
-                    text: replyMap[lowerMsg],
-                    quoted: message
-                });
-            }
-        } catch (err) {
-            console.error('❌ Error loading autoreply.json:', err.message);
-        }
-    }
-
-    // 🧠 AI fallback
     const cleaned = userMessage;
     if (!chatMemory.messages.has(senderId)) {
         chatMemory.messages.set(senderId, []);
