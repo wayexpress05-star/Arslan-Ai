@@ -1,8 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
+const config = require('../settings');
 
 const USER_GROUP_DATA = path.join(__dirname, '../data/userGroupData.json');
+const AUTOREPLY_PATH = path.join(__dirname, '../autos/autoreply.json');
 
 const chatMemory = {
     messages: new Map(),
@@ -29,7 +31,7 @@ async function showTyping(sock, chatId) {
     try {
         await sock.presenceSubscribe(chatId);
         await sock.sendPresenceUpdate('composing', chatId);
-        await new Promise(r => setTimeout(r, Math.floor(Math.random() * 3000) + 2000));
+        await new Promise(r => setTimeout(r, Math.floor(Math.random() * 3000) + 1000));
     } catch {}
 }
 
@@ -55,12 +57,13 @@ async function handleChatbotCommand(sock, chatId, message, match) {
     if (match === 'on') {
         data.chatbot[chatId] = true;
         saveUserGroupData(data);
-        return sock.sendMessage(chatId, { text: '✅ *Chatbot has been enabled in this group.*\nGet ready to chat with Arslan-MD AI! 🤖' });
+        return sock.sendMessage(chatId, { text: '✅ *Chatbot has been enabled in this group.*' });
     }
+
     if (match === 'off') {
         delete data.chatbot[chatId];
         saveUserGroupData(data);
-        return sock.sendMessage(chatId, { text: '🛑 *Chatbot has been disabled for this group.*\nType *.chatbot on* to activate again.' });
+        return sock.sendMessage(chatId, { text: '🛑 *Chatbot has been disabled for this group.*' });
     }
 
     return sock.sendMessage(chatId, { text: '*Invalid command. Use:* .chatbot on / off' });
@@ -72,6 +75,25 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
 
     if (isGroup && !data.chatbot[chatId]) return;
 
+    // ✅ Check autoreply.json first
+    if (config.AUTO_REPLY === 'true') {
+        try {
+            const replyMap = JSON.parse(fs.readFileSync(AUTOREPLY_PATH, 'utf-8'));
+            const lowerMsg = userMessage.trim().toLowerCase();
+
+            if (replyMap[lowerMsg]) {
+                await showTyping(sock, chatId);
+                return await sock.sendMessage(chatId, {
+                    text: replyMap[lowerMsg],
+                    quoted: message
+                });
+            }
+        } catch (err) {
+            console.error('❌ Error loading autoreply.json:', err.message);
+        }
+    }
+
+    // 🧠 AI fallback
     const cleaned = userMessage;
     if (!chatMemory.messages.has(senderId)) {
         chatMemory.messages.set(senderId, []);
@@ -92,11 +114,7 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
 
     if (response) {
         await sock.sendMessage(chatId, {
-            text: `🧠 *Arslan-MD Bot Replied:*\n\n${response}\n\n💡 _AI Powered by ArslanMD Official_`
-        }, { quoted: message });
-    } else {
-        await sock.sendMessage(chatId, {
-            text: '⚠️ I tried, but couldn’t understand that. Try rephrasing your message.',
+            text: `🧠 *Arslan-MD Replied:*\n\n${response}\n\n💡 _AI Powered by ArslanMD Official_`,
             quoted: message
         });
     }
@@ -108,7 +126,7 @@ async function getAIResponse(userMessage, context) {
         const res = await fetch("https://api.dreaded.site/api/chatgpt?text=" + encodeURIComponent(prompt));
         const json = await res.json();
         return json.result?.prompt || null;
-    } catch (e) {
+    } catch {
         return null;
     }
 }
