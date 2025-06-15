@@ -35,7 +35,7 @@ const settings = {
   MODE: "public",          // ✅ modern standard
 
   // 🔁 Toggles
-  autoreact: 'true',         // ✅ auto reaction
+  autoreact: true,         // ✅ auto reaction
   autotyping: false,
   autokick: false,
   chatbot: false,
