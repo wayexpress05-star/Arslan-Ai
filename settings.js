@@ -35,13 +35,14 @@ const settings = {
   MODE: "public",          // ✅ modern standard
 
   // 🔁 Toggles
-  autoreact: true,         // ✅ auto reaction
+  autoreact: 'true',         // ✅ auto reaction
   autotyping: false,
   autokick: false,
   chatbot: false,
   welcome: true,
   goodbye: true,
   antilink: false,
+  AUTO_REPLY: 'true',  // ✅ hona chahiye string, na ke boolean
 
   // 🔐 API Keys & Media
   giphyApiKey: "qnl7ssQChTdPjsKta2Ax2LMaGXz303tq",
