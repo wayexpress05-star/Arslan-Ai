@@ -150,6 +150,18 @@ async function handleMessages(sock, messageUpdate, printLog) {
         if (userMessage.startsWith('.')) {
             console.log(`📝 Command used in ${isGroup ? 'group' : 'private'}: ${userMessage}`);
         }
+        
+        // Auto-react on ALL messages (groups + private)
+        if (!message.key.fromMe) { // Bot khud ke messages pe react nahi karega
+        const emojis = ["❤️", "😂", "👍", "🎉"]; // Apne pasand ke emojis daalo
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+        await sock.sendMessage(chatId, {
+        react: {
+            text: randomEmoji,
+            key: message.key
+        }
+    });
+}
 
         // Check if user is banned (skip ban check for unban command)
         if (isBanned(senderId) && !userMessage.startsWith('.unban')) {
