@@ -321,7 +321,7 @@ async function menuCommand(sock, m, command, prefix, from, pushName) {
 `;
 
     try {
-        const videoPath = path.resolve('ArslanMedia/media/menu.mp4');
+        const videoPath = path.resolve('ArslanMedia/media/new.mp4');
         const voicePath = path.resolve('ArslanMedia/audio/marco.mp3');
 
         // 🎬 Send Video
