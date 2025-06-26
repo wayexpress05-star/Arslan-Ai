@@ -35,12 +35,12 @@ const settings = {
   MODE: "public",          // ✅ modern standard
 
   // 🔁 Toggles
-  autoreact: true,         // ✅ auto reaction
+  autoreact: false,         // ✅ auto reaction
   autotyping: false,
   autokick: false,
   chatbot: false,
-  welcome: true,
-  goodbye: true,
+  welcome: false,
+  goodbye: false,
   antilink: false,
   AUTO_REPLY: 'true',  // ✅ hona chahiye string, na ke boolean
 
@@ -54,9 +54,9 @@ const settings = {
   // 🌐 Metadata
   description: "🔥 The Most Powerful WhatsApp Bot by ArslanMD.",
   version: "2.0.2",             // ✅ for all commands
-  website: "https://github.com/Arslan-MD/Arslan-MD",
+  website: "https://github.com/Arslan-MD/Arslan-Ai",
   ytchannel: "https://youtube.com/@ArslanMD",
-  repo: "https://github.com/Arslan-MD/Arslan-MD",
+  repo: "https://github.com/Arslan-MD/Arslan-Ai",
 
   // 🗣️ Voice Option (future)
   botVoice: "en-US-Wavenet-D"
