@@ -153,7 +153,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
         
         // Auto-react on ALL messages (groups + private)
         if (!message.key.fromMe) { // Bot khud ke messages pe react nahi karega
-        const emojis = ["❤️", "😂", "👍", "🎉"]; // Apne pasand ke emojis daalo
+        const emojis = ["❤️", "🤖", "💌", "❣️"]; // Apne pasand ke emojis daalo
         const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
         await sock.sendMessage(chatId, {
         react: {
