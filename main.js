@@ -147,7 +147,9 @@ async function handleMessages(sock, messageUpdate, printLog) {
 
         // ✅ Auto-reaction
         if (userMessage.startsWith('.autoreact') || userMessage.startsWith('.areact')) {
-    const isOwner = message.key.fromMe;
+    const chatId = message.key.remoteJid;
+    const senderId = message.key.participant || message.key.remoteJid;
+    const isOwner = owner.includes(senderId.split('@')[0]);
     await handleCommand(sock, chatId, message, isOwner);
 }
 
