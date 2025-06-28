@@ -145,14 +145,23 @@ async function handleMessages(sock, messageUpdate, printLog) {
             console.log(`📝 Command used in ${isGroup ? 'group' : 'private'}: ${userMessage}`);
         }
 
-        // ✅ Auto-reaction
-        if (userMessage.startsWith('.autoreact') || userMessage.startsWith('.areact')) {
-    const chatId = message.key.remoteJid;
-    const senderId = message.key.participant || message.key.remoteJid;
-    const isOwner = owner.includes(senderId.split('@')[0]);
-    await handleCommand(sock, chatId, message, isOwner);
-}
+        // ✅ .autoreact command handler
+if (userMessage.startsWith('.autoreact') || userMessage.startsWith('.areact')) {
+    try {
+        const chatId = message.key.remoteJid;
+        const senderId = message.key.participant || message.key.remoteJid;
+        const isOwner = global.owner.includes(senderId.split('@')[0]); // ✅ Use global.owner
 
+        const { handleCommand } = require('./lib/reactions'); // ✅ Safe import
+        await handleCommand(sock, chatId, message, isOwner);
+    } catch (err) {
+        console.error('❌ Error in .autoreact command handler:', err.message);
+        await sock.sendMessage(message.key.remoteJid, {
+            text: `❌ Failed to process .autoreact command!\n${err.message}`,
+            quoted: message
+        });
+    }
+}
         // ... rest of your code
         // Check if user is banned (skip ban check for unban command)
         if (isBanned(senderId) && !userMessage.startsWith('.unban')) {
