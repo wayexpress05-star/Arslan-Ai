@@ -162,6 +162,12 @@ if (userMessage.startsWith('.autoreact') || userMessage.startsWith('.areact')) {
         });
     }
 }
+
+// ✅ Auto-reaction using config in autoreact.json
+const { addReaction } = require('./lib/reactions');
+if (!message.key.fromMe) {
+    await addReaction(sock, message);
+}
         // ... rest of your code
         // Check if user is banned (skip ban check for unban command)
         if (isBanned(senderId) && !userMessage.startsWith('.unban')) {
