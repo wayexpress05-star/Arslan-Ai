@@ -150,13 +150,13 @@ if (userMessage.startsWith('.autoreact') || userMessage.startsWith('.areact')) {
     try {
         const chatId = message.key.remoteJid;
         const senderId = message.key.participant || message.key.remoteJid;
-        const isOwner = global.owner.includes(senderId.split('@')[0]); // ✅ Use global.owner
+        const isOwner = (global.owner || []).includes(senderId.split('@')[0]);
 
-        const { handleCommand } = require('./lib/reactions'); // ✅ Safe import
+        const { handleCommand } = require('./lib/reactions');
         await handleCommand(sock, chatId, message, isOwner);
     } catch (err) {
         console.error('❌ Error in .autoreact command handler:', err.message);
-        await sock.sendMessage(message.key.remoteJid, {
+        await sock.sendMessage(chatId, {
             text: `❌ Failed to process .autoreact command!\n${err.message}`,
             quoted: message
         });
