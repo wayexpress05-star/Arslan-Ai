@@ -1,6 +1,3 @@
-/*Créditos A Quien Correspondan 
-Play Traido y Editado 
-Por Cuervo-Team-Supreme*/
 const axios = require('axios');
 const crypto = require('crypto');
 const yts = require('yt-search');
