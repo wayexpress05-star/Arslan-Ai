@@ -1,81 +1,55 @@
-const yts = require('yt-search');
-const axios = require('axios');
+import axios from "axios";
+import yts from "yt-search";
+import config from '../config.cjs';
 
-async function playCommand(sock, chatId, message) {
-  try {
-    const text = message.message?.conversation || message.message?.extendedTextMessage?.text;
-    const searchQuery = text?.split(' ').slice(1).join(' ').trim();
+const play = async (m, gss) => {
+  const prefix = config.PREFIX;
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
+  const args = m.body.slice(prefix.length + cmd.length).trim().split(" ");
 
-    if (!searchQuery) {
-      return await sock.sendMessage(chatId, {
-        text: "❌ What song do you want to download?\n\n_Use: .play Tum Mile_"
-      });
+  if (cmd === "play") {
+    if (args.length === 0 || !args.join(" ")) {
+      return m.reply("*Please provide a song name or keywords to search for.*");
     }
 
-    const { videos } = await yts(searchQuery);
-    if (!videos || videos.length === 0) {
-      return await sock.sendMessage(chatId, {
-        text: "❌ No songs found!"
-      });
-    }
+    const searchQuery = args.join(" ");
+    m.reply("*🎵 Searching and downloading...*");
 
-    const video = videos[0];
-    const title = video.title.replace(/[\\/:*?"<>|]/g, '');
-    let audioUrl;
-
-    await sock.sendMessage(chatId, {
-      text: `🎶 *${video.title}*\n📥 Please wait while downloading...`
-    });
-
-    // ✅ 1st try: vidhub
     try {
-      const api1 = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
-      const res1 = await axios.get(api1);
-      audioUrl = res1.data?.result?.url_audio || res1.data?.url;
-    } catch (e) {
-      console.log('[vidhub failed]');
-    }
-
-    // ✅ 2nd try: noobs-api
-    if (!audioUrl) {
-      try {
-        const api2 = `https://noobs-api.top/dipto/ytDl3?link=${video.videoId}&format=mp3`;
-        const res2 = await axios.get(api2);
-        audioUrl = res2.data?.downloadLink;
-      } catch (e) {
-        console.log('[noobs-api failed]');
+      const searchResults = await yts(searchQuery);
+      if (!searchResults.videos || searchResults.videos.length === 0) {
+        return m.reply(`❌ No results found for "${searchQuery}".`);
       }
-    }
 
-    // ✅ 3rd try: lolhuman API
-    if (!audioUrl) {
-      try {
-        const api3 = `https://api.lolhuman.xyz/api/ytmusic?apikey=ArslanFreeAPI&query=${encodeURIComponent(video.title)}`;
-        const res3 = await axios.get(api3);
-        audioUrl = res3.data?.result?.link;
-      } catch (e) {
-        console.log('[lolhuman failed]');
+      const firstResult = searchResults.videos[0];
+      const videoUrl = firstResult.url;
+
+      // Fetch MP3 from API
+      const apiUrl = `https://apis.davidcyriltech.my.id/download/ytmp3?url=${videoUrl}`;
+      const response = await axios.get(apiUrl);
+
+      if (!response.data.success) {
+        return m.reply(`❌ Failed to fetch audio for "${searchQuery}".`);
       }
+
+      const { title, download_url } = response.data.result;
+
+      await gss.sendMessage(
+        m.from,
+        {
+          audio: { url: download_url },
+          mimetype: "audio/mpeg",
+          fileName: `${title}.mp3`,
+          ptt: false
+        },
+        { quoted: m }
+      );
+
+    } catch (error) {
+      console.error(error);
+      m.reply("❌ An error occurred while processing your request.");
     }
-
-    if (!audioUrl) {
-      return await sock.sendMessage(chatId, {
-        text: "❌ Link nahi mila kisi bhi source se. Try again later ya different song try karo."
-      });
-    }
-
-    await sock.sendMessage(chatId, {
-      audio: { url: audioUrl },
-      mimetype: "audio/mpeg",
-      fileName: `${title}.mp3`
-    }, { quoted: message });
-
-  } catch (error) {
-    console.error('Error in play command:', error);
-    await sock.sendMessage(chatId, {
-      text: "⚠️ Download failed. Please try again later."
-    });
   }
-}
+};
 
-module.exports = playCommand;
+export default play;
