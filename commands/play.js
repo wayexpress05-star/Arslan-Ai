@@ -27,16 +27,16 @@ async function playCommand(sock, chatId, message) {
       text: `🎶 *${video.title}*\n📥 Please wait while downloading...`
     });
 
-    // Try vidhub API first
+    // ✅ 1st try: vidhub
     try {
       const api1 = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
       const res1 = await axios.get(api1);
       audioUrl = res1.data?.result?.url_audio || res1.data?.url;
     } catch (e) {
-      console.log('[vidhub API failed]');
+      console.log('[vidhub failed]');
     }
 
-    // If first fails, try noobs-api
+    // ✅ 2nd try: noobs-api
     if (!audioUrl) {
       try {
         const api2 = `https://noobs-api.top/dipto/ytDl3?link=${video.videoId}&format=mp3`;
@@ -47,9 +47,20 @@ async function playCommand(sock, chatId, message) {
       }
     }
 
+    // ✅ 3rd try: lolhuman API
+    if (!audioUrl) {
+      try {
+        const api3 = `https://api.lolhuman.xyz/api/ytmusic?apikey=ArslanFreeAPI&query=${encodeURIComponent(video.title)}`;
+        const res3 = await axios.get(api3);
+        audioUrl = res3.data?.result?.link;
+      } catch (e) {
+        console.log('[lolhuman failed]');
+      }
+    }
+
     if (!audioUrl) {
       return await sock.sendMessage(chatId, {
-        text: "❌ Failed to fetch download link from all sources. Try again later."
+        text: "❌ Link nahi mila kisi bhi source se. Try again later ya different song try karo."
       });
     }
 
