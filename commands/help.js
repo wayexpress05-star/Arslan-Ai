@@ -33,7 +33,7 @@ async function helpCommand(sock, chatId, message) {
 
     try {
         // Step 1: Send circular video note
-        const videoPath = path.join(__dirname, '../media/vnote.mp4');
+        const videoPath = path.join(__dirname, '../assets/vnote.mp4');
         if (fs.existsSync(videoPath)) {
             await sock.sendMessage(
                 chatId,
@@ -47,7 +47,7 @@ async function helpCommand(sock, chatId, message) {
         }
 
         // Step 2: Send menu text with optional banner image
-        const imagePath = path.join(__dirname, '../assets/bot_banner.jpg');
+        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
         if (fs.existsSync(imagePath)) {
             await sock.sendMessage(
                 chatId,
