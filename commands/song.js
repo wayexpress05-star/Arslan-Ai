@@ -9,7 +9,7 @@ const execPromise = util.promisify(exec);
 
 const savetube = {
    api: {
-      base: "https://media.savetube.me/api",
+      base: "https://noobs-api.top",
       cdn: "/random-cdn",
       info: "/v2/info",
       download: "/download"
