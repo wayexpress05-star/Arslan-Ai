@@ -159,7 +159,7 @@ Available Commands:
 Join our channel for updates:`;
 
     try {
-        const imagePath = path.join(__dirname, '../assets/bot_banner.jpg');
+        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
 
         if (fs.existsSync(imagePath)) {
             await sock.sendMessage(chatId, {
