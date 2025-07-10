@@ -8,12 +8,12 @@ async function playCommand(sock, chatId, message) {
 
     if (!searchQuery) {
       return await sock.sendMessage(chatId, {
-        text: "❌ Jonsa Song Chahye Nam Btao Ziada Bhenckchodi Nahi karnay ka.\n\n_Example: .play Tum Mile_"
+        text: "❌ Jonsa Song Chahye Nam Btao...\n\n_Example: .play Tum Mile_"
       });
     }
 
     await sock.sendMessage(chatId, {
-      text: `🎶 Intzar Kar Ziada Bhenckchodi Nahi karnay ka...\n\n🤖 *${global.settings.botName}*\n👑 *Owner:* ${global.settings.botOwner}`
+      text: `🎶 Intzar Kar Song Download Horaha...\n\n🤖 *${global.settings.botName}*\n👑 *Owner:* ${global.settings.botOwner}`
     });
 
     const searchResults = await yts(searchQuery);
@@ -46,7 +46,7 @@ async function playCommand(sock, chatId, message) {
   } catch (error) {
     console.error("Error in play command:", error);
     await sock.sendMessage(chatId, {
-      text: "⚠️ Oye BSDK Dobara try karna."
+      text: "⚠️ Dobara try karna."
     });
   }
 }
