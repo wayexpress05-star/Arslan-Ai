@@ -8,18 +8,18 @@ async function playCommand(sock, chatId, message) {
 
     if (!searchQuery) {
       return await sock.sendMessage(chatId, {
-        text: "❌ Please provide a song name.\n\n_Example: .play Tum Mile_"
+        text: "❌ Jonsa Song Chahye Nam Btao Ziada Bhenckchodi Nahi karnay ka.\n\n_Example: .play Tum Mile_"
       });
     }
 
     await sock.sendMessage(chatId, {
-      text: `🎶 Searching and downloading your song...\n\n🤖 *${global.settings.botName}*\n👑 *Owner:* ${global.settings.botOwner}`
+      text: `🎶 Intzar Kar Ziada Bhenckchodi Nahi karnay ka...\n\n🤖 *${global.settings.botName}*\n👑 *Owner:* ${global.settings.botOwner}`
     });
 
     const searchResults = await yts(searchQuery);
     if (!searchResults.videos || searchResults.videos.length === 0) {
       return await sock.sendMessage(chatId, {
-        text: `❌ No results found for "${searchQuery}".`
+        text: `❌ Kuch Or Try Kar Jhanto "${searchQuery}".`
       });
     }
 
@@ -31,7 +31,7 @@ async function playCommand(sock, chatId, message) {
 
     if (!response.data.success || !response.data.result?.download_url) {
       return await sock.sendMessage(chatId, {
-        text: `❌ Failed to fetch audio from API for "${searchQuery}".`
+        text: `❌ Api Kharab Hogayn "${searchQuery}".`
       });
     }
 
@@ -46,7 +46,7 @@ async function playCommand(sock, chatId, message) {
   } catch (error) {
     console.error("Error in play command:", error);
     await sock.sendMessage(chatId, {
-      text: "⚠️ Download failed. Please try again later."
+      text: "⚠️ Oye BSDK Dobara try karna."
     });
   }
 }
