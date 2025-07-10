@@ -20,14 +20,15 @@ async function playCommand(sock, chatId, message) {
     }
 
     const video = videos[0];
-    const apiUrl = `https://noobs-api.top/dipto/ytDl3?link=${video.videoId}&format=mp3`;
+   const apiUrl = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
 
     await sock.sendMessage(chatId, {
       text: `🎶 *${video.title}*\n📥 Please wait while downloading...`
     });
 
     const response = await axios.get(apiUrl);
-    const data = response.data;
+const data = response.data;
+const audioUrl = data?.result?.url_audio || data?.url;
 
     if (!data || !data.downloadLink) {
       return await sock.sendMessage(chatId, {
