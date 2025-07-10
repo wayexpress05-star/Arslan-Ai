@@ -8,18 +8,18 @@ async function songCommand(sock, chatId, message) {
 
     if (!searchQuery) {
       return await sock.sendMessage(chatId, {
-        text: "❌ Please provide a song name.\n\n_Example: .song Tum Mile_"
+        text: "❌ Jonsa Song Chahye Nam Btao.\n\n_Example: .song Tum Mile_"
       });
     }
 
     await sock.sendMessage(chatId, {
-      text: "🎵 Searching and preparing document audio..."
+      text: "🎵 Intzar Kar Song Download Horaha..."
     });
 
     const searchResults = await yts(searchQuery);
     if (!searchResults.videos || searchResults.videos.length === 0) {
       return await sock.sendMessage(chatId, {
-        text: `❌ No results found for "${searchQuery}".`
+        text: `❌ Api Kharab Hogayn "${searchQuery}".`
       });
     }
 
@@ -31,7 +31,7 @@ async function songCommand(sock, chatId, message) {
 
     if (!response.data.success || !response.data.result?.download_url) {
       return await sock.sendMessage(chatId, {
-        text: `❌ Failed to fetch audio for "${searchQuery}".`
+        text: `❌ Api Kharab Hogayn "${searchQuery}".`
       });
     }
 
@@ -46,7 +46,7 @@ async function songCommand(sock, chatId, message) {
   } catch (error) {
     console.error("Error in song command:", error);
     await sock.sendMessage(chatId, {
-      text: "⚠️ Download failed. Please try again later."
+      text: "⚠️ Kuch Or Try Kar Jhanto."
     });
   }
 }
