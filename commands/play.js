@@ -20,23 +20,24 @@ async function playCommand(sock, chatId, message) {
     }
 
     const video = videos[0];
-   const apiUrl = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
+    const apiUrl = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
 
     await sock.sendMessage(chatId, {
       text: `🎶 *${video.title}*\n📥 Please wait while downloading...`
     });
 
     const response = await axios.get(apiUrl);
-const data = response.data;
-const audioUrl = data?.result?.url_audio || data?.url;
+    const data = response.data;
 
-    if (!data || !data.downloadLink) {
+    // ✅ Use safe fallback for audio URL
+    const audioUrl = data?.result?.url_audio || data?.url;
+
+    if (!audioUrl) {
       return await sock.sendMessage(chatId, {
         text: "❌ Failed to fetch audio from the API. Please try again later."
       });
     }
 
-    const audioUrl = data.downloadLink;
     const fileName = `${video.title.replace(/[\\/:*?"<>|]/g, '')}.mp3`;
 
     await sock.sendMessage(chatId, {
