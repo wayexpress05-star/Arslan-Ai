@@ -1,42 +1,55 @@
-const axios = require('axios');
 const yts = require('yt-search');
+const axios = require('axios');
 
-module.exports = {
-  name: "play",
-  alias: ["music"],
-  desc: "Download and play MP3 from YouTube",
-  category: "download",
-  react: "🎧",
-  usage: '.play <song name>',
-  start: async (sock, m, { text, args, prefix, command }) => {
-    try {
-      if (!text) {
-        return m.reply(`❌ Please provide a song name!\n\nExample: *${prefix + command} Tu hai kahan*`);
-      }
+async function playCommand(sock, chatId, message) {
+  try {
+    const text = message.message?.conversation || message.message?.extendedTextMessage?.text;
+    const searchQuery = text?.split(' ').slice(1).join(' ').trim();
 
-      let search = await yts(text);
-      let video = search.videos[0];
-      if (!video) return m.reply("❌ No results found!");
-
-      let fileName = `${video.title.replace(/[\\/:*?"<>|]/g, '')}.mp3`;
-      let apiUrl = `https://noobs-api.top/dipto/ytDl3?link=${video.videoId}&format=mp3`;
-
-      await m.reply(`🎧 *Title:* ${video.title}\n📥 Downloading MP3...`);
-
-      let res = await axios.get(apiUrl);
-      let data = res.data;
-
-      if (!data.downloadLink) return m.reply("❌ Failed to get audio link.");
-
-      await sock.sendMessage(m.chat, {
-        audio: { url: data.downloadLink },
-        mimetype: 'audio/mpeg',
-        fileName
-      }, { quoted: m });
-
-    } catch (err) {
-      console.error('PLAY ERROR:', err);
-      m.reply("⚠️ Error occurred while downloading the song.");
+    if (!searchQuery) {
+      return await sock.sendMessage(chatId, {
+        text: "❌ What song do you want to download?\n\n_Use: .play Tum Mile_"
+      });
     }
+
+    const { videos } = await yts(searchQuery);
+    if (!videos || videos.length === 0) {
+      return await sock.sendMessage(chatId, {
+        text: "❌ No songs found!"
+      });
+    }
+
+    const video = videos[0];
+    const apiUrl = `https://noobs-api.top/dipto/ytDl3?link=${video.videoId}&format=mp3`;
+
+    await sock.sendMessage(chatId, {
+      text: `🎶 *${video.title}*\n📥 Please wait while downloading...`
+    });
+
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+
+    if (!data || !data.downloadLink) {
+      return await sock.sendMessage(chatId, {
+        text: "❌ Failed to fetch audio from the API. Please try again later."
+      });
+    }
+
+    const audioUrl = data.downloadLink;
+    const fileName = `${video.title.replace(/[\\/:*?"<>|]/g, '')}.mp3`;
+
+    await sock.sendMessage(chatId, {
+      audio: { url: audioUrl },
+      mimetype: "audio/mpeg",
+      fileName
+    }, { quoted: message });
+
+  } catch (error) {
+    console.error('Error in play command:', error);
+    await sock.sendMessage(chatId, {
+      text: "⚠️ Download failed. Please try again later."
+    });
   }
-};
+}
+
+module.exports = playCommand;
