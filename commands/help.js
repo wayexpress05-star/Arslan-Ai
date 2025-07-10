@@ -73,7 +73,7 @@ async function helpCommand(sock, chatId, message) {
         }
 
         // Step 3: Send voice note
-        const audioPath = path.join(__dirname, '../media/audio.mp3');
+        const audioPath = path.join(__dirname, '../assets/audio.mp3');
         if (fs.existsSync(audioPath)) {
             await sock.sendMessage(
                 chatId,
