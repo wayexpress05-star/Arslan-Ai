@@ -13,7 +13,7 @@ async function playCommand(sock, chatId, message) {
     }
 
     await sock.sendMessage(chatId, {
-      text: "🎶 Searching and downloading your song..."
+      text: `🎶 Searching and downloading your song...\n\n🤖 *${global.settings.botName}*\n👑 *Owner:* ${global.settings.botOwner}`
     });
 
     const searchResults = await yts(searchQuery);
