@@ -20,30 +20,43 @@ async function playCommand(sock, chatId, message) {
     }
 
     const video = videos[0];
-    const apiUrl = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
+    const title = video.title.replace(/[\\/:*?"<>|]/g, '');
+    let audioUrl;
 
     await sock.sendMessage(chatId, {
       text: `🎶 *${video.title}*\n📥 Please wait while downloading...`
     });
 
-    const response = await axios.get(apiUrl);
-    const data = response.data;
+    // Try vidhub API first
+    try {
+      const api1 = `https://vidhub.cloud/api/ytmp3?url=https://youtube.com/watch?v=${video.videoId}`;
+      const res1 = await axios.get(api1);
+      audioUrl = res1.data?.result?.url_audio || res1.data?.url;
+    } catch (e) {
+      console.log('[vidhub API failed]');
+    }
 
-    // ✅ Use safe fallback for audio URL
-    const audioUrl = data?.result?.url_audio || data?.url;
+    // If first fails, try noobs-api
+    if (!audioUrl) {
+      try {
+        const api2 = `https://noobs-api.top/dipto/ytDl3?link=${video.videoId}&format=mp3`;
+        const res2 = await axios.get(api2);
+        audioUrl = res2.data?.downloadLink;
+      } catch (e) {
+        console.log('[noobs-api failed]');
+      }
+    }
 
     if (!audioUrl) {
       return await sock.sendMessage(chatId, {
-        text: "❌ Failed to fetch audio from the API. Please try again later."
+        text: "❌ Failed to fetch download link from all sources. Try again later."
       });
     }
-
-    const fileName = `${video.title.replace(/[\\/:*?"<>|]/g, '')}.mp3`;
 
     await sock.sendMessage(chatId, {
       audio: { url: audioUrl },
       mimetype: "audio/mpeg",
-      fileName
+      fileName: `${title}.mp3`
     }, { quoted: message });
 
   } catch (error) {
