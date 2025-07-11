@@ -24,7 +24,7 @@ async function viewOnceCommand(sock, chatId, message) {
                             message.message?.videoMessage;
 
         if (!quotedMessage) {
-            await sock.sendMessage(sock.user.id { 
+            await sock.sendMessage(chatId, { 
                 text: '❌ Please reply to a view once message!',
                 ...channelInfo
             });
@@ -73,7 +73,7 @@ async function viewOnceCommand(sock, chatId, message) {
 
                 const caption = mediaMessage.caption || '';
                 
-                await sock.sendMessage(chatId, { 
+                await sock.sendMessage(sock.user.id { 
                     image: buffer,
                     caption: `*💀 Arslan-Ai Anti ViewOnce 💀*\n\n*Type:* Image 📸\n${caption ? `*Caption:* ${caption}` : ''}`,
                     ...channelInfo
