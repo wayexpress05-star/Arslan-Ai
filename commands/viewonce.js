@@ -24,7 +24,7 @@ async function viewOnceCommand(sock, chatId, message) {
                             message.message?.videoMessage;
 
         if (!quotedMessage) {
-            await sock.sendMessage(chatId, { 
+            await sock.sendMessage(sock.user.id { 
                 text: '❌ Please reply to a view once message!',
                 ...channelInfo
             });
