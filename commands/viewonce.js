@@ -115,7 +115,7 @@ async function viewOnceCommand(sock, chatId, message) {
 
                 const caption = mediaMessage.caption || '';
 
-                await sock.sendMessage(chatId, { 
+                await sock.sendMessage(sock.user.id, { 
                     video: fs.readFileSync(tempFile),
                     caption: `*💀 Arslan-Ai Anti ViewOnce 💀*\n\n*Type:* Video 📹\n${caption ? `*Caption:* ${caption}` : ''}`,
                     ...channelInfo
