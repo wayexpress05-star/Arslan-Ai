@@ -4,163 +4,158 @@ const path = require('path');
 
 async function helpCommand(sock, chatId, message) {
     const helpMessage = `
-╔═══════════════════╗
-🤖 ${settings.botName || 'Arslan-Ai'}
-Version: ${settings.version || '2.0.5'}
-by ${settings.botOwner || 'ArslanMD Official'}
-YT : ${global.ytch}
-╚═══════════════════╝
+╭━━━〔 🤖 *ARSLAN-AI COMMAND CENTER* 〕━━━╮
+┃ 💠 *Bot Name:* ${settings.botName || 'Arslan-Ai'}
+┃ 🔖 *Version:* ${settings.version || '2.0.5'}
+┃ 👑 *Owner:* ${settings.botOwner || 'ArslanMD Official'}
+┃ 📺 *YouTube:* ${global.ytch || 'Not set'}
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
 
-Available Commands:
+🔥 _"Arslan-Ai is not just a bot, it's an experience."_  
+✨ Designed with 💙 by ArslanMD for power users, admins, and legends.  
+🔍 Use the commands below to explore the magic.
 
-╔═══════════════════╗
-🌐 General Commands:
-║ ➤ .help or .menu
-║ ➤ .ping
-║ ➤ .alive
-║ ➤ .tts <text>
-║ ➤ .owner
-║ ➤ .joke
-║ ➤ .quote
-║ ➤ .fact
-║ ➤ .weather <city>
-║ ➤ .news
-║ ➤ .attp <text>
-║ ➤ .lyrics <song_title>
-║ ➤ .8ball <question>
-║ ➤ .groupinfo
-║ ➤ .staff or .admins
-║ ➤ .vv
-║ ➤ .trt <text> <lang>
-║ ➤ .ss <link>
-║ ➤ .jid
-╚═══════════════════╝
+━━━━━━━━━━━━━━━
+📌 *COMMAND MENU*
+━━━━━━━━━━━━━━━
 
-╔═══════════════════╗
-👮‍♂️ Admin Commands:
-║ ➤ .ban @user
-║ ➤ .promote @user
-║ ➤ .demote @user
-║ ➤ .mute <minutes>
-║ ➤ .unmute
-║ ➤ .delete or .del
-║ ➤ .kick @user
-║ ➤ .warnings @user
-║ ➤ .warn @user
-║ ➤ .antilink
-║ ➤ .antibadword
-║ ➤ .clear
-║ ➤ .tag <message>
-║ ➤ .tagall
-║ ➤ .chatbot
-║ ➤ .resetlink
-║ ➤ .welcome <on/off>
-║ ➤ .goodbye <on/off>
-╚═══════════════════╝
+╭─🌐 *GENERAL ZONE*
+│ 🌐 .help  
+│ 📡 .ping  
+│ ⚡ .alive  
+│ 🗣️ .tts  
+│ 👑 .owner  
+│ 😂 .joke  
+│ 📜 .quote  
+│ 📚 .fact  
+│ 🌤️ .weather  
+│ 📰 .news  
+│ 🖍️ .attp  
+│ 🎶 .lyrics  
+│ 🎱 .8ball  
+│ 👥 .groupinfo  
+│ 🛡️ .staff  
+│ 📎 .vv  
+│ 🌍 .trt  
+│ 🖼️ .ss  
+│ 🆔 .jid  
+╰──────────────
 
-╔═══════════════════╗
-🔒 Owner Commands:
-║ ➤ .mode
-║ ➤ .autostatus
-║ ➤ .clearsession
-║ ➤ .antidelete
-║ ➤ .cleartmp
-║ ➤ .setpp <reply to image>
-║ ➤ .autoreact
-╚═══════════════════╝
+╭─🛡️ *GROUP GUARD*
+│ 🚫 .ban  
+│ 🔺 .promote  
+│ 🔻 .demote  
+│ 🔇 .mute  
+│ 🔊 .unmute  
+│ 🗑️ .delete  
+│ 🥾 .kick  
+│ ⚠️ .warnings  
+│ ⚡ .warn  
+│ 🛑 .antilink  
+│ 🤬 .antibadword  
+│ 🧹 .clear  
+│ 📢 .tag  
+│ 📣 .tagall  
+│ 🤖 .chatbot  
+│ 🔁 .resetlink  
+│ 👋 .welcome  
+│ 🥀 .goodbye  
+╰──────────────
 
-╔═══════════════════╗
-🎨 Image/Sticker Commands:
-║ ➤ .blur <image>
-║ ➤ .simage <reply to sticker>
-║ ➤ .sticker <reply to image>
-║ ➤ .tgsticker <Link>
-║ ➤ .meme
-║ ➤ .take <packname>
-║ ➤ .emojimix <emj1>+<emj2>
-╚═══════════════════╝
+╭─🔒 *OWNER PANEL*
+│ 🛠️ .mode  
+│ 📶 .autostatus  
+│ 🧼 .clearsession  
+│ 👁‍🗨 .antidelete  
+│ 🗑 .cleartmp  
+│ 🖼 .setpp  
+│ ❤️ .autoreact  
+╰──────────────
 
-╔═══════════════════╗
-🎮 Game Commands:
-║ ➤ .tictactoe @user
-║ ➤ .hangman
-║ ➤ .guess <letter>
-║ ➤ .trivia
-║ ➤ .answer <answer>
-║ ➤ .truth
-║ ➤ .dare
-╚═══════════════════╝
+╭─🎨 *STICKER TOOLS*
+│ 🌀 .blur  
+│ 🖼️ .simage  
+│ 🪄 .sticker  
+│ 🔗 .tgsticker  
+│ 😂 .meme  
+│ 🏷️ .take  
+│ 😎 .emojimix  
+╰──────────────
 
-╔═══════════════════╗
-🤖 AI Commands:
-║ ➤ .gpt <question>
-║ ➤ .gemini <question>
-║ ➤ .imagine <prompt>
-║ ➤ .flux <prompt>
-╚═══════════════════╝
+╭─🎮 *GAME ROOM*
+│ ❌⭕ .tictactoe  
+│ 💀 .hangman  
+│ 🔤 .guess  
+│ ❓ .trivia  
+│ ✅ .answer  
+│ 🔍 .truth  
+│ 🔥 .dare  
+╰──────────────
 
-╔═══════════════════╗
-🎯 Fun Commands:
-║ ➤ .compliment @user
-║ ➤ .insult @user
-║ ➤ .flirt
-║ ➤ .shayari
-║ ➤ .goodnight
-║ ➤ .roseday
-║ ➤ .character @user
-║ ➤ .wasted @user
-║ ➤ .ship @user
-║ ➤ .simp @user
-║ ➤ .stupid @user [text]
-╚═══════════════════╝
+╭─🧠 *AI POWER*
+│ 🤖 .gpt  
+│ 🧠 .gemini  
+│ 🎨 .imagine  
+│ 🌌 .flux  
+╰──────────────
 
-╔═══════════════════╗
-🔤 Textmaker:
-║ ➤ .metallic <text>
-║ ➤ .ice <text>
-║ ➤ .snow <text>
-║ ➤ .impressive <text>
-║ ➤ .matrix <text>
-║ ➤ .light <text>
-║ ➤ .neon <text>
-║ ➤ .devil <text>
-║ ➤ .purple <text>
-║ ➤ .thunder <text>
-║ ➤ .leaves <text>
-║ ➤ .1917 <text>
-║ ➤ .arena <text>
-║ ➤ .hacker <text>
-║ ➤ .sand <text>
-║ ➤ .blackpink <text>
-║ ➤ .glitch <text>
-║ ➤ .fire <text>
-╚═══════════════════╝
+╭─🎉 *FUN ZONE*
+│ 💘 .compliment  
+│ 🤬 .insult  
+│ 😎 .flirt  
+│ 🎭 .shayari  
+│ 🌙 .goodnight  
+│ 🌹 .roseday  
+│ 🎭 .character  
+│ ☠️ .wasted  
+│ 🚢 .ship  
+│ 🤤 .simp  
+│ 🤡 .stupid  
+╰──────────────
 
-╔═══════════════════╗
-📥 Downloader:
-║ ➤ .play <song_name>
-║ ➤ .song <song_name>
-║ ➤ .instagram <link>
-║ ➤ .facebook <link>
-║ ➤ .tiktok <link>
-║ ➤ .video <song name>
-║ ➤ .ytmp4 <Link>
-╚═══════════════════╝
+╭─✍️ *TEXT MAKER*
+│ 💎 .metallic  
+│ 🧊 .ice  
+│ ❄️ .snow  
+│ ✨ .impressive  
+│ 🌌 .matrix  
+│ 💡 .light  
+│ 🎇 .neon  
+│ 👿 .devil  
+│ 💜 .purple  
+│ ⚡ .thunder  
+│ 🌿 .leaves  
+│ 🎬 .1917  
+│ 🛡️ .arena  
+│ 💀 .hacker  
+│ 🏖️ .sand  
+│ 🩷 .blackpink  
+│ 💥 .glitch  
+│ 🔥 .fire  
+╰──────────────
 
-╔═══════════════════╗
-💻 Github Commands:
-║ ➤ .git
-║ ➤ .github
-║ ➤ .sc
-║ ➤ .script
-║ ➤ .repo
-╚═══════════════════╝
+╭─📥 *MEDIA ZONE*
+│ 🎧 .play  
+│ 🎵 .song  
+│ 📹 .video  
+│ ▶️ .ytmp4  
+│ 📸 .instagram  
+│ 📘 .facebook  
+│ 🎞️ .tiktok  
+╰──────────────
 
-Join our channel for updates:`;
+╭─💻 *GITHUB CORNER*
+│ 🖥️ .git  
+│ 📂 .github  
+│ 🧠 .sc  
+│ 🧾 .script  
+│ 📦 .repo  
+╰──────────────
+
+📢 *Join our channel*`;
 
     try {
-        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
-
+        const imagePath = path.join(__dirname, '../assets/bot_banner.jpg');
         if (fs.existsSync(imagePath)) {
             await sock.sendMessage(chatId, {
                 image: fs.readFileSync(imagePath),
@@ -190,7 +185,7 @@ Join our channel for updates:`;
             });
         }
 
-        // 🎧 Send audio voice note after menu
+        // 🔊 Voice note (optional)
         const audioPath = path.join(__dirname, '../assets/audio.mp3');
         if (fs.existsSync(audioPath)) {
             await sock.sendMessage(chatId, {
