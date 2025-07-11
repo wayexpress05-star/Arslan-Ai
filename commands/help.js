@@ -9,14 +9,14 @@ async function helpCommand(sock, chatId, message) {
 ┃ 🔖 *Version:* ${settings.version || '2.0.5'}
 ┃ 👑 *Owner:* ${settings.botOwner || 'ArslanMD Official'}
 ┃ 📺 *YouTube:* ${global.ytch || 'Not set'}
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
+╰━━━━━━━━━━━━━━╯
 
 🔥 _"Arslan-Ai is not just a bot, it's an experience."_  
-✨ Designed with 💙 by ArslanMD
-🔍 Use the commands below to explore the magic🪄.
+✨ _Designed with 💙 by ArslanMD_
+🔍 _Use the commands below to explore the magic🪄._
 
 ━━━━━━━━━━━━━━━
-📌 *COMMAND MENU*
+> 📌*COMMAND MENU*
 ━━━━━━━━━━━━━━━
 
 ╭─🌐 *GENERAL ZONE*
@@ -155,7 +155,7 @@ async function helpCommand(sock, chatId, message) {
 📢 *Join our channel*`;
 
     try {
-        const imagePath = path.join(__dirname, '../assets/bot_banner.jpg');
+        const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
         if (fs.existsSync(imagePath)) {
             await sock.sendMessage(chatId, {
                 image: fs.readFileSync(imagePath),
