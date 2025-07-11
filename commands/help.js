@@ -4,7 +4,7 @@ const path = require('path');
 
 async function helpCommand(sock, chatId, message) {
     const helpMessage = `
-╭━━━〔 🤖 *ARSLAN-AI COMMAND CENTER* 〕━━━╮
+╭━━━〔 🤖 *ARSLAN-AI* 〕━━━╮
 ┃ 💠 *Bot Name:* ${settings.botName || 'Arslan-Ai'}
 ┃ 🔖 *Version:* ${settings.version || '2.0.5'}
 ┃ 👑 *Owner:* ${settings.botOwner || 'ArslanMD Official'}
