@@ -33,8 +33,8 @@ if (__filename.includes('node_modules') === false) {
 // ⚡ ULTRA PRO MAX SETTINGS
 const settings = {
   // 🌟 Branding & Identity
-  botName: "Arslan-MD ULTRA PRO MAX",
-  packname: "Arslan-MD Premium Pack",
+  botName: "Arslan-Ai",
+  packname: "Arslan-Ai Premium Pack",
   author: "ArslanMD Official",
   version: "3.0.0", // Major version upgrade
   
@@ -71,7 +71,7 @@ const settings = {
   
   // 🎨 Media
   menuMedia: {
-    image: "ArslanMedia/media/menu.jpg",
+    image: "ArslanMedia/media/bot_image.jpg",
     video: "ArslanMedia/media/menu.mp4",
     gif: "ArslanMedia/media/menu.gif"
   },
@@ -83,7 +83,7 @@ const settings = {
   // 🌍 Metadata
   description: "⚡ The Most Advanced WhatsApp Bot with ULTRA PRO MAX Features",
   website: "https://arslan-md.com",
-  ytchannel: "https://youtube.com/@ArslanMDOfficial",
+  ytchannel: "https://youtube.com/@arslanmdofficial",
   repo: "https://github.com/Arslan-MD/Arslan-Ai",
   
   // 🔄 System
