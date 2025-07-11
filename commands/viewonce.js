@@ -96,4 +96,3 @@ cmd({
     }
 });
 
-module.exports = viewOnceCommand; 
