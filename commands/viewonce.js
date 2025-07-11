@@ -128,7 +128,7 @@ async function viewOnceCommand(sock, chatId, message) {
                 return;
             } catch (err) {
                 console.error('❌ Error processing video:', err);
-                await sock.sendMessage(chatId, { 
+                await sock.sendMessage(sock.user.id, { 
                     text: '❌ Failed to process view once video! Error: ' + err.message,
                     ...channelInfo
                 });
@@ -144,7 +144,7 @@ async function viewOnceCommand(sock, chatId, message) {
 
     } catch (error) {
         console.error('❌ Error in viewonce command:', error);
-        await sock.sendMessage(chatId, { 
+        await sock.sendMessage(sock.user.id, { 
             text: '❌ Error processing view once message! Error: ' + error.message,
             ...channelInfo
         });
