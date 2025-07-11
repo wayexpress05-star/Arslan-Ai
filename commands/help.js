@@ -12,8 +12,8 @@ async function helpCommand(sock, chatId, message) {
 ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
 
 🔥 _"Arslan-Ai is not just a bot, it's an experience."_  
-✨ Designed with 💙 by ArslanMD for power users, admins, and legends.  
-🔍 Use the commands below to explore the magic.
+✨ Designed with 💙 by ArslanMD
+🔍 Use the commands below to explore the magic🪄.
 
 ━━━━━━━━━━━━━━━
 📌 *COMMAND MENU*
