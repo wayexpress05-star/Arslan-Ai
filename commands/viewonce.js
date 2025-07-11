@@ -1,7 +1,6 @@
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const fs = require('fs');
 const path = require('path');
-const { cmd } = require('../command'); // correct relative path
 const settings = require('../settings');
 
 const channelInfo = {
@@ -16,19 +15,12 @@ const channelInfo = {
     }
 };
 
-cmd({
-    pattern: "anti1x",
-    alias: ["viewonce", "vonce"],
-    desc: "Break view once image/video",
-    category: "tools",
-    react: "💀",
-    filename: __filename
-}, async (sock, m, { from }) => {
+async function viewOnceCommand(sock, chatId, message) {
     try {
-        const quoted = m.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+        const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
 
         if (!quoted) {
-            return await sock.sendMessage(from, {
+            return await sock.sendMessage(chatId, {
                 text: '❌ Reply to a *view once* image or video!',
                 ...channelInfo
             });
@@ -39,7 +31,7 @@ cmd({
         const media = imageView || videoView;
 
         if (!media) {
-            return await sock.sendMessage(from, {
+            return await sock.sendMessage(chatId, {
                 text: '❌ This is *not* a view once message!',
                 ...channelInfo
             });
@@ -52,7 +44,7 @@ cmd({
             let buffer = Buffer.from([]);
             for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk]);
 
-            return await sock.sendMessage(from, {
+            return await sock.sendMessage(chatId, {
                 image: buffer,
                 caption: `*💀 ${settings.botName} Anti ViewOnce 💀*\n\n*Type:* Image 📸\n${caption ? `*Caption:* ${caption}` : ''}`,
                 ...channelInfo
@@ -71,7 +63,7 @@ cmd({
             writer.end();
             await new Promise(resolve => writer.on('finish', resolve));
 
-            await sock.sendMessage(from, {
+            await sock.sendMessage(chatId, {
                 video: fs.readFileSync(filePath),
                 caption: `*💀 ${settings.botName} Anti ViewOnce 💀*\n\n*Type:* Video 📹\n${caption ? `*Caption:* ${caption}` : ''}`,
                 ...channelInfo
@@ -82,9 +74,11 @@ cmd({
 
     } catch (err) {
         console.error('❌ ViewOnce Error:', err);
-        await sock.sendMessage(from, {
-            text: '❌ Failed to break view once!\n' + err.message,
+        await sock.sendMessage(chatId, {
+            text: '❌ Failed to process view once message!\nError: ' + err.message,
             ...channelInfo
         });
     }
-});
+}
+
+module.exports = viewOnceCommand;
