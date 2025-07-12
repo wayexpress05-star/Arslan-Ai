@@ -1,23 +1,23 @@
-const fetch = require('node-fetch');
+const fs = require('fs');
+const path = require('path');
 
-async function truthCommand(sock, chatId, message) {
+module.exports = async function (sock, chatId, message) {
     try {
-        const shizokeys = 'Arslan-Ai';
-        const res = await fetch(`https://api.shizo.top/api/quote/truth?apikey=${shizokeys}`);
-        
-        if (!res.ok) {
-            throw await res.text();
+        const videoPath = path.join(__dirname, '../media/funny.mp4');
+
+        if (!fs.existsSync(videoPath)) {
+            return await sock.sendMessage(chatId, { text: '❌ Funny video not found!' });
         }
-        
-        const json = await res.json();
-        const truthMessage = json.result;
 
-        // Send the truth message
-        await sock.sendMessage(chatId, { text: truthMessage }, { quoted: message });
-    } catch (error) {
-        console.error('Error in truth command:', error);
-        await sock.sendMessage(chatId, { text: '❌ Failed to get truth. Please try again later!' }, { quoted: message });
+        await sock.sendMessage(chatId, {
+            video: fs.readFileSync(videoPath),
+            caption: '🤣 Here\'s something funny for you!',
+            mimetype: 'video/mp4',
+            gifPlayback: false
+        }, { quoted: message });
+
+    } catch (err) {
+        console.error('Funny command error:', err);
+        await sock.sendMessage(chatId, { text: '❌ Failed to send funny video.' });
     }
-}
-
-module.exports = { truthCommand };
+};
