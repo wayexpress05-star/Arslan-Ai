@@ -5,6 +5,9 @@
   "keywords": ["whatsapp", "bot", "baileys", "arslan-ai"],
   "buildpacks": [
     {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    },
+    {
       "url": "heroku/nodejs"
     }
   ],
