@@ -11,16 +11,6 @@
       "url": "heroku/nodejs"
     }
   ],
-  "env": {
-    "AUTO_REACT": {
-      "description": "Auto react to messages",
-      "value": "true"
-    },
-    "MODE": {
-      "description": "Bot mode: public or private",
-      "value": "public"
-    }
-  },
   "scripts": {
     "postdeploy": "echo '✅ Arslan-Ai deployed on Heroku!'"
   }
