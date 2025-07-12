@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = async function (sock, chatId, message) {
     try {
-        const videoPath = path.join(__dirname, '../media/funny.mp4');
+        const videoPath = path.join(__dirname, '../assets/funny.mp4');
 
         if (!fs.existsSync(videoPath)) {
             return await sock.sendMessage(chatId, { text: '❌ Funny video not found!' });
