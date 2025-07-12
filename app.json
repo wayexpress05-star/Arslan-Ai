@@ -1,18 +1,13 @@
 {
-  "name": "Arslan-Ai-2.0",
-  "description": "A javascript bot developed by professor sandesh bhashana",
+  "name": "Arslan-Ai",
+  "description": "A javascript bot developed by professor arslanmd official",
   "keywords": [
     "whatsapp bot"
   ],
   "logo":"https://imgur.com/a/jgZN1dp",
-  "repository": "https://github.com/Arslan-MD/Arslan-Ai-2.0",
+  "repository": "https://github.com/Arslan-MD/Arslan-Ai",
   "stack": "container",
-  "env": { 
-      "SESSION_ID": {
-      "description": "your session id",
-      "required": true,
-      "value": ""
-    },
+
     "MODE": {
       "description": "mode public or private",
       "required": true,
