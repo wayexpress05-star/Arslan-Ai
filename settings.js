@@ -4,7 +4,7 @@ const crypto = require("crypto");
 
 // 🔐 Anti-Tamper & Clone Protection
 const botName = "Arslan-MD";
-const ownerNumber = "923237045919";
+const ownerNumber = "254704322434";
 const securityHash = "a1b2c3d4e5f6g7h8i9j0"; // Change this to your unique hash
 
 // 🚨 Security Check
@@ -39,8 +39,8 @@ const settings = {
   version: "3.0.0", // Major version upgrade
   
   // 👑 Ownership
-  botOwner: "ArslanMD",
-  ownerNumber: "923237045919",
+  botOwner: "sharmen",
+  ownerNumber: "254704322434",
   coOwners: [], // Add secondary owners if needed
   
   // ⚙️ Operation Modes
